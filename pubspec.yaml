@@ -28,6 +28,11 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  riverpod: ^2.5.0
+  flutter_riverpod: ^2.4.10
+  get_it: ^7.6.7
+  date_format: ^2.0.7
+  dio: ^5.4.1
   flutter:
     sdk: flutter
 
