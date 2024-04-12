@@ -1,6 +1,54 @@
+import 'package:json_annotation/json_annotation.dart';
+
+
 
 abstract class User {
-  final String id;
+  final int userId;
+  final String? email;
+  final String? name;
+  final String? surName;
+  final String? phoneNumber;
+  final bool? isEmailVerified;
+  final DateTime? dob;
+  final String? profileUrl;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final String? address;
+  final String? phoneNo;
+  final String? password;
+
+  User({
+    required this.userId,
+    this.email,
+    this.name,
+    this.surName,
+    this.phoneNumber,
+    this.isEmailVerified,
+    this.dob,
+    this.profileUrl,
+    this.createdAt,
+    this.updatedAt,
+    this.address,
+    this.phoneNo,
+    this.password
+  });
+
+
+
+
+  @override
+  String toString() {
+    return 'User{userId: $userId, email: $email, name: $name, surName: $surName, phoneNumber: $phoneNumber, isEmailVerified: $isEmailVerified, dob: $dob, profileUrl: $profileUrl, createdAt: $createdAt, updatedAt: $updatedAt, address: $address}';
+  }
+}
+
+
+
+/*
+
+
+abstract class User {
+  final int id;
   String? email;
   String? name;
   String? surname;
@@ -11,6 +59,8 @@ abstract class User {
   DateTime? createdAt;
   DateTime? updatedAt;
   String? address;
+  String? phoneNo;
+  String? password;
 
   User({
     required this.id,
@@ -23,37 +73,43 @@ abstract class User {
     this.profileURL,
     this.createdAt,
     this.updatedAt,
-    this.address
+    this.address,
+    this.phoneNo,
+    this.password
   });
 
   Map<String, dynamic> toMap() {
     return {
-      "id"        : id,
+      "userId"        : id,
       "email"     : email,
       "name"      : name,
-      "surname"  : surname,
-      "profileURL": profileURL,
+      "surName"  : surname,
+      "profileUrl": profileURL,
       "phoneNumber": phoneNumber,
       "isEmailVerified": isEmailVerified,
       "address": address,
-      "birthday" : birthday,
-      "createdAt" : createdAt,
-      "updatedAt" : updatedAt,
+      "phoneNo" : phoneNo,
+      "password" : password,
+      "birthday" : birthday?.toIso8601String(),
+      "createdAt" : createdAt?.toIso8601String(),
+      "updatedAt" : updatedAt?.toIso8601String(),
     };
   }
 
   User.fromMap(Map<String, dynamic> map):  // : this anlamında
-        id = map["id"],
+        id = map["userId"],
         email = map["email"],
         name = map["name"],
-        surname = map["surname"],
-        profileURL = map["profileURL"],
+        surname = map["surName"],
+        profileURL = map["profileUrl"],
         phoneNumber = map["phoneNumber"],
         isEmailVerified = map["isEmailVerified"],
         address = map["address"],
-        birthday = map["birthday"].toDate(),
-        createdAt = map["createdAt"].toDate(),
-        updatedAt = map["updatedAt"].toDate();
+        phoneNo = map["phoneNo"],
+        password = map["password"],
+        birthday = DateTime.tryParse(map["dob"]),
+        createdAt = DateTime.tryParse(map["createdAt"]),
+        updatedAt = DateTime.tryParse(map["updatedAt"]);
 
   @override
   String toString() {
@@ -69,7 +125,7 @@ class Student extends User {
   String? contactNumber;
 
   Student({
-    required String id,
+    required int id,
     String? email,
     String? name,
     String? surname,
@@ -80,6 +136,7 @@ class Student extends User {
     DateTime? createdAt,
     DateTime? updatedAt,
     String? address,
+    String? password,
     this.studentNumber,
     this.department,
     this.gender,
@@ -96,30 +153,38 @@ class Student extends User {
     birthday: birthday,
     address: address,
     isEmailVerified: isEmailVerified,
+    password: password
   );
 
   @override
   Map<String, dynamic> toMap() {
-    return {
-      "id"        : id,
+    return { 
+      "userId"        : id, 
       "email"     : email,
-      "name"      : name,
-      "surname"   : surname,
-      "birthday"  : birthday,
-      "phoneNumber"  : phoneNumber,
-      "isEmailVerified"  : isEmailVerified,
-      "address"  : address,
+      "studentNumber" : studentNumber, 
+      "department" : department,
+      "name"      : name, 
+      "surName"   : surname, 
+      "isEmailVerified"  : isEmailVerified, 
+      "address"  : address, 
       "profileURL": profileURL,
-      "createdAt" : createdAt,
-      "updatedAt" : updatedAt,
+     /*  "createdAt" : createdAt?.toString(), 
+      "dob" : birthday?.toIso8601String(), 
+      "updatedAt" : updatedAt?.toIso8601String(), */
+      "emergencyContactNo" : contactNumber, 
+      "phoneNo" : phoneNumber,
+      "gender" : gender, 
+      "password" : password 
     };
   }
+
+
 
   Student.fromMap(Map<String, dynamic> map) : super.fromMap(map) {
     studentNumber = map["studentNumber"];
     department = map["department"];
     gender = map["gender"];
-    contactNumber = map["contactNumber"];
+    contactNumber = map["emergencyContactNo"];
   }
 
   @override
@@ -136,7 +201,7 @@ class Admin extends User {
   String? contactNumber;
 
   Admin({
-    required String id,
+    required int id,
     String? email,
     String? name,
     String? surname,
@@ -147,12 +212,14 @@ class Admin extends User {
     DateTime? createdAt,
     DateTime? updatedAt,
     String? address,
+    String? password,
     this.studentNumber,
     this.department,
     this.gender,
     this.contactNumber,
   }) : super(
     id: id,
+    password: password,
     name: name,
     surname: surname,
     email: email,
@@ -179,6 +246,7 @@ class Admin extends User {
       "profileURL": profileURL,
       "createdAt" : createdAt,
       "updatedAt" : updatedAt,
+      "password" : password
     };
   }
 
@@ -200,7 +268,7 @@ class DormitoryOwner extends User {
   String? dormitoryID;
 
   DormitoryOwner({
-    required String id,
+    required int id,
     String? email,
     String? name,
     String? surname,
@@ -211,12 +279,14 @@ class DormitoryOwner extends User {
     DateTime? createdAt,
     DateTime? updatedAt,
     String? address,
+    String? password,
     this.dormitoryID
   }) : super(
     id: id,
     name: name,
     surname: surname,
     email: email,
+    password: password,
     profileURL: profileURL,
     createdAt: createdAt,
     updatedAt: updatedAt,
@@ -240,6 +310,7 @@ class DormitoryOwner extends User {
       "profileURL": profileURL,
       "createdAt" : createdAt,
       "updatedAt" : updatedAt,
+      "password" : password
     };
   }
 
@@ -252,3 +323,6 @@ class DormitoryOwner extends User {
     return 'DormitoryOwner{dormitoryID: $dormitoryID}';
   }
 }
+
+
+*/
