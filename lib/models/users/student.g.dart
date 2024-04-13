@@ -7,11 +7,11 @@ part of 'student.dart';
 // **************************************************************************
 
 Student _$StudentFromJson(Map<String, dynamic> json) => Student(
-      userId: json['userId'] as int,
+      userId: json['userId'] as int?,
       email: json['email'] as String?,
       name: json['name'] as String?,
       surName: json['surName'] as String?,
-      phoneNumber: json['phoneNumber'] as String?,
+      phoneNo: json['phoneNo'] as String?,
       isEmailVerified: json['isEmailVerified'] as bool?,
       dob: json['dob'] == null ? null : DateTime.parse(json['dob'] as String),
       profileUrl: json['profileUrl'] as String?,
@@ -29,21 +29,31 @@ Student _$StudentFromJson(Map<String, dynamic> json) => Student(
       emergencyContactNo: json['emergencyContactNo'] as String?,
     );
 
-Map<String, dynamic> _$StudentToJson(Student instance) => <String, dynamic>{
-      'userId': instance.userId,
-      'email': instance.email,
-      'name': instance.name,
-      'surName': instance.surName,
-      'phoneNumber': instance.phoneNumber,
-      'isEmailVerified': instance.isEmailVerified,
-      'dob': instance.dob?.toIso8601String(),
-      'profileUrl': instance.profileUrl,
-      'createdAt': instance.createdAt?.toIso8601String(),
-      'updatedAt': instance.updatedAt?.toIso8601String(),
-      'address': instance.address,
-      'password': instance.password,
-      'studentNumber': instance.studentNumber,
-      'department': instance.department,
-      'gender': instance.gender,
-      'emergencyContactNo': instance.emergencyContactNo,
-    };
+Map<String, dynamic> _$StudentToJson(Student instance) {
+  final val = <String, dynamic>{
+    'email': instance.email,
+    'name': instance.name,
+    'surName': instance.surName,
+    'isEmailVerified': instance.isEmailVerified,
+    'dob': instance.dob?.toIso8601String(),
+    'profileUrl': instance.profileUrl,
+    'createdAt': instance.createdAt?.toIso8601String(),
+    'updatedAt': instance.updatedAt?.toIso8601String(),
+    'address': instance.address,
+    'phoneNo': instance.phoneNo,
+    'password': instance.password,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('userId', instance.userId);
+  val['studentNumber'] = instance.studentNumber;
+  val['department'] = instance.department;
+  val['gender'] = instance.gender;
+  val['emergencyContactNo'] = instance.emergencyContactNo;
+  return val;
+}

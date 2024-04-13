@@ -7,17 +7,21 @@ import 'package:json_annotation/json_annotation.dart';
 @JsonSerializable()
 class Student extends User {
 
+  @JsonKey(includeIfNull: false)
+  @override
+  int? get userId => super.userId;
+
   final String? studentNumber;
   final String? department;
   final String? gender;
   final String? emergencyContactNo;
 
   Student({
-    required int userId,
+    required int? userId,
     String? email,
     String? name,
     String? surName,
-    String? phoneNumber,
+    String? phoneNo,
     bool? isEmailVerified,
     DateTime? dob,
     String? profileUrl,
@@ -37,7 +41,7 @@ class Student extends User {
     profileUrl: profileUrl,
     createdAt: createdAt,
     updatedAt: updatedAt,
-    phoneNumber: phoneNumber,
+    phoneNo: phoneNo,
     dob: dob,
     address: address,
     isEmailVerified: isEmailVerified,

@@ -3,11 +3,10 @@ import 'package:json_annotation/json_annotation.dart';
 
 
 abstract class User {
-  final int userId;
+  final int? userId;
   final String? email;
   final String? name;
   final String? surName;
-  final String? phoneNumber;
   final bool? isEmailVerified;
   final DateTime? dob;
   final String? profileUrl;
@@ -22,7 +21,6 @@ abstract class User {
     this.email,
     this.name,
     this.surName,
-    this.phoneNumber,
     this.isEmailVerified,
     this.dob,
     this.profileUrl,
@@ -34,11 +32,9 @@ abstract class User {
   });
 
 
-
-
   @override
   String toString() {
-    return 'User{userId: $userId, email: $email, name: $name, surName: $surName, phoneNumber: $phoneNumber, isEmailVerified: $isEmailVerified, dob: $dob, profileUrl: $profileUrl, createdAt: $createdAt, updatedAt: $updatedAt, address: $address}';
+    return 'User{userId: $userId, email: $email, name: $name, surName: $surName, isEmailVerified: $isEmailVerified, dob: $dob, profileUrl: $profileUrl, createdAt: $createdAt, updatedAt: $updatedAt, address: $address}';
   }
 }
 

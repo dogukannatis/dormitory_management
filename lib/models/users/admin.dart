@@ -7,17 +7,16 @@ import 'package:json_annotation/json_annotation.dart';
 @JsonSerializable()
 class Admin extends User {
 
-  final String? studentNumber;
-  final String? department;
-  final String? gender;
-  final String? contactNumber;
+  @JsonKey(includeIfNull: false)
+  @override
+  int? get userId => super.userId;
 
   Admin({
-    required int userId,
+    required int? userId,
     String? email,
     String? name,
     String? surName,
-    String? phoneNumber,
+    String? phoneNo,
     bool? isEmailVerified,
     DateTime? dob,
     String? profileUrl,
@@ -25,10 +24,6 @@ class Admin extends User {
     DateTime? updatedAt,
     String? address,
     String? password,
-    this.studentNumber,
-    this.department,
-    this.gender,
-    this.contactNumber,
   }) : super(
     userId: userId,
     password: password,
@@ -38,7 +33,7 @@ class Admin extends User {
     profileUrl: profileUrl,
     createdAt: createdAt,
     updatedAt: updatedAt,
-    phoneNumber: phoneNumber,
+    phoneNo: phoneNo,
     dob: dob,
     address: address,
     isEmailVerified: isEmailVerified,
@@ -48,9 +43,5 @@ class Admin extends User {
 
   Map<String, dynamic> toJson() => _$AdminToJson(this);
 
-  @override
-  String toString() {
-    return 'Student{studentNumber: $studentNumber, department: $department, gender: $gender, contactNumber: $contactNumber}';
-  }
 }
 

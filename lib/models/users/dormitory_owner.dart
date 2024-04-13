@@ -10,11 +10,11 @@ class DormitoryOwner extends User {
   final String? dormitoryID;
 
   DormitoryOwner({
-    required int userId,
+    required int? userId,
     String? email,
     String? name,
     String? surName,
-    String? phoneNumber,
+    String? phoneNo,
     bool? isEmailVerified,
     DateTime? dob,
     String? profileUrl,
@@ -32,7 +32,7 @@ class DormitoryOwner extends User {
     profileUrl: profileUrl,
     createdAt: createdAt,
     updatedAt: updatedAt,
-    phoneNumber: phoneNumber,
+    phoneNo: phoneNo,
     dob: dob,
     address: address,
     isEmailVerified: isEmailVerified,
