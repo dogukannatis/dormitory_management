@@ -1,10 +1,15 @@
+import 'package:json_annotation/json_annotation.dart';
 
+part 'dormitory_details.g.dart';
+
+@JsonSerializable()
 class DormitoryDetails {
-  final String id;
-  final String dormitoryID;
-  String? phoneNumber;
+  @JsonKey(includeIfNull: false)
+  final int? detailId;
+  final int? dormitoryId;
+  String? contactNo;
   String? email;
-  String? faxNumber;
+  String? faxNo;
   String? address;
   int? capacity;
   String? description;
@@ -15,16 +20,18 @@ class DormitoryDetails {
   bool? hasBalcony;
   bool? hasTV;
   bool? hasMicrowave;
-  bool? hasAC;
+  bool? hasAirConditioning;
+  @JsonKey(includeIfNull: false)
+  List? photoUrls;
   DateTime? createdAt;
   DateTime? updatedAt;
 
   DormitoryDetails({
-    required this.id,
-    required this.dormitoryID,
-    this.phoneNumber,
+    required this.detailId,
+    required this.dormitoryId,
+    this.contactNo,
     this.email,
-    this.faxNumber,
+    this.faxNo,
     this.address,
     this.capacity,
     this.description,
@@ -35,56 +42,13 @@ class DormitoryDetails {
     this.hasBalcony,
     this.hasTV,
     this.hasMicrowave,
-    this.hasAC,
+    this.hasAirConditioning,
     this.createdAt,
+    this.photoUrls,
     this.updatedAt
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      "id"        : id,
-      "dormitoryID"     : dormitoryID,
-      "phoneNumber"      : phoneNumber,
-      "email"  : email,
-      "faxNumber"  : faxNumber,
-      "address"  : address,
-      "capacity"  : capacity,
-      "description"  : description,
-      "internetSpeed"  : internetSpeed,
-      "hasKitchen"  : hasKitchen,
-      "hasCleanService"  : hasCleanService,
-      "hasShowerAndToilet"  : hasShowerAndToilet,
-      "hasTV"  : hasTV,
-      "hasMicrowave"  : hasMicrowave,
-      "hasBalcony"  : hasBalcony,
-      "hasAC"  : hasAC,
-      "createdAt" : createdAt,
-      "updatedAt" : updatedAt,
-    };
-  }
+  factory DormitoryDetails.fromJson(Map<String, dynamic> json) => _$DormitoryDetailsFromJson(json);
 
-  DormitoryDetails.fromMap(Map<String, dynamic> map) :
-        id = map["id"],
-        dormitoryID = map["dormitoryID"],
-        phoneNumber = map["phoneNumber"],
-        email = map["email"],
-        faxNumber = map["faxNumber"],
-        address = map["address"],
-        capacity = map["capacity"],
-        description = map["description"],
-        internetSpeed = map["internetSpeed"],
-        hasKitchen = map["hasKitchen"],
-        hasCleanService = map["hasCleanService"],
-        hasShowerAndToilet = map["hasShowerAndToilet"],
-        hasTV = map["hasTV"],
-        hasMicrowave = map["hasMicrowave"],
-        hasBalcony = map["hasBalcony"],
-        hasAC = map["hasAC"],
-        createdAt = map["createdAt"],
-        updatedAt = map["updatedAt"];
-
-  @override
-  String toString() {
-    return 'DormitoryDetails{id: $id, dormitoryID: $dormitoryID, phoneNumber: $phoneNumber, email: $email, faxNumber: $faxNumber, address: $address, capacity: $capacity, description: $description, internetSpeed: $internetSpeed, hasKitchen: $hasKitchen, hasCleanService: $hasCleanService, hasShowerAndToilet: $hasShowerAndToilet, hasBalcony: $hasBalcony, hasTV: $hasTV, hasMicrowave: $hasMicrowave, hasAC: $hasAC, createdAt: $createdAt, updatedAt: $updatedAt}';
-  }
+  Map<String, dynamic> toJson() => _$DormitoryDetailsToJson(this);
 }
