@@ -1,20 +1,16 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_notification.dart';
+part of 'rating.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-AppNotification _$AppNotificationFromJson(Map<String, dynamic> json) =>
-    AppNotification(
+Rating _$RatingFromJson(Map<String, dynamic> json) => Rating(
       id: json['id'] as int?,
-      title: json['title'] as String?,
-      description: json['description'] as String?,
-      senderId: json['senderId'] as int?,
-      receiverId: json['receiverId'] as int?,
-      imageUrl: json['imageUrl'] as String?,
-      seen: json['seen'] as bool?,
+      dormitoryId: json['dormitoryId'] as int?,
+      userId: json['userId'] as int?,
+      ratingNo: json['ratingNo'] as int?,
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
@@ -23,7 +19,7 @@ AppNotification _$AppNotificationFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['updatedAt'] as String),
     );
 
-Map<String, dynamic> _$AppNotificationToJson(AppNotification instance) {
+Map<String, dynamic> _$RatingToJson(Rating instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -33,12 +29,9 @@ Map<String, dynamic> _$AppNotificationToJson(AppNotification instance) {
   }
 
   writeNotNull('id', instance.id);
-  val['title'] = instance.title;
-  val['description'] = instance.description;
-  val['senderId'] = instance.senderId;
-  val['receiverId'] = instance.receiverId;
-  val['imageUrl'] = instance.imageUrl;
-  val['seen'] = instance.seen;
+  val['dormitoryId'] = instance.dormitoryId;
+  val['userId'] = instance.userId;
+  val['ratingNo'] = instance.ratingNo;
   val['createdAt'] = instance.createdAt?.toIso8601String();
   val['updatedAt'] = instance.updatedAt?.toIso8601String();
   return val;

@@ -7,7 +7,11 @@ part 'dormitory_owner.g.dart';
 @JsonSerializable()
 class DormitoryOwner extends User {
 
-  final String? dormitoryID;
+  @JsonKey(includeIfNull: false)
+  @override
+  int? get userId => super.userId;
+  
+  final int? dormitoryId;
 
   DormitoryOwner({
     required int? userId,
@@ -22,7 +26,7 @@ class DormitoryOwner extends User {
     DateTime? updatedAt,
     String? address,
     String? password,
-    this.dormitoryID
+    this.dormitoryId
   }) : super(
     userId: userId,
     name: name,
@@ -44,6 +48,6 @@ class DormitoryOwner extends User {
 
   @override
   String toString() {
-    return 'DormitoryOwner{dormitoryID: $dormitoryID}';
+    return 'DormitoryOwner{dormitoryID: $dormitoryId}';
   }
 }

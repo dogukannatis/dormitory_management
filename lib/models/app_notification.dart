@@ -7,12 +7,12 @@ part 'app_notification.g.dart';
 @JsonSerializable()
 class AppNotification {
   @JsonKey(includeIfNull: false)
-  final String? id;
+  final int? id;
   final String? title;
   final String? description;
-  final String? senderID;
-  final String? receiverID;
-  String? imageURL;
+  final int? senderId;
+  final int? receiverId;
+  String? imageUrl;
   bool? seen;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -21,9 +21,9 @@ class AppNotification {
     required this.id,
     required this.title,
     required this.description,
-    required this.senderID,
-    required this.receiverID,
-    this.imageURL,
+    required this.senderId,
+    required this.receiverId,
+    this.imageUrl,
     this.seen,
     this.createdAt,
     this.updatedAt
@@ -35,6 +35,6 @@ class AppNotification {
 
   @override
   String toString() {
-    return 'AppNotification{id: $id, title: $title, description: $description, senderID: $senderID, receiverID: $receiverID, imageURL: $imageURL, seen: $seen, createdAt: $createdAt, updatedAt: $updatedAt}';
+    return 'AppNotification{id: $id, title: $title, description: $description, senderId: $senderId, receiverId: $receiverId, imageURL: $imageUrl, seen: $seen, createdAt: $createdAt, updatedAt: $updatedAt}';
   }
 }

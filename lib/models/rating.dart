@@ -1,42 +1,32 @@
+import 'package:json_annotation/json_annotation.dart';
 
+part 'rating.g.dart';
+
+@JsonSerializable()
 class Rating {
-  final String id;
-  final String dormitoryID;
-  final String userID;
-  final int rating;
+  @JsonKey(includeIfNull: false)
+  final int? id;
+  final int? dormitoryId;
+  final int? userId;
+  final int? ratingNo;
   DateTime? createdAt;
   DateTime? updatedAt;
 
   Rating({
     required this.id,
-    required this.dormitoryID,
-    required this.userID,
-    required this.rating,
+    required this.dormitoryId,
+    required this.userId,
+    required this.ratingNo,
     this.createdAt,
     this.updatedAt
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      "id"        : id,
-      "dormitoryID"     : dormitoryID,
-      "userID"      : userID,
-      "rating"   : rating,
-      "createdAt" : createdAt,
-      "updatedAt" : updatedAt,
-    };
-  }
+  factory Rating.fromJson(Map<String, dynamic> json) => _$RatingFromJson(json);
 
-  Rating.fromMap(Map<String, dynamic> map) :
-        id = map["id"],
-        dormitoryID = map["dormitoryID"],
-        userID = map["userID"],
-        rating = map["rating"],
-        createdAt = map["createdAt"],
-        updatedAt = map["updatedAt"];
+  Map<String, dynamic> toJson() => _$RatingToJson(this);
 
   @override
   String toString() {
-    return 'Rating{id: $id, dormitoryID: $dormitoryID, userID: $userID, rating: $rating, createdAt: $createdAt, updatedAt: $updatedAt}';
+    return 'Rating{id: $id, dormitoryID: $dormitoryId, userID: $userId, ratingNo: $ratingNo, createdAt: $createdAt, updatedAt: $updatedAt}';
   }
 }
