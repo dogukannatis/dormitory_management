@@ -13,7 +13,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade50,
+      backgroundColor: Color(0xFFF5F5F5),
       appBar: getCustomAppBar(context),
       drawer: const CustomDrawer(),
       body: SingleChildScrollView(
@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
     return Container(
       margin: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Colors.blueGrey[100],
+        color: Color(0xFFFFFFFF),
       ),
       padding: const EdgeInsets.all(16.0),
       child: Row(
