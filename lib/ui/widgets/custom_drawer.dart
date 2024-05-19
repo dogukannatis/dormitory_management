@@ -1,3 +1,4 @@
+import 'package:dormitory_management/ui/pages/edit_profile_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -11,7 +12,9 @@ class CustomDrawer extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            onTap: (){},
+            onTap: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const EditProfilePage()));
+            },
             title: const Text("Edit Profile"),
           ),
           ListTile(
