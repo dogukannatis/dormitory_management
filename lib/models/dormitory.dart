@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'dormitory_details.dart';
+
 part 'dormitory.g.dart';
 
 @JsonSerializable()
@@ -11,6 +13,7 @@ class Dormitory {
   int? quota;
   DateTime? createdAt;
   DateTime? updatedAt;
+  DormitoryDetails? dormitoryDetails;
 
   Dormitory({
     required this.dormitoryId,

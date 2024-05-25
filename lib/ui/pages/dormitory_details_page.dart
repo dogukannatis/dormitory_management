@@ -1,19 +1,22 @@
+import 'package:dormitory_management/models/dormitory_details.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 
-class DormitoriesPage extends StatefulWidget {
-  const DormitoriesPage({Key? key}) : super(key: key);
+class DormitoryDetailsPage extends StatefulWidget {
+  const DormitoryDetailsPage({Key? key, required this.details}) : super(key: key);
+
+  final DormitoryDetails details;
 
   @override
-  State<DormitoriesPage> createState() => _DormitoriesPageState();
+  State<DormitoryDetailsPage> createState() => _DormitoryDetailsPageState();
 }
 
-class _DormitoriesPageState extends State<DormitoriesPage> {
+class _DormitoryDetailsPageState extends State<DormitoryDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF5F5F5),
       appBar: getCustomAppBar(context),
       drawer: const CustomDrawer(),
       body: SingleChildScrollView(
@@ -37,7 +40,7 @@ class _DormitoriesPageState extends State<DormitoriesPage> {
                         child: Padding(
                           padding: const EdgeInsets.only(right: 50.0),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(15.0),
                               bottomLeft: Radius.circular(15.0),
                             ),
@@ -230,11 +233,4 @@ class CommentWidget extends StatelessWidget {
       ],
     );
   }
-}
-
-
-void main() {
-  runApp(MaterialApp(
-    home: DormitoriesPage(),
-  ));
 }

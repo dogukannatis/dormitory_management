@@ -1,5 +1,5 @@
 import 'package:dormitory_management/ui/pages/compare_dormitories_page.dart';
-import 'package:dormitory_management/ui/pages/dormitories_page.dart';
+import 'package:dormitory_management/ui/pages/dormitory_details_page.dart';
 import 'package:dormitory_management/ui/pages/home_page.dart';
 import 'package:dormitory_management/ui/pages/signin_page.dart';
 import 'package:dormitory_management/ui/pages/signup_page.dart';
@@ -116,15 +116,6 @@ AppBar getCustomAppBar(BuildContext context) {
                 ),
                 onTap: (){
                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
-                },
-              ),
-              InkWell(
-                child: const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Text("Dormitories"),
-                ),
-                onTap: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormitoriesPage()));
                 },
               ),
               InkWell(

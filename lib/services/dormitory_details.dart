@@ -50,6 +50,23 @@ class DormitoryDetailsApi extends Api{
 
   }
 
+  /// Get dormitory details with [dormitoryDetailsId]
+  /// Works properly
+  Future<DormitoryDetails?> getDormitoryDetailsByDormitoryID({required int dormitoryId}) async {
+
+    try{
+      final response = await dio.get("$baseUrl/DormitoryDetail/getDormitoryDetailsByDormitoryId", queryParameters: {"id" : dormitoryId}, options: options);
+      debugPrint("response: $response");
+      DormitoryDetails dormitoryDetails = DormitoryDetails.fromJson(response.data);
+      debugPrint("dormitoryDetails: $dormitoryDetails");
+      return dormitoryDetails;
+    } on DioException catch (e, str) {
+       debugPrint("HATA: $e, $str");
+       return null;
+    }
+
+  }
+
 
 
   /// Delete dormitory details with [dormitoryDetailsId]
