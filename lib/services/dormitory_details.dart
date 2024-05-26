@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:dormitory_management/models/dormitory.dart';
 import 'package:dormitory_management/models/dormitory_details.dart';
 import 'package:dormitory_management/services/api.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +54,7 @@ class DormitoryDetailsApi extends Api{
   Future<DormitoryDetails?> getDormitoryDetailsByDormitoryID({required int dormitoryId}) async {
 
     try{
-      final response = await dio.get("$baseUrl/DormitoryDetail/getDormitoryDetailsByDormitoryId", queryParameters: {"id" : dormitoryId}, options: options);
+      final response = await dio.get("$baseUrl/DormitoryDetail/getDormitoryDetailByDormitoryId", queryParameters: {"id" : dormitoryId}, options: options);
       debugPrint("response: $response");
       DormitoryDetails dormitoryDetails = DormitoryDetails.fromJson(response.data);
       debugPrint("dormitoryDetails: $dormitoryDetails");

@@ -1,15 +1,26 @@
+import 'package:dormitory_management/models/users/student.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
+import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SignupPage extends StatefulWidget {
+class SignupPage extends ConsumerStatefulWidget {
   const SignupPage({super.key});
 
   @override
-  State<SignupPage> createState() => _SignupPageState();
+  ConsumerState createState() => _SignupPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _SignupPageState extends ConsumerState<SignupPage> {
+
   bool _acceptTerms = false;
+
+
+  Future<void> register({required Student student}) async {
+    final userManager = ref.read(userManagerProvider.notifier);
+    await userManager.saveStudent(user: student);
+  }
+
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/io.dart';
 import 'package:dormitory_management/landing_page.dart';
 import 'package:dormitory_management/locator.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +9,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
+  
+  
   runApp(const MyApp());
 }
 

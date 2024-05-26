@@ -1,8 +1,12 @@
 
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:dormitory_management/models/users/user.dart';
 import 'package:flutter/material.dart';
 
+  
 abstract class Api {
 
   String baseUrl = "https://localhost:7247/api";
@@ -12,17 +16,17 @@ abstract class Api {
   String adminUrl ="Admin";
   String userUrl ="User";
  
-  Options options = Options(contentType: Headers.jsonContentType, headers: {"accept" : "*/*"});
+  Options options = Options(contentType: Headers.jsonContentType,
+      headers: {
+    "accept" : "*/*",
+        "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+        "Access-Control-Allow-Credentials": true, // Required for cookies, authorization headers with HTTPS
+        "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
+  }
+  );
 
   final dio = Dio();
 
-  Future<User?> login({required String email, required String password}) async {
-    final response = await dio.get("$baseUrl/Login");
-      debugPrint("response: $response");
-  }
-
-
-
-
 
 }
+

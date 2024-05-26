@@ -58,6 +58,8 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
 
   List<Dormitory> dormitories = [];
 
+  bool isLoading = false;
+
 
   @override
   void initState() {
@@ -68,7 +70,13 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
   /// Sayfa yüklendiğinde tüm yurtlar dormitories içine gelecek.
   Future<void> getAllDormitories() async {
     final dormManager = ref.read(dormManagerProvider.notifier);
+    setState(() {
+      isLoading = true;
+    });
     dormitories = await dormManager.getAllDormitories();
+    setState(() {
+      isLoading = false;
+    });
   }
 
 
@@ -89,7 +97,7 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: getCustomAppBar(context),
       drawer: const CustomDrawer(),
-      body: Padding(
+      body: isLoading ? const Center(child: CircularProgressIndicator(),) : Padding(
         padding: const EdgeInsets.all(20.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

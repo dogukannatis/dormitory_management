@@ -1,16 +1,33 @@
-import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
-import 'package:flutter/material.dart';
 
-class SigninPage extends StatefulWidget {
+
+import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
+import 'package:dormitory_management/viewmodels/user_manager.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+
+class SigninPage extends ConsumerStatefulWidget {
   const SigninPage({Key? key}) : super(key: key);
 
   @override
-  State<SigninPage> createState() => _SigninPageState();
+  ConsumerState createState() => _SigninPageState();
 }
 
-class _SigninPageState extends State<SigninPage> {
+class _SigninPageState extends ConsumerState<SigninPage> {
+
+
+  Future<void> login(String email, String password) async {
+    final userManager = ref.read(userManagerProvider.notifier);
+    await userManager.login(email: email, password: password);
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(userManagerProvider);
+
     return Scaffold(
       backgroundColor: Color(0xFFF5F5F5),
       appBar: getCustomAppBar(context),

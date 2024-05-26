@@ -6,18 +6,17 @@ import 'package:dormitory_management/repository/repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum UserManagerState {idle, busy}
 
-final userManagerProvider = StateNotifierProvider<UserManager, UserManagerState>((ref){
+final userManagerProvider = StateNotifierProvider<UserManager, User?>((ref){
   return UserManager(ref);
 });
 
-class UserManager extends StateNotifier<UserManagerState> {
+class UserManager extends StateNotifier<User?> {
   final Ref ref;
 
-  UserManager(this.ref) : super(UserManagerState.idle);
+  UserManager(this.ref) : super(null);
 
-  final _userRepository = locator<Repository>();
+  final _repository = locator<Repository>();
 
   Future<User?> login({required String email, required String password}) async {
 
@@ -27,18 +26,20 @@ class UserManager extends StateNotifier<UserManagerState> {
     String? _password = prefs.getString('password');
 
     if(_email != null && _password != null && (_email == email && _password == password)) {
-
+      return state = await _repository.login(email: email, password: password);
     }else{
-      return null;
+      return state = null;
     }
     
     
   }
 
   Future<void> saveStudent({required Student user}) async {
+    await _repository.saveStudent(user: user);
+  }
 
-    await _userRepository.saveStudent(user: user);
-
+  Future<void> updateStudent({required Student user}) async {
+    await _repository.updateStudent(user: user);
   }
 
 
