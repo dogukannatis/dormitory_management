@@ -15,6 +15,9 @@ class _UserBookingHistoryState extends ConsumerState<UserBookingHistory> {
   List<Booking> bookings = [
     Booking(bookingId: 1, userId: 1, dormitoryId: 1, roomId: 3, status: "Current"),
     Booking(bookingId: 2, userId: 1, dormitoryId: 2, roomId: 3, status: "Former"),
+    Booking(bookingId: 3, userId: 1, dormitoryId: 3, roomId: 3, status: "In Debt"),
+    Booking(bookingId: 4, userId: 1, dormitoryId: 4, roomId: 3, status: "Current"),
+    Booking(bookingId: 5, userId: 1, dormitoryId: 5, roomId: 3, status: "Current"),
   ];
 
   Widget _buildStatusChip(String status) {
@@ -26,9 +29,9 @@ class _UserBookingHistoryState extends ConsumerState<UserBookingHistory> {
         color = Colors.green;
         label = 'Current';
         break;
-      case 'Debt':
+      case 'In Debt':
         color = Colors.orange;
-        label = 'Debt';
+        label = 'In Debt';
         break;
       case 'Former':
       default:

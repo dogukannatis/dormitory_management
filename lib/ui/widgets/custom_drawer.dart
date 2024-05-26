@@ -2,6 +2,7 @@ import 'package:dormitory_management/ui/pages/dorm_occupancy_rates_page.dart';
 import 'package:dormitory_management/ui/pages/edit_profile_page.dart';
 import 'package:dormitory_management/ui/pages/user_profile_dormitory.dart';
 import 'package:dormitory_management/ui/pages/user_booking_history_page.dart';
+import 'package:dormitory_management/ui/pages/user_profile_notifications_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -37,6 +38,12 @@ class CustomDrawer extends StatelessWidget {
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormOccupancyRates()));
             },
             title: const Text("Dorm Occupancy Rates"),
+          ),
+          ListTile(
+            onTap: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const UserProfileNotifications()));
+            },
+            title: const Text("User Profile Notifications"),
           ),
         ],
       ),
