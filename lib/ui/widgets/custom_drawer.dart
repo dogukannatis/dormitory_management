@@ -3,6 +3,7 @@ import 'package:dormitory_management/ui/pages/edit_profile_page.dart';
 import 'package:dormitory_management/ui/pages/user_profile_dormitory.dart';
 import 'package:dormitory_management/ui/pages/user_booking_history_page.dart';
 import 'package:dormitory_management/ui/pages/user_profile_notifications_page.dart';
+import 'package:dormitory_management/ui/pages/user_profile_chat_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -35,16 +36,41 @@ class CustomDrawer extends StatelessWidget {
           ),
           ListTile(
             onTap: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const UserProfileNotifications()));
+            },
+            title: const Text("User Profile Notifications"),
+          ),
+          ListTile(
+            onTap: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const UserProfileChats()));
+            },
+            title: const Text("User Profile Chats"),
+          ),
+          ListTile(
+            onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormOccupancyRates()));
             },
             title: const Text("Dorm Occupancy Rates"),
           ),
           ListTile(
             onTap: (){
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const UserProfileNotifications()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormOccupancyRates()));
             },
-            title: const Text("User Profile Notifications"),
+            title: const Text("Dorm Occupancy Rates"),
           ),
+          ListTile(
+            onTap: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormOccupancyRates()));
+            },
+            title: const Text("Dorm Occupancy Rates"),
+          ),
+          ListTile(
+            onTap: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormOccupancyRates()));
+            },
+            title: const Text("Dorm Occupancy Rates"),
+          ),
+
         ],
       ),
     );
