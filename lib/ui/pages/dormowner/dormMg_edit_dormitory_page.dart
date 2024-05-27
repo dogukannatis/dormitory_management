@@ -76,7 +76,7 @@ class _DormMGEditDormState extends ConsumerState<DormMGEditDorm> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SizedBox(
-          width: MediaQuery.of(context).size.height,
+          //width: MediaQuery.of(context).size.height,
           child: Card(
             elevation: 5,
             shape: RoundedRectangleBorder(
