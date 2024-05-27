@@ -1,11 +1,12 @@
 import 'package:dormitory_management/models/users/dormitory_owner.dart';
 import 'package:dormitory_management/models/users/student.dart';
-import 'package:dormitory_management/ui/pages/dorm_occupancy_rates_page.dart';
-import 'package:dormitory_management/ui/pages/edit_profile_page.dart';
-import 'package:dormitory_management/ui/pages/user_profile_dormitory.dart';
-import 'package:dormitory_management/ui/pages/user_booking_history_page.dart';
-import 'package:dormitory_management/ui/pages/user_profile_notifications_page.dart';
-import 'package:dormitory_management/ui/pages/user_profile_chat_page.dart';
+import 'package:dormitory_management/ui/pages/dormowner/dormMg_occupancy_rates_page.dart';
+import 'package:dormitory_management/ui/pages/student/user_edit_profile_page.dart';
+import 'package:dormitory_management/ui/pages/student/user_profile_dormitory.dart';
+import 'package:dormitory_management/ui/pages/student/user_booking_history_page.dart';
+import 'package:dormitory_management/ui/pages/student/user_profile_notifications_page.dart';
+import 'package:dormitory_management/ui/pages/student/user_profile_chat_page.dart';
+import 'package:dormitory_management/ui/pages/dormowner/dormMg_set_dateRange_page.dart';
 import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -76,9 +77,9 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
           ),
           ListTile(
             onTap: (){
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormOccupancyRates()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGSetDateRange()));
             },
-            title: const Text("Dorm Occupancy Rates"),
+            title: const Text("Set Date Range"),
           ),
           ListTile(
             onTap: (){

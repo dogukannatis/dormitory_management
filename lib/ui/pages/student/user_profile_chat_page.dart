@@ -12,9 +12,14 @@ class UserProfileChats extends StatefulWidget {
 
 class _UserProfileChatsState extends State<UserProfileChats> {
   List<String> users = ['User A', 'User B', 'User C'];
-  Message? _selectedMessage;
+  String? _selectedUser;
+  List<Message> messages = [
+    Message(id: '1', senderID: '1', receiverID: '2', content: 'Hello User A!', createdAt: DateTime.now().subtract(Duration(minutes: 5))),
+    Message(id: '2', senderID: '2', receiverID: '1', content: 'Hi! How are you?', createdAt: DateTime.now().subtract(Duration(minutes: 3))),
+    Message(id: '3', senderID: '1', receiverID: '2', content: 'I\'m good, thanks! How about you?', createdAt: DateTime.now().subtract(Duration(minutes: 1))),
+  ];
+
   final TextEditingController _messageController = TextEditingController();
-  List<Message> messages = [];
 
   @override
   Widget build(BuildContext context) {
@@ -43,20 +48,16 @@ class _UserProfileChatsState extends State<UserProfileChats> {
                       ),
                       SizedBox(height: 16),
                       Expanded(
-                        child: ListView.builder(
+                        child: ListView.separated(
                           itemCount: users.length,
+                          separatorBuilder: (context, index) => Divider(),
                           itemBuilder: (context, index) {
                             final user = users[index];
-                            return Column(
-                              children: [
-                                ListTile(
-                                  title: Text(user),
-                                  onTap: () {
-                                    _startChatWithUser(context, user);
-                                  },
-                                ),
-                                Divider(),
-                              ],
+                            return ListTile(
+                              title: Text(user),
+                              onTap: () {
+                                _startChatWithUser(user);
+                              },
                             );
                           },
                         ),
@@ -72,7 +73,9 @@ class _UserProfileChatsState extends State<UserProfileChats> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
-                    child: _selectedMessage != null ? ChatScreen(message: _selectedMessage!) : Container(),
+                    child: _selectedUser != null
+                        ? ChatScreen(user: _selectedUser!, messages: messages)
+                        : Center(child: Text('Select a user to start chatting')),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -86,9 +89,7 @@ class _UserProfileChatsState extends State<UserProfileChats> {
                         ),
                         IconButton(
                           icon: Icon(Icons.send),
-                          onPressed: () {
-                            _sendMessage();
-                          },
+                          onPressed: _sendMessage,
                         ),
                       ],
                     ),
@@ -108,55 +109,49 @@ class _UserProfileChatsState extends State<UserProfileChats> {
     ));
   }
 
-  void _startChatWithUser(BuildContext context, String user) {
+  void _startChatWithUser(String user) {
     setState(() {
-      _selectedMessage = Message(
-        id: '1',
-        senderID: '1',
-        receiverID: '2',
-        content: 'Hi $user, how are you?',
-        createdAt: DateTime.now(),
-      );
+      _selectedUser = user;
     });
   }
 
   void _sendMessage() {
-    setState(() {
-      final newMessage = Message(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        senderID: '1',
-        receiverID: '2',
-        content: _messageController.text,
-        createdAt: DateTime.now(),
-      );
-      messages.add(newMessage);
-      _messageController.clear();
-    });
+    if (_messageController.text.isNotEmpty && _selectedUser != null) {
+      setState(() {
+        final newMessage = Message(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          senderID: '1',
+          receiverID: '2',
+          content: _messageController.text,
+          createdAt: DateTime.now(),
+        );
+        messages.add(newMessage);
+        _messageController.clear();
+      });
+    }
   }
 }
 
 class ChatScreen extends StatelessWidget {
-  final Message message;
+  final String user;
+  final List<Message> messages;
 
-  const ChatScreen({Key? key, required this.message}) : super(key: key);
+  const ChatScreen({Key? key, required this.user, required this.messages}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 1,
+    return ListView.separated(
+      itemCount: messages.length,
+      separatorBuilder: (context, index) => Divider(),
       itemBuilder: (context, index) {
-        return Column(
-          children: [
-            ListTile(
-              title: Text(
-                message.senderID == '1' ? 'You' : 'Other User',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text(message.content),
-              trailing: Text(_formatDateTime(message.createdAt!)),
-            ),
-            Divider(),
-          ],
+        final message = messages[index];
+        return ListTile(
+          title: Text(
+            message.senderID == '1' ? 'You' : 'Other User',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          subtitle: Text(message.content),
+          trailing: Text(_formatDateTime(message.createdAt!)),
         );
       },
     );
