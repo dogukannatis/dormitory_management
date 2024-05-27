@@ -1,4 +1,5 @@
 import 'package:dormitory_management/models/users/student.dart';
+import 'package:dormitory_management/ui/pages/signin_page.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,8 @@ class _SignupPageState extends ConsumerState<SignupPage> {
       emailController.clear();
       passwordController.clear();
     });
+
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignInPage()));
   }
 
 
@@ -120,13 +123,13 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                                 dob: DateTime.now(),
                                 createdAt: DateTime.now(),
                                 updatedAt: DateTime.now(),
-                                department: "it", // eklenecek
-                                gender: "erkek", // eklenecek
+                                department: "", // eklenecek
+                                gender: "", // eklenecek
                                 profileUrl: "null",
                                 isEmailVerified: false,
-                                emergencyContactNo: "123", // eklenecek
-                                address: "kıbrıs", // eklenecek
-                                studentNumber: "123", // eklenecek
+                                emergencyContactNo: "", // eklenecek
+                                address: "", // eklenecek
+                                studentNumber: "", // eklenecek
                                 userType: "student",
                               );
                               register(student: student);

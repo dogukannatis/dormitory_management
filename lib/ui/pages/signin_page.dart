@@ -1,5 +1,6 @@
 
 
+import 'package:dormitory_management/ui/pages/home_page.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
     final userManager = ref.read(userManagerProvider.notifier);
     try{
       await userManager.login(email: email, password: password);
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
     }catch(e,str){
       debugPrint("HATA: $e $str");
     }

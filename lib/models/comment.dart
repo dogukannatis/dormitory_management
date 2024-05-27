@@ -1,4 +1,5 @@
 
+import 'package:dormitory_management/models/users/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'comment.g.dart';
@@ -12,6 +13,7 @@ class Comment {
   String? commentContent;
   DateTime? createdAt;
   DateTime? updatedAt;
+  User? user;
 
   Comment({
     required this.commentId,
