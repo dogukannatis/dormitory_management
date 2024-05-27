@@ -24,6 +24,7 @@ DormitoryOwner _$DormitoryOwnerFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['updatedAt'] as String),
       address: json['address'] as String?,
       password: json['password'] as String?,
+      userType: json['userType'] as String?,
       dormitoryId: json['dormitoryId'] as int?,
     );
 
@@ -40,6 +41,7 @@ Map<String, dynamic> _$DormitoryOwnerToJson(DormitoryOwner instance) {
     'address': instance.address,
     'phoneNo': instance.phoneNo,
     'password': instance.password,
+    'userType': instance.userType,
   };
 
   void writeNotNull(String key, dynamic value) {

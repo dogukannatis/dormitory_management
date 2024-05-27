@@ -1,20 +1,48 @@
+import 'package:dormitory_management/models/booking.dart';
 import 'package:dormitory_management/models/dormitory_details.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
+import 'package:dormitory_management/viewmodels/booking_manager.dart';
+import 'package:dormitory_management/viewmodels/dorm_manager.dart';
+import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DormitoryDetailsPage extends StatefulWidget {
-  const DormitoryDetailsPage({Key? key, required this.details}) : super(key: key);
+import '../../models/dormitory.dart';
 
-  final DormitoryDetails details;
+class DormitoryDetailsPage extends ConsumerStatefulWidget {
+  const DormitoryDetailsPage({Key? key, required this.dormitory}) : super(key: key);
+
+  final Dormitory dormitory;
 
   @override
-  State<DormitoryDetailsPage> createState() => _DormitoryDetailsPageState();
+  ConsumerState createState() => _DormitoryDetailsPageState();
 }
 
-class _DormitoryDetailsPageState extends State<DormitoryDetailsPage> {
+class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
+
+  Future<void> book() async {
+    final bookingManager = ref.read(bookingManagerProvider.notifier);
+    final user = ref.watch(userManagerProvider);
+    Booking booking = Booking(
+        bookingId: null,
+        userId: user!.userId,
+        dormitoryId: widget.dormitory.dormitoryId,
+        status: "pending",
+        roomId: 0 //TODO: check
+    );
+    await bookingManager.saveDormitory(booking: booking);
+  }
+
+  Future<void> getComments() async {
+    final dormManager = ref.read(dormManagerProvider.notifier);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(userManagerProvider);
+
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: getCustomAppBar(context),
@@ -58,28 +86,28 @@ class _DormitoryDetailsPageState extends State<DormitoryDetailsPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Universe Dormitory',
-                              style: TextStyle(
+                              widget.dormitory.name!,
+                              style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
-                                'About',
+                                "Description",
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.grey,
                                 ),
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Text(
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                              widget.dormitory.dormitoryDetails!.description!,
                               textAlign: TextAlign.justify,
                             ),
-                            Padding(
+                            const Padding(
                               padding: const EdgeInsets.symmetric(vertical: 8.0),
                               child: Text(
                                 'Features',
@@ -89,49 +117,13 @@ class _DormitoryDetailsPageState extends State<DormitoryDetailsPage> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 16),
-                            Wrap(
-                              spacing: 8,
-                              runSpacing: 4,
-                              children: [
-                                Chip(
-                                  label: Text('Clean Service'),
-                                  backgroundColor: Colors.green[100],
-                                ),
-                                Chip(
-                                  label: Text('TV'),
-                                  backgroundColor: Colors.green[100],
-                                ),
-                                Chip(
-                                  label: Text('AC'),
-                                  backgroundColor: Colors.green[100],
-                                ),
-                                Chip(
-                                  label: Text('Shower'),
-                                  backgroundColor: Colors.green[100],
-                                ),
-                                Chip(
-                                  label: Text('Internet'),
-                                  backgroundColor: Colors.green[100],
-                                ),
-                                Chip(
-                                  label: Text('Kitchen'),
-                                  backgroundColor: Colors.red[100],
-                                ),
-                                Chip(
-                                  label: Text('Balcony'),
-                                  backgroundColor: Colors.red[100],
-                                ),
-                                Chip(
-                                  label: Text('Microwave'),
-                                  backgroundColor: Colors.green[100],
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
+                            getFeatures(),
+                            const SizedBox(height: 16),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                /*
                                 Row(
                                   children: [
                                     Text(
@@ -141,9 +133,10 @@ class _DormitoryDetailsPageState extends State<DormitoryDetailsPage> {
                                   ],
                                 ),
                                 SizedBox(height: 8),
+                                 */
                                 ElevatedButton(
-                                  onPressed: () {},
-                                  child: Text('Book Now'),
+                                  onPressed: user == null ? null : () => book(),
+                                  child: const Text('Book Now'),
                                 ),
                               ],
                             ),
@@ -154,7 +147,8 @@ class _DormitoryDetailsPageState extends State<DormitoryDetailsPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
+              user != null ?
               Card(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -192,13 +186,56 @@ class _DormitoryDetailsPageState extends State<DormitoryDetailsPage> {
                     ],
                   ),
                 ),
-              ),
+              ) : Container(),
             ],
           ),
         ),
       ),
     );
   }
+
+  Wrap getFeatures() {
+    return Wrap(
+      spacing: 8,
+      runSpacing: 4,
+      children: [
+        Chip(
+          label: Text('Clean Service'),
+          backgroundColor: widget.dormitory.dormitoryDetails!.hasCleanService == true ? Colors.green[100] : Colors.red[100],
+        ),
+        Chip(
+          label: Text('TV'),
+          backgroundColor: widget.dormitory.dormitoryDetails!.hasTV == true ? Colors.green[100] : Colors.red[100],
+        ),
+        Chip(
+          label: Text('AC'),
+          backgroundColor: widget.dormitory.dormitoryDetails!.hasAirConditioning == true ? Colors.green[100] : Colors.red[100],
+        ),
+        Chip(
+          label: Text('Shower'),
+          backgroundColor: widget.dormitory.dormitoryDetails!.hasShowerAndToilet == true ? Colors.green[100] : Colors.red[100],
+        ),
+        Chip(
+          label: Text('Internet'),
+          backgroundColor: widget.dormitory.dormitoryDetails!.internetSpeed == true ? Colors.green[100] : Colors.red[100],
+        ),
+        Chip(
+          label: Text('Kitchen'),
+          backgroundColor: widget.dormitory.dormitoryDetails!.hasKitchen == true ? Colors.green[100] : Colors.red[100],
+        ),
+        Chip(
+          label: Text('Balcony'),
+          backgroundColor: widget.dormitory.dormitoryDetails!.hasBalcony == true ? Colors.green[100] : Colors.red[100],
+        ),
+        Chip(
+          label: Text('Microwave'),
+          backgroundColor: widget.dormitory.dormitoryDetails!.hasMicrowave == true ? Colors.green[100] : Colors.red[100],
+        ),
+      ],
+    );
+  }
+
+
 }
 
 class CommentWidget extends StatelessWidget {

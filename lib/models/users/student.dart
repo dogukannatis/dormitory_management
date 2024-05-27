@@ -29,6 +29,7 @@ class Student extends User {
     DateTime? updatedAt,
     String? address,
     String? password,
+    String? userType,
     this.studentNumber,
     this.department,
     this.gender,
@@ -45,6 +46,7 @@ class Student extends User {
     dob: dob,
     address: address,
     isEmailVerified: isEmailVerified,
+      userType: userType,
     password: password
   );
 

@@ -24,6 +24,7 @@ class Admin extends User {
     DateTime? updatedAt,
     String? address,
     String? password,
+    String? userType,
   }) : super(
     userId: userId,
     password: password,
@@ -36,6 +37,7 @@ class Admin extends User {
     phoneNo: phoneNo,
     dob: dob,
     address: address,
+    userType: userType,
     isEmailVerified: isEmailVerified,
   );
 

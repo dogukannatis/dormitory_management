@@ -23,6 +23,7 @@ Student _$StudentFromJson(Map<String, dynamic> json) => Student(
           : DateTime.parse(json['updatedAt'] as String),
       address: json['address'] as String?,
       password: json['password'] as String?,
+      userType: json['userType'] as String?,
       studentNumber: json['studentNumber'] as String?,
       department: json['department'] as String?,
       gender: json['gender'] as String?,
@@ -42,6 +43,7 @@ Map<String, dynamic> _$StudentToJson(Student instance) {
     'address': instance.address,
     'phoneNo': instance.phoneNo,
     'password': instance.password,
+    'userType': instance.userType,
   };
 
   void writeNotNull(String key, dynamic value) {

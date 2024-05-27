@@ -1,5 +1,7 @@
+import 'package:dormitory_management/models/rating.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import 'comment.dart';
 import 'dormitory_details.dart';
 
 part 'dormitory.g.dart';
@@ -14,6 +16,8 @@ class Dormitory {
   DateTime? createdAt;
   DateTime? updatedAt;
   DormitoryDetails? dormitoryDetails;
+  Rating? rating;
+  List<Comment?>? comments;
 
   Dormitory({
     required this.dormitoryId,

@@ -6,19 +6,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
-class SigninPage extends ConsumerStatefulWidget {
-  const SigninPage({Key? key}) : super(key: key);
+class SignInPage extends ConsumerStatefulWidget {
+  const SignInPage({Key? key}) : super(key: key);
 
   @override
-  ConsumerState createState() => _SigninPageState();
+  ConsumerState createState() => _SignInPageState();
 }
 
-class _SigninPageState extends ConsumerState<SigninPage> {
+class _SignInPageState extends ConsumerState<SignInPage> {
+  final _formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
 
   Future<void> login(String email, String password) async {
     final userManager = ref.read(userManagerProvider.notifier);
-    await userManager.login(email: email, password: password);
+    try{
+      await userManager.login(email: email, password: password);
+    }catch(e,str){
+      debugPrint("HATA: $e $str");
+    }
   }
 
 
@@ -29,7 +36,7 @@ class _SigninPageState extends ConsumerState<SigninPage> {
     final user = ref.watch(userManagerProvider);
 
     return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF5F5F5),
       appBar: getCustomAppBar(context),
       body: SafeArea(
         child: Row(
@@ -54,12 +61,12 @@ class _SigninPageState extends ConsumerState<SigninPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "Welcome back!",
                         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10),
-                      Text(
+                      const Text(
                         "Please enter your details.",
                         style: TextStyle(fontSize: 16, color: Colors.grey),
                       ),
@@ -71,25 +78,30 @@ class _SigninPageState extends ConsumerState<SigninPage> {
                         children: [
                           TextButton(
                             onPressed: () {},
-                            child: Text(
+                            child: const Text(
                               "Forgot Password",
                               style: TextStyle(fontSize: 14, color: Colors.black), // Change color to black
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Container(
                         width: 350,
                         height: 50,
-                        margin: EdgeInsets.symmetric(horizontal: 30),
+                        margin: const EdgeInsets.symmetric(horizontal: 30),
                         decoration: BoxDecoration(
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: TextButton(
-                          onPressed: () {},
-                          child: Text(
+                          onPressed: () {
+                            _formKey.currentState!.save();
+                            if(_formKey.currentState!.validate()){
+                              login(emailController.text.trim(), passwordController.text.trim());
+                            }
+                          },
+                          child: const Text(
                             "Log in",
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
@@ -124,57 +136,79 @@ class _SigninPageState extends ConsumerState<SigninPage> {
     );
   }
 
+
+
   Widget buildLoginFormContent() {
-    return Column(
-      children: [
-        Container(
-          height: 50,
-          width: 350,
-          margin: EdgeInsets.symmetric(vertical: 5),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 4,
-                offset: Offset(0, 2),
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          Container(
+            height: 50,
+            width: 350,
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: TextFormField(
+              controller: emailController,
+              validator: (v){
+                if(v!.isEmpty){
+                  return "Email is required";
+                }else{
+                  return null;
+                }
+              },
+              decoration: const InputDecoration(
+                hintText: "Email",
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.symmetric(horizontal: 16),
               ),
-            ],
-          ),
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: "Email",
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
             ),
           ),
-        ),
-        Container(
-          height: 50,
-          width: 350,
-          margin: EdgeInsets.symmetric(vertical: 5),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 4,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextField(
-            obscureText: true,
-            decoration: InputDecoration(
-              hintText: "Password",
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
+          Container(
+            height: 50,
+            width: 350,
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
+            child: TextFormField(
+              controller: passwordController,
+              obscureText: true,
+              validator: (v){
+                if(v!.isEmpty){
+                  return "Password is required";
+                }else{
+                  return null;
+                }
+              },
+              decoration: const InputDecoration(
+                hintText: "Password",
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.symmetric(horizontal: 16),
+              ),
+            ),
+
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

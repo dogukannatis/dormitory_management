@@ -95,7 +95,7 @@ class CommentApi extends Api{
 
   /// Update comment with [comment] object.
   /// Works properly
-  Future<bool?> updateBooking({required Comment comment}) async {
+  Future<bool?> updateComment({required Comment comment}) async {
   
     try{
       

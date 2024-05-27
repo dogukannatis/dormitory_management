@@ -15,17 +15,36 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
   bool _acceptTerms = false;
 
+  final _formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final surnameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   Future<void> register({required Student student}) async {
     final userManager = ref.read(userManagerProvider.notifier);
     await userManager.saveStudent(user: student);
+    const snackBar = SnackBar(
+      content: Text('Account has been created!'),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    setState(() {
+      nameController.clear();
+      surnameController.clear();
+      phoneController.clear();
+      emailController.clear();
+      passwordController.clear();
+    });
   }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF5F5F5),
       appBar: getCustomAppBar(context),
       body: SafeArea(
         child: Row(
@@ -72,30 +91,55 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                               });
                             },
                           ),
-                          Text(
+                          const Text(
                             "I accept the Terms & Conditions",
                             style: TextStyle(fontSize: 14, color: Colors.black),
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Container(
                         width: 350,
                         height: 50,
-                        margin: EdgeInsets.symmetric(horizontal: 30),
+                        margin: const EdgeInsets.symmetric(horizontal: 30),
                         decoration: BoxDecoration(
                           color: Colors.black,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: TextButton(
-                          onPressed: () {},
-                          child: Text(
+                          onPressed: _acceptTerms == true ? () {
+                            _formKey.currentState!.save();
+                            if(_formKey.currentState!.validate()){
+                              Student student = Student(
+                                userId: null,
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim(),
+                                name: nameController.text.trim(),
+                                surName: surnameController.text.trim(),
+                                phoneNo: phoneController.text.trim(),
+                                dob: DateTime.now(),
+                                createdAt: DateTime.now(),
+                                updatedAt: DateTime.now(),
+                                department: "it", // eklenecek
+                                gender: "erkek", // eklenecek
+                                profileUrl: "null",
+                                isEmailVerified: false,
+                                emergencyContactNo: "123", // eklenecek
+                                address: "kıbrıs", // eklenecek
+                                studentNumber: "123", // eklenecek
+                                userType: "student",
+                              );
+                              register(student: student);
+                            }
+
+                          } : null,
+                          child: const Text(
                             "Sign up",
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -125,125 +169,133 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   }
 
   Widget buildSignupFormContent() {
-    return Column(
-      children: [
-        Container(
-          height: 50,
-          width: 350,
-          margin: EdgeInsets.symmetric(vertical: 5),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 4,
-                offset: Offset(0, 2),
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          Container(
+            height: 50,
+            width: 350,
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: TextField(
+              controller: nameController,
+              decoration: const InputDecoration(
+                hintText: "Name",
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.symmetric(horizontal: 16),
               ),
-            ],
-          ),
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: "Name",
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
             ),
           ),
-        ),
-        Container(
-          height: 50,
-          width: 350,
-          margin: EdgeInsets.symmetric(vertical: 5),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 4,
-                offset: Offset(0, 2),
+          Container(
+            height: 50,
+            width: 350,
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: TextField(
+              controller: surnameController,
+              decoration: const InputDecoration(
+                hintText: "Surname",
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.symmetric(horizontal: 16),
               ),
-            ],
-          ),
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: "Surname",
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
             ),
           ),
-        ),
-        Container(
-          height: 50,
-          width: 350,
-          margin: EdgeInsets.symmetric(vertical: 5),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 4,
-                offset: Offset(0, 2),
+          Container(
+            height: 50,
+            width: 350,
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: TextField(
+              controller: phoneController,
+              decoration: const InputDecoration(
+                hintText: "Phone Number",
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.symmetric(horizontal: 16),
               ),
-            ],
-          ),
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: "Phone Number",
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
             ),
           ),
-        ),
-        Container(
-          height: 50,
-          width: 350,
-          margin: EdgeInsets.symmetric(vertical: 5),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 4,
-                offset: Offset(0, 2),
+          Container(
+            height: 50,
+            width: 350,
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: TextField(
+              controller: emailController,
+              decoration: const InputDecoration(
+                hintText: "Email",
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.symmetric(horizontal: 16),
               ),
-            ],
-          ),
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: "Email",
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
             ),
           ),
-        ),
-        Container(
-          height: 50,
-          width: 350,
-          margin: EdgeInsets.symmetric(vertical: 5),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 4,
-                offset: Offset(0, 2),
+          Container(
+            height: 50,
+            width: 350,
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: TextField(
+              controller: passwordController,
+              obscureText: true,
+              decoration: const InputDecoration(
+                hintText: "Password",
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.symmetric(horizontal: 16),
               ),
-            ],
-          ),
-          child: TextField(
-            obscureText: true,
-            decoration: InputDecoration(
-              hintText: "Password",
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 16),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

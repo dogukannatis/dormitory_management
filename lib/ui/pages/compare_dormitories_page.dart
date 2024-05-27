@@ -1,18 +1,11 @@
 import 'package:dormitory_management/models/dormitory.dart';
+import 'package:dormitory_management/ui/pages/dormitory_details_page.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
 import 'package:dormitory_management/viewmodels/dorm_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DormitorySilinecek {
-  final String name;
-  final List<String> features;
-  final int price;
-  final int rating;
-
-  DormitorySilinecek(this.name, this.features, this.price, this.rating);
-}
 
 /// Sayfalar State yönetimi riverpod ile yapıldığından dolayı ConsumerStatefulWidget olarak yapılandırılmalı.
 class CompareDormitoriesPage extends ConsumerStatefulWidget {
@@ -36,22 +29,6 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
 
   Set<String> selectedFilters = Set();
 
-  List<DormitorySilinecek> dormitoriesMock = [
-    DormitorySilinecek('Dormitory 1', ['Clean Service', 'TV', 'AC', 'Shower'], 150000, 4),
-    DormitorySilinecek('Dormitory 2', ['Internet', 'Kitchen', 'Balcony'], 200000, 3),
-    DormitorySilinecek('Dormitory 3', ['Clean Service', 'TV', 'Internet', 'Microwave'], 250000, 5),
-    DormitorySilinecek('Dormitory 4', ['AC', 'Shower', 'Balcony'], 180000, 2),
-    DormitorySilinecek('Dormitory 5', ['TV', 'AC', 'Internet'], 300000, 4),
-  ];
-
-  bool dormitoryMatchesFilters(DormitorySilinecek dormitory) {
-    for (var filter in selectedFilters) {
-      if (!dormitory.features.contains(filter)) {
-        return false;
-      }
-    }
-    return true;
-  }
 
   RangeValues _currentPriceRangeValues = RangeValues(100000, 500000);
   RangeValues _currentRatingRangeValues = RangeValues(1, 5);
@@ -80,6 +57,200 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
   }
 
 
+  @override
+  Widget build(BuildContext context) {
+    ref.watch(dormManagerProvider); // State otomatik yenilenecek
+
+    return Scaffold(
+      backgroundColor: const Color(0xFFF5F5F5),
+      appBar: getCustomAppBar(context),
+      drawer: const CustomDrawer(),
+      body: isLoading ? const Center(child: CircularProgressIndicator(),) : Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 2,
+              child: ListView(
+                children: dormitories.map((dormitory) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Card(
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15.0),
+                                  bottomLeft: Radius.circular(15.0),
+                                ),
+                                child: Image.asset(
+                                  'assets/images/home_img1.png',
+                                  fit: BoxFit.contain,
+                                  height: 300,
+                                  width: 450,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 25.0),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    dormitory.name!,
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    'Rating: ${dormitory.rating?.ratingNo.toString()} stars',
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => DormitoryDetailsPage(dormitory: dormitory)));
+
+                                    },
+                                    child: const Text('Show More'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+            SizedBox(width: 20.0),
+            Expanded(
+              flex: 1,
+              child: SingleChildScrollView(
+                child: Card(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 10),
+                        const Text(
+                          'Filters',
+                          style: TextStyle(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        const Text(
+                          'Features',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 4,
+                          children: [
+                            for (var filter in filters)
+                              FilterChip(
+                                label: Text(filter),
+                                selected: selectedFilters.contains(filter),
+                                onSelected: (bool selected) {
+                                  setState(() {
+                                    if (selected) {
+                                      selectedFilters.add(filter);
+                                    } else {
+                                      selectedFilters.remove(filter);
+                                    }
+                                  });
+                                },
+                                selectedColor: Colors.green,
+                                checkmarkColor: Colors.white,
+                                backgroundColor:
+                                selectedFilters.contains(filter) ? Colors.green : Colors.red,
+                              ),
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          'Price Range: ${_currentPriceRangeValues.start.toInt()} TL - ${_currentPriceRangeValues.end.toInt()} TL',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        RangeSlider(
+                          values: _currentPriceRangeValues,
+                          min: 100000,
+                          max: 500000,
+                          divisions: 40,
+                          onChanged: (RangeValues values) {
+                            setState(() {
+                              _currentPriceRangeValues = values;
+                            });
+                          },
+                          activeColor: Colors.black,
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          'Rating Range: ${_currentRatingRangeValues.start.toInt()} stars - ${_currentRatingRangeValues.end.toInt()} stars',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        RangeSlider(
+                          values: _currentRatingRangeValues,
+                          min: 1,
+                          max: 5,
+                          divisions: 4,
+                          onChanged: (RangeValues values) {
+                            setState(() {
+                              _currentRatingRangeValues = values;
+                            });
+                          },
+                          activeColor: Colors.black,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  /*
   @override
   Widget build(BuildContext context) {
     ref.watch(dormManagerProvider); // State otomatik yenilenecek
@@ -296,6 +467,7 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
       ),
     );
   }
+   */
 }
 
 void main() {

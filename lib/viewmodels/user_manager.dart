@@ -20,6 +20,11 @@ class UserManager extends StateNotifier<User?> {
 
   Future<User?> login({required String email, required String password}) async {
 
+
+    User? user = await _repository.login(email: email, password: password);
+    state = user;
+    return state;
+    /*
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String? _email = prefs.getString('email');
@@ -28,8 +33,10 @@ class UserManager extends StateNotifier<User?> {
     if(_email != null && _password != null && (_email == email && _password == password)) {
       return state = await _repository.login(email: email, password: password);
     }else{
-      return state = null;
+      return state = await _repository.login(email: email, password: password);
     }
+     */
+
     
     
   }
@@ -40,6 +47,10 @@ class UserManager extends StateNotifier<User?> {
 
   Future<void> updateStudent({required Student user}) async {
     await _repository.updateStudent(user: user);
+  }
+
+  void signOut(){
+    state = null;
   }
 
 

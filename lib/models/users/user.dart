@@ -15,6 +15,7 @@ abstract class User {
   final String? address;
   final String? phoneNo;
   final String? password;
+  final String? userType;
 
   User({
     required this.userId,
@@ -28,7 +29,8 @@ abstract class User {
     this.updatedAt,
     this.address,
     this.phoneNo,
-    this.password
+    this.password,
+    this.userType
   });
 
 

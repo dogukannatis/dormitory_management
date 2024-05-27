@@ -1,20 +1,28 @@
 import 'package:dormitory_management/locator.dart';
+import 'package:dormitory_management/models/booking.dart';
 import 'package:dormitory_management/models/dormitory.dart';
 import 'package:dormitory_management/models/dormitory_details.dart';
 import 'package:dormitory_management/models/users/student.dart';
 import 'package:dormitory_management/models/users/user.dart';
+import 'package:dormitory_management/services/comment_api.dart';
 import 'package:dormitory_management/services/dormitory_api.dart';
 import 'package:dormitory_management/services/dormitory_details.dart';
 import 'package:dormitory_management/services/login_api.dart';
+import 'package:dormitory_management/services/rating_api.dart';
 
 import 'package:dormitory_management/services/student_api.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../services/booking_api.dart';
 
 
 class Repository {
   final _studentApi = locator<StudentApi>();
   final _dormitoryApi = locator<DormitoryApi>();
   final _dormitoryDetailsApi = locator<DormitoryDetailsApi>();
+  final _ratingApi = locator<RatingApi>();
+  final _bookingApi = locator<BookingApi>();
+  final _commentApi = locator<CommentApi>();
   final _loginApi = locator<LoginApi>();
 
   Future<void> saveStudent({required Student user}) async {
@@ -30,6 +38,8 @@ class Repository {
     dorms = await _dormitoryApi.getAllDormitories();
     for(Dormitory dorm in dorms){
       dorm.dormitoryDetails = await _dormitoryDetailsApi.getDormitoryDetailsByDormitoryID(dormitoryId: dorm.dormitoryId!);
+     // dorm.comments = await _commentApi.g(dormitoryId: dorm.dormitoryId!);
+     // dorm.rating = await _ratingApi.(dormitoryId: dorm.dormitoryId!);
       debugPrint("details ${dorm.dormitoryDetails}");
     }
     return dorms;
@@ -53,6 +63,26 @@ class Repository {
 
   Future<User?> login({required String email, required String password}) async {
     return await _loginApi.login(email: email, password: password);
+  }
+
+  Future<void> saveBooking({required Booking booking}) async {
+    await _bookingApi.saveBooking(booking: booking);
+  }
+
+  Future<void> updateBooking({required Booking booking}) async {
+    await _bookingApi.updateBooking(booking: booking);
+  }
+
+  Future<List<Booking>> getAllBookings() async {
+    return await _bookingApi.getAllBookings();
+  }
+
+  Future<Booking?> getBookingByID({required int bookingId}) async {
+    return await _bookingApi.getBookingByID(id: bookingId);
+  }
+
+  Future<List<Booking>> getBookingHistoryByStudentId({required int userId}) async {
+    return await _bookingApi.getBookingHistoryByStudentId(userId: userId);
   }
 
 }

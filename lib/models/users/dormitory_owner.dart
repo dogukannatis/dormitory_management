@@ -26,6 +26,7 @@ class DormitoryOwner extends User {
     DateTime? updatedAt,
     String? address,
     String? password,
+    String? userType,
     this.dormitoryId
   }) : super(
     userId: userId,
@@ -39,6 +40,7 @@ class DormitoryOwner extends User {
     phoneNo: phoneNo,
     dob: dob,
     address: address,
+    userType: userType,
     isEmailVerified: isEmailVerified,
   );
 

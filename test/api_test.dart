@@ -18,6 +18,7 @@ import 'package:dormitory_management/services/dormitory_owner_api.dart';
 import 'package:dormitory_management/services/notification_api.dart';
 import 'package:dormitory_management/services/rating_api.dart';
 import 'package:dormitory_management/services/student_api.dart';
+import 'package:dormitory_management/services/login_api.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -39,6 +40,8 @@ void main() {
   final notificationApi = NotificationApi();
 
   final ratingApi = RatingApi();
+
+  final loginApi = LoginApi();
 
   Student testUser = Student(
       userId: 7,
@@ -262,7 +265,7 @@ void main() {
   });
 
   test('updateBooking', () async {
-    expect(await commentApi.updateBooking(comment: testComment), equals(true));
+    expect(await commentApi.updateComment(comment: testComment), equals(true));
   });
 
 
@@ -384,6 +387,11 @@ test('getRatingByID', () async {
 
 
 
+// login test
+
+test('login', () async {
+  expect(await loginApi.login(email: "email", password: "pw"), equals(true));
+});
 
 
 

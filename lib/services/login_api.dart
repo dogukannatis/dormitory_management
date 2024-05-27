@@ -11,7 +11,7 @@ class LoginApi extends Api{
 
 
   Future<User?> login({required String email, required String password}) async {
-    final response = await dio.get("$baseUrl/Login");
+    final response = await dio.get("$baseUrl/Login", queryParameters: {"email" : email, "Password": password}, options: options);
     debugPrint("response: $response");
     var data = response.data;
     switch(data["userType"]){

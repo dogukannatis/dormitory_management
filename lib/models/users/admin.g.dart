@@ -23,6 +23,7 @@ Admin _$AdminFromJson(Map<String, dynamic> json) => Admin(
           : DateTime.parse(json['updatedAt'] as String),
       address: json['address'] as String?,
       password: json['password'] as String?,
+      userType: json['userType'] as String?,
     );
 
 Map<String, dynamic> _$AdminToJson(Admin instance) {
@@ -38,6 +39,7 @@ Map<String, dynamic> _$AdminToJson(Admin instance) {
     'address': instance.address,
     'phoneNo': instance.phoneNo,
     'password': instance.password,
+    'userType': instance.userType,
   };
 
   void writeNotNull(String key, dynamic value) {
