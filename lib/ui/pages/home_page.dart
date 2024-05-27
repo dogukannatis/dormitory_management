@@ -1,6 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
-import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: HomePage(),
+    );
+  }
+}
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,16 +28,25 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Color(0xFFF5F5F5),
       appBar: getCustomAppBar(context),
-      drawer: const CustomDrawer(),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildUpperBlock(),
-            _buildBlockInfo(),
-            _buildLowerBlock(),
-          ],
-        ),
+      body: Row(
+        children: [
+          Container(
+            width: 250, // Drawer genişliği
+            child: CustomDrawer(), // CustomDrawer içeriği
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildUpperBlock(),
+                  _buildBlockInfo(),
+                  _buildLowerBlock(),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

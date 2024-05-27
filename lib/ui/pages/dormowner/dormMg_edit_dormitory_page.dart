@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
@@ -70,288 +71,273 @@ class _DormMGEditDormState extends ConsumerState<DormMGEditDorm> {
     _descriptionController.text = dormitoryDetails.description ?? '';
 
     return Scaffold(
-        appBar: getCustomAppBar(context),
-        drawer: const CustomDrawer(),
-        body: Padding(
+      appBar: getCustomAppBar(context),
+      drawer: const CustomDrawer(),
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
-    child: Card(
-    elevation: 5,
-    shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(12),
-    ),
-    child: Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: Row(
-    children: [
-    Expanded(
-    flex: 2,
-    child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-    Text(
-    'Edit Dormitory',
-    style: TextStyle(
-    fontSize: 24,
-    fontWeight: FontWeight.bold,
-    ),
-    ),
-    SizedBox(height: 16),
-      Row(
-        children: [
-          Expanded(
-            child: TextFormField(
-              controller: _statusController,
-              decoration: InputDecoration(
-                labelText: 'Status',
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.height,
+          child: Card(
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Edit Dormitory',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller: _statusController,
+                                decoration: InputDecoration(
+                                  labelText: 'Status',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            Expanded(
+                              child: TextFormField(
+                                controller: _createdDateController,
+                                decoration: InputDecoration(
+                                  labelText: 'Created Date',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller: _phoneController,
+                                decoration: InputDecoration(
+                                  labelText: 'Phone',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            Expanded(
+                              child: TextFormField(
+                                controller: _faxController,
+                                decoration: InputDecoration(
+                                  labelText: 'Fax',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller: _nameController,
+                                decoration: InputDecoration(
+                                  labelText: 'Name',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            Expanded(
+                              child: TextFormField(
+                                controller: _quotaController,
+                                decoration: InputDecoration(
+                                  labelText: 'Quota',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller: _emailController,
+                                decoration: InputDecoration(
+                                  labelText: 'Email',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            Expanded(
+                              child: TextFormField(
+                                controller: _passwordController,
+                                decoration: InputDecoration(
+                                  labelText: 'Password',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 16),
+                        TextFormField(
+                          controller: _descriptionController,
+                          decoration: InputDecoration(
+                            labelText: 'Description',
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 4,
+                          children: [
+                            for (var feature in dormitoryFeatures)
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    feature.toggleSelection();
+                                  });
+                                },
+                                child: Chip(
+                                  label: Text(feature.name),
+                                  backgroundColor: feature.isSelected ? Colors.green[100] : Colors.red[100],
+                                ),
+                              ),
+                          ],
+                        ),
+                        SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Text('Save'),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.all(10),
+                      child: VerticalDivider(thickness: 1, color: Colors.grey)),
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          'Room Management',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Text('Add Room'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                            padding: EdgeInsets.symmetric(vertical: 16.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        Center(
+                          child: Text(
+                            'or',
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Select Room',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () {},
+                          child: Text('Edit Room'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey,
+                            padding: EdgeInsets.symmetric(vertical: 16.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-          SizedBox(width: 16),
-          Expanded(
-            child: TextFormField(
-              controller: _createdDateController,
-              decoration: InputDecoration(
-                labelText: 'Created Date',
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-      SizedBox(height: 16),
-      Row(
-        children: [
-          Expanded(
-            child: TextFormField(
-              controller: _phoneController,
-              decoration: InputDecoration(
-                labelText: 'Phone',
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(width: 16),
-          Expanded(
-            child: TextFormField(
-              controller: _faxController,
-              decoration: InputDecoration(
-                labelText: 'Fax',
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-      SizedBox(height: 16),
-      Row(
-        children: [
-          Expanded(
-            child: TextFormField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                labelText: 'Name',
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(width: 16),
-          Expanded(
-            child: TextFormField(
-              controller: _quotaController,
-              decoration: InputDecoration(
-                labelText: 'Quota',
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-      SizedBox(height: 16),
-      Row(
-        children: [
-          Expanded(
-            child: TextFormField(
-              controller: _emailController,
-              decoration: InputDecoration(
-                labelText: 'Email',
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(width: 16),
-          Expanded(
-            child: TextFormField(
-              controller: _passwordController,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-      SizedBox(height: 16),
-    TextFormField(
-      controller: _descriptionController,
-      decoration: InputDecoration(
-        labelText: 'Description',
-        filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide.none,
         ),
       ),
-    ),
-      SizedBox(height: 16),
-      Wrap(
-        spacing: 8,
-        runSpacing: 4,
-        children: [
-          Chip(
-            label: Text('Clean Service'),
-            backgroundColor: dormitoryDetails.hasCleanService! ? Colors.green[100] : Colors.red[100],
-          ),
-          Chip(
-            label: Text('Shower'),
-            backgroundColor: dormitoryDetails.hasShowerAndToilet! ? Colors.green[100] : Colors.red[100],
-          ),
-          Chip(
-            label: Text('Balcony'),
-            backgroundColor: dormitoryDetails.hasBalcony! ? Colors.green[100] : Colors.red[100],
-          ),
-          Chip(
-            label: Text('TV'),
-            backgroundColor: dormitoryDetails.hasTV! ? Colors.green[100] : Colors.red[100],
-          ),
-          Chip(
-            label: Text('Internet'),
-            backgroundColor: dormitoryDetails.internetSpeed != null ? Colors.green[100] : Colors.red[100],
-          ),
-          Chip(
-            label: Text('Microwave'),
-            backgroundColor: dormitoryDetails.hasMicrowave! ? Colors.green[100] : Colors.red[100],
-          ),
-          Chip(
-            label: Text('AC'),
-            backgroundColor: dormitoryDetails.hasAirConditioning! ? Colors.green[100] : Colors.red[100],
-          ),
-          Chip(
-            label: Text('Kitchen'),
-            backgroundColor: dormitoryDetails.hasKitchen! ? Colors.green[100] : Colors.red[100],
-          ),
-        ],
-      ),
-      SizedBox(height: 16),
-      ElevatedButton(
-        onPressed: () {},
-        child: Text('Create'),
-      ),
-    ],
-    ),
-    ),
-      VerticalDivider(thickness: 1, color: Colors.grey),
-      Expanded(
-        flex: 1,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Room Management',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {},
-              child: Text('Add Room'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-            ),
-            SizedBox(height: 16),
-            Center(
-              child: Text(
-                'or',
-                style: TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-            ),
-            SizedBox(height: 16),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Select Room',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {},
-              child: Text('Edit Room'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey,
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    ],
-    ),
-    ),
-    ),
-        ),
     );
   }
 
@@ -411,3 +397,25 @@ class DormitoryDetails {
     this.updatedAt,
   });
 }
+
+class DormitoryFeature {
+  final String name;
+  bool isSelected;
+
+  DormitoryFeature(this.name, {this.isSelected = false});
+
+  void toggleSelection() {
+    isSelected = !isSelected;
+  }
+}
+
+final List<DormitoryFeature> dormitoryFeatures = [
+  DormitoryFeature('Clean Service', isSelected: true),
+  DormitoryFeature('Shower'),
+  DormitoryFeature('Balcony', isSelected: true),
+  DormitoryFeature('TV'),
+  DormitoryFeature('Internet'),
+  DormitoryFeature('Microwave'),
+  DormitoryFeature('AC'),
+  DormitoryFeature('Kitchen', isSelected: true),
+];
