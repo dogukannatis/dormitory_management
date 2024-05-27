@@ -162,58 +162,89 @@ AppBar getCustomAppBar(BuildContext context) {
       ),
     ),
     actions: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              InkWell(
-                child: const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Text("Home"),
-                ),
-                onTap: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
-                },
-              ),
-              InkWell(
-                child: const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Text("Compare Dormitories"),
-                ),
-                onTap: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const CompareDormitoriesPage()));
-                },
-              ),
-            ],
-          ),
-          const SizedBox(width: 20,),
-
-          Row(
-            children: [
-              ElevatedButton(
-                onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignInPage()));
-                },
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text("Sign In"),
-                ),
-              ),
-              const SizedBox(width: 10,),
-              ElevatedButton(
-                onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignupPage()));
-                },
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text("Sign Up"),
-                ),
-              )
-            ],
-          )
-        ],
-      ),
+      AppBarActions(),
     ],
   );
+}
+
+
+class AppBarActions extends ConsumerStatefulWidget {
+  const AppBarActions({
+    super.key,
+  });
+
+  @override
+  ConsumerState createState() => _AppBarActionsState();
+}
+
+class _AppBarActionsState extends ConsumerState<AppBarActions> {
+  @override
+  Widget build(BuildContext context) {
+    final user = ref.watch(userManagerProvider);
+    final userManager = ref.read(userManagerProvider.notifier);
+
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            InkWell(
+              child: const Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Text("Home"),
+              ),
+              onTap: (){
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
+              },
+            ),
+            InkWell(
+              child: const Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Text("Compare Dormitories"),
+              ),
+              onTap: (){
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const CompareDormitoriesPage()));
+              },
+            ),
+          ],
+        ),
+        const SizedBox(width: 20,),
+        user == null ?
+        Row(
+          children: [
+            ElevatedButton(
+              onPressed: (){
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignInPage()));
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text("Sign In"),
+              ),
+            ),
+            const SizedBox(width: 10,),
+            ElevatedButton(
+              onPressed: (){
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignupPage()));
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text("Sign Up"),
+              ),
+            )
+          ],
+        ) : ElevatedButton(
+          onPressed: (){
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
+
+            userManager.signOut();
+          },
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("Sign Out"),
+          ),
+        ),
+      ],
+    );
+  }
 }

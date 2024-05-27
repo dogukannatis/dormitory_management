@@ -75,6 +75,31 @@ class CommentApi extends Api{
 
   }
 
+  /// Get all comments from database
+  /// Works properly
+  Future<List<Comment>> getAllCommentByDormitoryId({required int dormitoryId}) async {
+
+    try{
+      final response = await dio.get("$baseUrl/Comment/getAllCommentByDormitoryId", queryParameters: {"dormId" : dormitoryId}, options: options);
+      debugPrint("response: $response");
+      List<Comment> comments = [];
+
+      List? responseData = response.data;
+
+      if(responseData != null && responseData.isNotEmpty){
+        for(int i = 0; i < responseData.length; i++){
+          comments.add(Comment.fromJson(responseData[i]));
+        }
+      }
+
+      return comments;
+    } on DioException catch (e, str) {
+       debugPrint("HATA: $e, $str");
+       return [];
+    }
+
+  }
+
 
 
   /// Delete comment with [commentId]

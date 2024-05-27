@@ -21,6 +21,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
   Widget build(BuildContext context) {
 
     User? user = ref.watch(userManagerProvider);
+    debugPrint("landing user: $user");
 
     if(user is Student){
       return const Scaffold(

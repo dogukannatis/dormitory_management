@@ -148,7 +148,7 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                 ),
               ),
               const SizedBox(height: 50),
-              user != null ?
+
               Card(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -165,28 +165,39 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 50),
-                      CommentWidget(
-                        username: 'Utku Eren Yalçın',
-                        timeAgo: '2 days ago',
-                        comment: 'super dorm',
+                      ListView.builder(
+                        itemCount: widget.dormitory.comments!.length,
+                        itemBuilder: (context, index){
+                          return CommentWidget(
+                          username: 'Utku Eren Yalçın',
+                          timeAgo: '2 days ago',
+                          comment: 'super dorm',
+                          );
+                        },
                       ),
                       SizedBox(height: 50),
-                      TextField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Write a review',
-                        ),
-                        maxLines: 3,
-                      ),
-                      SizedBox(height: 50),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: Text('Submit Review'),
-                      ),
+                      user != null ?
+                          Column(
+                            children: [
+                              const TextField(
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Write a review',
+                                ),
+                                maxLines: 3,
+                              ),
+                              const SizedBox(height: 50),
+                              ElevatedButton(
+                                onPressed: () {},
+                                child: const Text('Submit Review'),
+                              ),
+                            ],
+                          ) : Container(),
+
                     ],
                   ),
                 ),
-              ) : Container(),
+              ),
             ],
           ),
         ),

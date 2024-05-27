@@ -1,5 +1,6 @@
 import 'package:dormitory_management/locator.dart';
 import 'package:dormitory_management/models/booking.dart';
+import 'package:dormitory_management/models/comment.dart';
 import 'package:dormitory_management/models/dormitory.dart';
 import 'package:dormitory_management/models/dormitory_details.dart';
 import 'package:dormitory_management/models/users/student.dart';
@@ -38,7 +39,7 @@ class Repository {
     dorms = await _dormitoryApi.getAllDormitories();
     for(Dormitory dorm in dorms){
       dorm.dormitoryDetails = await _dormitoryDetailsApi.getDormitoryDetailsByDormitoryID(dormitoryId: dorm.dormitoryId!);
-     // dorm.comments = await _commentApi.g(dormitoryId: dorm.dormitoryId!);
+      dorm.comments = await getAllCommentByDormitoryId(dormitoryId: dorm.dormitoryId!);
      // dorm.rating = await _ratingApi.(dormitoryId: dorm.dormitoryId!);
       debugPrint("details ${dorm.dormitoryDetails}");
     }
@@ -83,6 +84,14 @@ class Repository {
 
   Future<List<Booking>> getBookingHistoryByStudentId({required int userId}) async {
     return await _bookingApi.getBookingHistoryByStudentId(userId: userId);
+  }
+
+  Future<List<Comment>> getAllCommentByDormitoryId({required int dormitoryId}) async {
+    List<Comment> comments =  await _commentApi.getAllCommentByDormitoryId(dormitoryId: dormitoryId);
+    for(Comment comment in comments){
+      comment.user = await _studentApi.getStudentByID(id: comment.userId!);
+    }
+    return comments;
   }
 
 }

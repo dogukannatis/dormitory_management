@@ -46,6 +46,7 @@ class UserManager extends StateNotifier<User?> {
   }
 
   Future<void> updateStudent({required Student user}) async {
+    state = user;
     await _repository.updateStudent(user: user);
   }
 
