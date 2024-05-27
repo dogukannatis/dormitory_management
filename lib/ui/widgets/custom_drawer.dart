@@ -7,6 +7,8 @@ import 'package:dormitory_management/ui/pages/student/user_booking_history_page.
 import 'package:dormitory_management/ui/pages/student/user_profile_notifications_page.dart';
 import 'package:dormitory_management/ui/pages/student/user_profile_chat_page.dart';
 import 'package:dormitory_management/ui/pages/dormowner/dormMg_set_dateRange_page.dart';
+import 'package:dormitory_management/ui/pages/dormowner/dormMg_edit_dormitory_page.dart';
+import 'package:dormitory_management/ui/pages/dormowner/dormMg_send_notifications_page.dart';
 import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -83,15 +85,15 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
           ),
           ListTile(
             onTap: (){
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormOccupancyRates()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGEditDorm()));
             },
-            title: const Text("Dorm Occupancy Rates"),
+            title: const Text("DORM MG - Edit Dorm"),
           ),
           ListTile(
             onTap: (){
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormOccupancyRates()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGSendNotifications()));
             },
-            title: const Text("Dorm Occupancy Rates"),
+            title: const Text("DormMG SendNotifications"),
           ),
           ListTile(
             onTap: (){
