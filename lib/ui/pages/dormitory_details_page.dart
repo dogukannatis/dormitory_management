@@ -8,6 +8,7 @@ import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../models/comment.dart';
 import '../../models/dormitory.dart';
 
 class DormitoryDetailsPage extends ConsumerStatefulWidget {
@@ -168,10 +169,11 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                       ListView.builder(
                         itemCount: widget.dormitory.comments!.length,
                         itemBuilder: (context, index){
+                          Comment? comment = widget.dormitory.comments![index];
                           return CommentWidget(
-                          username: 'Utku Eren Yalçın',
+                          username: comment!.user!.name!,
                           timeAgo: '2 days ago',
-                          comment: 'super dorm',
+                          comment: comment.commentContent!,
                           );
                         },
                       ),
