@@ -3,7 +3,7 @@ import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 
 class DormMGSetDateRange extends StatefulWidget {
-  const DormMGSetDateRange({super.key});
+  const DormMGSetDateRange({Key? key}) : super(key: key);
 
   @override
   State<DormMGSetDateRange> createState() => _DormMGSetDateRangeState();
@@ -37,7 +37,7 @@ class _DormMGSetDateRangeState extends State<DormMGSetDateRange> {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
                       Expanded(
@@ -48,32 +48,22 @@ class _DormMGSetDateRangeState extends State<DormMGSetDateRange> {
                               'Min Check-in Date',
                               style: TextStyle(color: Colors.grey),
                             ),
-                            SizedBox(height: 10),
-                            Container(
-                              height: 50,
-                              padding: EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 4,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Approved',
-                                  style: TextStyle(fontSize: 16),
+                            const SizedBox(height: 10),
+                            TextFormField(
+                              initialValue: 'Approved',
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide.none,
                                 ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,25 +72,15 @@ class _DormMGSetDateRangeState extends State<DormMGSetDateRange> {
                               'Max Check-in Date',
                               style: TextStyle(color: Colors.grey),
                             ),
-                            SizedBox(height: 10),
-                            Container(
-                              height: 50,
-                              padding: EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 4,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'September 10, 2023',
-                                  style: TextStyle(fontSize: 16),
+                            const SizedBox(height: 10),
+                            TextFormField(
+                              initialValue: 'September 10, 2023',
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide.none,
                                 ),
                               ),
                             ),
@@ -109,7 +89,7 @@ class _DormMGSetDateRangeState extends State<DormMGSetDateRange> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
                       Expanded(
@@ -120,32 +100,22 @@ class _DormMGSetDateRangeState extends State<DormMGSetDateRange> {
                               'Min Check-out Date',
                               style: TextStyle(color: Colors.grey),
                             ),
-                            SizedBox(height: 10),
-                            Container(
-                              height: 50,
-                              padding: EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 4,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'help@universedorm.com',
-                                  style: TextStyle(fontSize: 16),
+                            const SizedBox(height: 10),
+                            TextFormField(
+                              initialValue: 'help@universedorm.com',
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide.none,
                                 ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,25 +124,15 @@ class _DormMGSetDateRangeState extends State<DormMGSetDateRange> {
                               'Max Check-out Date',
                               style: TextStyle(color: Colors.grey),
                             ),
-                            SizedBox(height: 10),
-                            Container(
-                              height: 50,
-                              padding: EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 4,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '+90 533 333 33 33',
-                                  style: TextStyle(fontSize: 16),
+                            const SizedBox(height: 10),
+                            TextFormField(
+                              initialValue: '+90 533 333 33 33',
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide.none,
                                 ),
                               ),
                             ),
@@ -181,11 +141,10 @@ class _DormMGSetDateRangeState extends State<DormMGSetDateRange> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () {
-                    },
-                    child: Text('Dormitory Page'),
+                    onPressed: () {},
+                    child: Text('Save'),
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.blue,
