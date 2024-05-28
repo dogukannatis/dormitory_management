@@ -278,7 +278,7 @@ void main() {
 
 
   test('getDormitoryByID', () async {
-    expect(await dormitoryApi.getDormitoryByID(dormitroyId: 1), equals(true));
+    expect(await dormitoryApi.getDormitoryByID(dormitoryId: 1), equals(true));
   });
 
 

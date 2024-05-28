@@ -64,6 +64,15 @@ class Repository {
   Future<void> deleteDormitoryByID({required int dormitoryId}) async {
     await _dormitoryApi.deleteDormitoryByID(dormitoryId: dormitoryId);
   }
+
+  Future<Dormitory?> getDormitoryByID({required int dormitoryId}) async {
+    Dormitory? dorm = await _dormitoryApi.getDormitoryByID(dormitoryId: dormitoryId);
+    if(dorm != null){
+      dorm.dormitoryDetails = await _dormitoryDetailsApi.getDormitoryDetailsByDormitoryID(dormitoryId: dorm.dormitoryId!);
+      dorm.comments = await getAllCommentByDormitoryId(dormitoryId: dorm.dormitoryId!);
+    }
+    return dorm;
+  }
   Future<void> deleteCommentByID({required int commentId}) async {
     await _commentApi.deleteCommentByID(commentId: commentId);
   }
@@ -93,7 +102,11 @@ class Repository {
   }
 
   Future<List<Booking>> getBookingHistoryByStudentId({required int userId}) async {
-    return await _bookingApi.getBookingHistoryByStudentId(userId: userId);
+    List<Booking> list = await _bookingApi.getBookingHistoryByStudentId(userId: userId);
+    for(Booking booking in list){
+      booking.dormitory = await getDormitoryByID(dormitoryId: booking.dormitoryId!);
+    }
+    return list;
   }
 
   Future<List<Comment>> getAllCommentByDormitoryId({required int dormitoryId}) async {

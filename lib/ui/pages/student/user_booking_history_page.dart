@@ -1,6 +1,8 @@
 import 'package:dormitory_management/models/booking.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
+import 'package:dormitory_management/viewmodels/booking_manager.dart';
+import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,16 +14,27 @@ class UserBookingHistory extends ConsumerStatefulWidget {
 }
 
 class _UserBookingHistoryState extends ConsumerState<UserBookingHistory> {
-  List<Booking> bookings = [
-    Booking(bookingId: 1, userId: 1, dormitoryId: 1, roomId: 3, status: "Current"),
-    Booking(bookingId: 2, userId: 1, dormitoryId: 2, roomId: 3, status: "Former"),
-    Booking(bookingId: 3, userId: 1, dormitoryId: 3, roomId: 3, status: "In Debt"),
-    Booking(bookingId: 4, userId: 1, dormitoryId: 4, roomId: 3, status: "Current"),
-    Booking(bookingId: 5, userId: 1, dormitoryId: 5, roomId: 3, status: "Current"),
-  ];
 
 
+  List<Booking> bookings = [];
+  bool isLoading = false;
 
+  Future<void> getAllBookingHistory() async {
+    final bookingManager = ref.read(bookingManagerProvider.notifier);
+    final user = ref.read(userManagerProvider);
+    setState(() {
+      isLoading = true;
+    });
+    bookings = await bookingManager.getBookingHistoryByStudentId(userId: user!.userId!);
+    setState(() {
+      isLoading = false;
+    });
+  }
+  @override
+  void initState() {
+    getAllBookingHistory();
+    super.initState();
+  }
 
 
 
@@ -77,7 +90,9 @@ class _UserBookingHistoryState extends ConsumerState<UserBookingHistory> {
     return Scaffold(
       appBar: getCustomAppBar(context),
       drawer: const CustomDrawer(),
-      body: Padding(
+      body: isLoading ? Center(
+        child: CircularProgressIndicator(),
+      ) : Padding(
         padding: const EdgeInsets.all(16.0),
         child: Align(
           alignment: Alignment.topLeft,
@@ -109,18 +124,18 @@ class _UserBookingHistoryState extends ConsumerState<UserBookingHistory> {
                             DataColumn(label: Text('Room')),
                             DataColumn(label: Text('Year & Term')),
                             DataColumn(label: Text('Contact')),
-                            DataColumn(label: Text('Price TRY')),
-                            DataColumn(label: Text('Action')),
+                            //DataColumn(label: Text('Price TRY')),
+                           // DataColumn(label: Text('Action')),
                           ],
                           rows: bookings.map((booking) {
                             return DataRow(cells: [
-                              DataCell(Text('Universe ${booking.dormitoryId}')),
+                              DataCell(Text('${booking.dormitory?.name}')),
                               DataCell(_buildStatusChip(booking.status ?? 'Unknown')),
                               DataCell(Text('Room ${booking.roomId}')),
                               DataCell(Text('23-24 / F-S')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
-                              DataCell(Text('+90 555 555 55 55')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
-                              DataCell(Text('TRY 75000.00')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
-                              DataCell(_buildActionButton()),
+                              DataCell(Text("${booking.dormitory?.dormitoryDetails?.email}")), // Bu veri modelde yok, şimdilik manuel ekliyoruz
+                             // DataCell(Text('TRY 75000.00')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
+                              //DataCell(_buildActionButton()),
                             ]);
                           }).toList(),
                         ),

@@ -47,7 +47,7 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
     setState(() {
       isBooked = true;
     });
-    await bookingManager.saveDormitory(booking: booking);
+    await bookingManager.saveBooking(booking: booking);
   }
 
   bool isLoading = false;

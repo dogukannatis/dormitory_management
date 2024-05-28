@@ -34,10 +34,10 @@ class DormitoryApi extends Api{
 
   /// Get dormitory with [id]
   /// Works properly
-  Future<Dormitory?> getDormitoryByID({required int dormitroyId}) async {
+  Future<Dormitory?> getDormitoryByID({required int dormitoryId}) async {
   
     try{
-      final response = await dio.get("$baseUrl/Dormitory/getDormitoryById", queryParameters: {"id" : dormitroyId}, options: options);
+      final response = await dio.get("$baseUrl/Dormitory/getDormitoryById", queryParameters: {"id" : dormitoryId}, options: options);
       debugPrint("response: $response");
       Dormitory dormitory = Dormitory.fromJson(response.data);
       debugPrint("dormitory: $dormitory");

@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
 import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../models/users/student.dart';
 import '../../../models/users/user.dart';
@@ -78,7 +81,8 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-
+  final ImagePicker picker = ImagePicker();
+  XFile? image;
 
   @override
   Widget build(BuildContext context) {
@@ -108,14 +112,22 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const CircleAvatar(
+                  image != null ? CircleAvatar(
                         radius: 100,
-                        backgroundImage: AssetImage('assets/images/login_access.png'),
+                        backgroundImage: NetworkImage(image!.path),
                         backgroundColor: Colors.black,
-                      ),
+                      ) : const CircleAvatar(
+                    radius: 100,
+                    backgroundImage: AssetImage('assets/images/login_access.png'),
+                    backgroundColor: Colors.black,
+                  ),
                       const SizedBox(height: 10),
                       TextButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          image = await picker.pickImage(source: ImageSource.gallery);
+                          setState(() {
+
+                          });
                         },
                         child: Text('Upload Profile Photo'),
                         style: TextButton.styleFrom(
