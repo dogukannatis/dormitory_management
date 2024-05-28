@@ -1,47 +1,47 @@
-import 'package:dormitory_management/models/booking.dart';
+import 'package:dormitory_management/models/rating.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class DormMGReviewAndRatings extends ConsumerStatefulWidget {
-  const DormMGReviewAndRatings({super.key});
+  const DormMGReviewAndRatings({Key? key}) : super(key: key);
 
   @override
-  ConsumerState createState() => _DormMGReviewAndRatingsState();
+  ConsumerState<DormMGReviewAndRatings> createState() => _DormMGReviewAndRatingsState();
 }
 
 class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings> {
-  List<Booking> bookings = [
-    Booking(bookingId: 1, userId: 1, dormitoryId: 1, roomId: 1, status: "5"),
-    Booking(bookingId: 2, userId: 1, dormitoryId: 2, roomId: 2, status: "4"),
-    Booking(bookingId: 3, userId: 1, dormitoryId: 3, roomId: 3, status: "3"),
-    Booking(bookingId: 4, userId: 1, dormitoryId: 4, roomId: 4, status: "2"),
-    Booking(bookingId: 5, userId: 1, dormitoryId: 5, roomId: 5, status: "1"),
+  List<Rating> ratings = [
+    Rating(id: 1, dormitoryId: 1, userId: 1, ratingNo: 5),
+    Rating(id: 2, dormitoryId: 2, userId: 2, ratingNo: 4),
+    Rating(id: 3, dormitoryId: 3, userId: 3, ratingNo: 3),
+    Rating(id: 4, dormitoryId: 4, userId: 4, ratingNo: 2),
+    Rating(id: 5, dormitoryId: 5, userId: 5, ratingNo: 1),
   ];
 
-  Widget _buildStatusChip(String status) {
+  Widget _buildRatingChip(int ratingNo) {
     Color color;
     String label;
 
-    switch (status) {
-      case '5':
+    switch (ratingNo) {
+      case 5:
         color = Colors.green;
         label = '5';
         break;
-      case '4':
+      case 4:
         color = Colors.lightGreen;
         label = '4';
         break;
-      case '3':
+      case 3:
         color = Colors.yellow;
         label = '3';
         break;
-      case '2':
+      case 2:
         color = Colors.orange;
         label = '2';
         break;
-      case '1':
+      case 1:
       default:
         color = Colors.red;
         label = '1';
@@ -65,9 +65,18 @@ class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings>
     );
   }
 
-  Widget _buildActionButton() {
+  Widget _buildActionPopupMenu() {
     return PopupMenuButton<int>(
-      onSelected: (item) => print('Selected item: $item'),
+      onSelected: (item) {
+        switch (item) {
+          case 0:
+          // Action 1 selected
+            break;
+          case 1:
+          // Action 2 selected
+            break;
+        }
+      },
       itemBuilder: (context) => [
         PopupMenuItem<int>(value: 0, child: Text('Action 1')),
         PopupMenuItem<int>(value: 1, child: Text('Action 2')),
@@ -107,23 +116,17 @@ class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings>
                         DataTable(
                           columnSpacing: 12.0,
                           columns: [
+                            DataColumn(label: Text('Dormitory')),
+                            DataColumn(label: Text('Rating')),
                             DataColumn(label: Text('User')),
-                            DataColumn(label: Text('Status')),
-                            DataColumn(label: Text('Room')),
-                            DataColumn(label: Text('SKU')),
-                            DataColumn(label: Text('Contact')),
-                            DataColumn(label: Text('Price TRY')),
                             DataColumn(label: Text('Action')),
                           ],
-                          rows: bookings.map((booking) {
+                          rows: ratings.map((rating) {
                             return DataRow(cells: [
-                              DataCell(Text('Universe ${booking.dormitoryId}')),
-                              DataCell(_buildStatusChip(booking.status ?? 'Unknown')),
-                              DataCell(Text('Room ${booking.roomId}')),
-                              DataCell(Text('23-24 / F-S')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
-                              DataCell(Text('+90 555 555 55 55')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
-                              DataCell(Text('TRY 75000.00')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
-                              DataCell(_buildActionButton()),
+                              DataCell(Text('Dormitory ${rating.dormitoryId}')),
+                              DataCell(_buildRatingChip(rating.ratingNo ?? 0)),
+                              DataCell(Text('User ${rating.userId}')),
+                              DataCell(_buildActionPopupMenu()),
                             ]);
                           }).toList(),
                         ),
