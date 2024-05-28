@@ -12,7 +12,7 @@ class DormitoryApi extends Api{
   /// Save dormitory to database with given [dormitory] object.
   /// PLEASE NOTE THAT: DORMITORY ID SHOULD BE NULL.
   /// Works properly
-  Future<bool?> saveDormitory({required Dormitory dormitory}) async {
+  Future<Dormitory?> saveDormitory({required Dormitory dormitory}) async {
     
 
     var data = jsonEncode(dormitory.toJson());
@@ -21,10 +21,12 @@ class DormitoryApi extends Api{
     try{
       final response = await dio.post("$baseUrl/Dormitory/add", data: data, options: options);
       debugPrint("response: $response");
-      return true;
+      Dormitory dormitory = Dormitory.fromJson(response.data);
+      debugPrint("dormitory: $dormitory");
+      return dormitory;
     } on DioException catch (e, str) {
        debugPrint("HATA: $e, $str");
-       return false;
+       return null;
     }
 
     

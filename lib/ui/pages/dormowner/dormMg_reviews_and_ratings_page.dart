@@ -1,6 +1,9 @@
 import 'package:dormitory_management/models/rating.dart';
+import 'package:dormitory_management/models/users/dormitory_owner.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
+import 'package:dormitory_management/viewmodels/dorm_manager.dart';
+import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,13 +15,9 @@ class DormMGReviewAndRatings extends ConsumerStatefulWidget {
 }
 
 class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings> {
-  List<Rating> ratings = [
-    Rating(id: 1, dormitoryId: 1, userId: 1, ratingNo: 5, review: "Great place!"),
-    Rating(id: 2, dormitoryId: 2, userId: 2, ratingNo: 4, review: "Nice environment."),
-    Rating(id: 3, dormitoryId: 3, userId: 3, ratingNo: 3, review: "Could be better."),
-    Rating(id: 4, dormitoryId: 4, userId: 4, ratingNo: 2, review: "Not satisfied."),
-    Rating(id: 5, dormitoryId: 5, userId: 5, ratingNo: 1, review: "Awful experience."),
-  ];
+  List<Rating> ratings = [];
+
+  bool isLoading = false;
 
   Widget _buildRatingChip(int ratingNo) {
     Color color;
@@ -65,7 +64,7 @@ class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings>
     );
   }
 
-  Widget _buildActionPopupMenu() {
+  Widget _buildActionPopupMenu(int id) {
     return PopupMenuButton<int>(
       onSelected: (item) {
         switch (item) {
@@ -76,18 +75,51 @@ class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings>
         }
       },
       itemBuilder: (context) => [
-        PopupMenuItem<int>(value: 0, child: Text('Action 1')),
-        PopupMenuItem<int>(value: 1, child: Text('Action 2')),
+        PopupMenuItem<int>(
+            value: 0,
+            child: Text('Delete'),
+          onTap: (){
+              deleteReview(id);
+          },
+        ),
       ],
     );
   }
 
+  Future<void> deleteReview(int id) async {
+    final dormManager = ref.read(dormManagerProvider.notifier);
+    await dormManager.deleteRating(ratingId: id);
+    setState(() {
+      ratings.removeWhere((element) => element.ratingId == id);
+    });
+  }
+
+  Future<void> getRatings() async {
+    final dormManager = ref.read(dormManagerProvider.notifier);
+    final user = ref.read(userManagerProvider) as DormitoryOwner;
+    setState(() {
+      isLoading = true;
+    });
+    ratings = await dormManager.getRatingByDormitoryId(dormitoryId: user.dormitoryId!);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    getRatings();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = ref.read(userManagerProvider) as DormitoryOwner;
+
     return Scaffold(
       appBar: getCustomAppBar(context),
       drawer: const CustomDrawer(),
-      body: Padding(
+      body: isLoading ? const Center(child: CircularProgressIndicator(),) : Padding(
         padding: const EdgeInsets.all(16.0),
         child: Align(
           alignment: Alignment.topLeft,
@@ -103,30 +135,28 @@ class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Reviews & Ratings',
+                  const Text(
+                    'Ratings',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Expanded(
                     child: ListView(
                       children: [
                         DataTable(
                           columnSpacing: 12.0,
-                          columns: [
-                            DataColumn(label: Text('User')),
+                          columns: const [
+                            DataColumn(label: Text('Student Name')),
                             DataColumn(label: Text('Dormitory')),
                             DataColumn(label: Text('Rating')),
-                            DataColumn(label: Text('Review')),
                             DataColumn(label: Text('Action')),
                           ],
                           rows: ratings.map((rating) {
                             return DataRow(cells: [
-                              DataCell(Text('User ${rating.userId}')),
-                              DataCell(Text('Dormitory ${rating.dormitoryId}')),
+                              DataCell(Text('${rating.user!.name} ${rating.user!.surName}')),
+                              DataCell(Text('${user.name}')),
                               DataCell(_buildRatingChip(rating.ratingNo ?? 0)),
-                              DataCell(Text(rating.review ?? "")),
-                              DataCell(_buildActionPopupMenu()),
+                              DataCell(_buildActionPopupMenu(rating.ratingId!)),
                             ]);
                           }).toList(),
                         ),

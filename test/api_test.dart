@@ -158,7 +158,7 @@ void main() {
     );
 
     Rating testRating = Rating(
-      id: null,
+      ratingId: null,
       userId: 1,
       dormitoryId: 1,
       ratingNo: 5,

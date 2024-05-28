@@ -52,7 +52,7 @@ class RatingApi extends Api{
 
   /// Get rating with [ratingId]
   /// Works properly
-  Future<List<Rating>?> getRatingByDormitoryId({required int dormitoryId}) async {
+  Future<List<Rating>> getRatingByDormitoryId({required int dormitoryId}) async {
 
     try{
       final response = await dio.get("$baseUrl/Rating/getRatingByDormitoryId", queryParameters: {"id" : dormitoryId}, options: options);
@@ -70,7 +70,7 @@ class RatingApi extends Api{
       return ratings;
     } on DioException catch (e, str) {
        debugPrint("HATA: $e, $str");
-       return null;
+       return [];
     }
 
   }

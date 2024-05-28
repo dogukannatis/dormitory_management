@@ -1,5 +1,6 @@
 import 'package:dormitory_management/models/booking.dart';
 import 'package:dormitory_management/models/dormitory_details.dart';
+import 'package:dormitory_management/models/users/dormitory_owner.dart';
 import 'package:dormitory_management/models/users/student.dart';
 import 'package:dormitory_management/ui/widgets/button_loading.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
@@ -14,6 +15,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import '../../models/comment.dart';
 import '../../models/dormitory.dart';
+import '../../models/users/admin.dart';
 
 class DormitoryDetailsPage extends ConsumerStatefulWidget {
   const DormitoryDetailsPage({Key? key, required this.dormitory}) : super(key: key);
@@ -231,7 +233,9 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                               onPressed: (){
                                 deleteComment(comment.commentId!);
                               },
-                              canDelete: comment.user!.userId == user?.userId ? true : false,
+                              canDelete: user is Admin ||
+                              (user is DormitoryOwner && user.userId == comment.dormitoryId)
+                                  || comment.user!.userId == user?.userId ? true : false,
                             ),
                           );
                         },

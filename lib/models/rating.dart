@@ -1,3 +1,4 @@
+import 'package:dormitory_management/models/users/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'rating.g.dart';
@@ -5,16 +6,18 @@ part 'rating.g.dart';
 @JsonSerializable()
 class Rating {
   @JsonKey(includeIfNull: false)
-  final int? id;
+  final int? ratingId;
   final int? dormitoryId;
   final int? userId;
   final int? ratingNo;
   final String? review;
   DateTime? createdAt;
   DateTime? updatedAt;
+  @JsonKey(ignore: true)
+  User? user;
 
   Rating({
-    required this.id,
+    required this.ratingId,
     required this.dormitoryId,
     required this.userId,
     required this.ratingNo,
@@ -29,6 +32,6 @@ class Rating {
 
   @override
   String toString() {
-    return 'Rating{id: $id, dormitoryID: $dormitoryId, userID: $userId, ratingNo: $ratingNo, createdAt: $createdAt, updatedAt: $updatedAt}';
+    return 'Rating{ratingId: $ratingId, dormitoryID: $dormitoryId, userID: $userId, ratingNo: $ratingNo, createdAt: $createdAt, updatedAt: $updatedAt}';
   }
 }
