@@ -16,7 +16,7 @@ class Dormitory {
   DateTime? createdAt;
   DateTime? updatedAt;
   DormitoryDetails? dormitoryDetails;
-  Rating? rating;
+  List<Rating>? ratings;
   List<Comment?>? comments;
 
   Dormitory({

@@ -4,6 +4,7 @@ import 'package:dormitory_management/repository/repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../models/comment.dart';
 import '../models/dormitory.dart';
 
 
@@ -18,6 +19,18 @@ class DormManager extends StateNotifier<List<Dormitory>> {
 
   final _repository = locator<Repository>();
 
+  void updateDormitoryComment({required Comment comment}) async {
+    for(Dormitory dormitory in state){
+      if(dormitory.dormitoryId == comment.dormitoryId){
+        for(Comment? dormComment in dormitory.comments!){
+          if(dormComment!.commentId == comment.commentId){
+            dormComment = comment;
+          }
+        }
+      }
+    }
+    state = state;
+  }
 
   Future<List<Dormitory>> getAllDormitories() async {
     state = await _repository.getAllDormitories();

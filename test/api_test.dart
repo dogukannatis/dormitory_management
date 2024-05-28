@@ -162,6 +162,7 @@ void main() {
       userId: 1,
       dormitoryId: 1,
       ratingNo: 5,
+      review: "coki",
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );

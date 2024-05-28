@@ -1,4 +1,5 @@
 import 'package:dormitory_management/locator.dart';
+import 'package:dormitory_management/models/app_notification.dart';
 import 'package:dormitory_management/models/booking.dart';
 import 'package:dormitory_management/models/comment.dart';
 import 'package:dormitory_management/models/dormitory.dart';
@@ -9,6 +10,7 @@ import 'package:dormitory_management/services/comment_api.dart';
 import 'package:dormitory_management/services/dormitory_api.dart';
 import 'package:dormitory_management/services/dormitory_details.dart';
 import 'package:dormitory_management/services/login_api.dart';
+import 'package:dormitory_management/services/notification_api.dart';
 import 'package:dormitory_management/services/rating_api.dart';
 
 import 'package:dormitory_management/services/student_api.dart';
@@ -25,9 +27,14 @@ class Repository {
   final _bookingApi = locator<BookingApi>();
   final _commentApi = locator<CommentApi>();
   final _loginApi = locator<LoginApi>();
+  final _notificationApi = locator<NotificationApi>();
 
   Future<void> saveStudent({required Student user}) async {
     await _studentApi.saveStudent(user: user);
+  }
+
+  Future<void> saveNotification({required AppNotification notification}) async {
+    await _notificationApi.saveNotification(notification: notification);
   }
 
   Future<void> updateStudent({required Student user}) async {
@@ -40,7 +47,7 @@ class Repository {
     for(Dormitory dorm in dorms){
       dorm.dormitoryDetails = await _dormitoryDetailsApi.getDormitoryDetailsByDormitoryID(dormitoryId: dorm.dormitoryId!);
       dorm.comments = await getAllCommentByDormitoryId(dormitoryId: dorm.dormitoryId!);
-     // dorm.rating = await _ratingApi.(dormitoryId: dorm.dormitoryId!);
+      //dorm.ratings = await _ratingApi.getRatingByDormitoryId(dormitoryId: dorm.dormitoryId!);
       debugPrint("details ${dorm.dormitoryDetails}");
     }
     return dorms;
@@ -56,6 +63,9 @@ class Repository {
 
   Future<void> deleteDormitoryByID({required int dormitoryId}) async {
     await _dormitoryApi.deleteDormitoryByID(dormitoryId: dormitoryId);
+  }
+  Future<void> deleteCommentByID({required int commentId}) async {
+    await _commentApi.deleteCommentByID(commentId: commentId);
   }
 
   Future<void> getDormitoryDetailsByDormitoryID({required int dormitoryId}) async {
@@ -92,6 +102,10 @@ class Repository {
       comment.user = await _studentApi.getStudentByID(id: comment.userId!);
     }
     return comments;
+  }
+
+  Future<void> saveComment({required Comment comment}) async {
+    await _commentApi.saveComment(comment: comment);
   }
 
 }

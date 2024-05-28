@@ -64,6 +64,12 @@ class _UserProfileNotificationsState extends ConsumerState<UserProfileNotificati
       }
     }
   }
+  
+  
+  Future<void> getNotifications() async {
+
+  }
+  
 
   @override
   Widget build(BuildContext context) {

@@ -1,12 +1,15 @@
 import 'package:dormitory_management/models/booking.dart';
 import 'package:dormitory_management/models/dormitory_details.dart';
+import 'package:dormitory_management/ui/widgets/button_loading.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
 import 'package:dormitory_management/viewmodels/booking_manager.dart';
+import 'package:dormitory_management/viewmodels/comment_manager.dart';
 import 'package:dormitory_management/viewmodels/dorm_manager.dart';
 import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import '../../models/comment.dart';
 import '../../models/dormitory.dart';
@@ -22,6 +25,8 @@ class DormitoryDetailsPage extends ConsumerStatefulWidget {
 
 class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
 
+  bool isBooked = false;
+
   Future<void> book() async {
     final bookingManager = ref.read(bookingManagerProvider.notifier);
     final user = ref.watch(userManagerProvider);
@@ -30,18 +35,61 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
         userId: user!.userId,
         dormitoryId: widget.dormitory.dormitoryId,
         status: "pending",
-        roomId: 0 //TODO: check
+      paymentStatus: "pending",
+        roomId: 0, //TODO: check,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      inMin: DateTime.now(),
+      inMax: DateTime.now(),
+      outMin: DateTime.now(),
+      outMax: DateTime.now(),
     );
+    setState(() {
+      isBooked = true;
+    });
     await bookingManager.saveDormitory(booking: booking);
   }
 
-  Future<void> getComments() async {
-    final dormManager = ref.read(dormManagerProvider.notifier);
+  bool isLoading = false;
+
+  Future<void> saveComment() async {
+    final commentManager = ref.read(commentManagerProvider.notifier);
+    final user = ref.watch(userManagerProvider);
+    Comment comment = Comment(
+        commentId: null,
+        userId: user!.userId,
+        dormitoryId: widget.dormitory.dormitoryId,
+      commentContent: commentController.text.trim(),
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
+    comment.user = user;
+    setState(() {
+      isLoading = true;
+    });
+    await commentManager.saveComment(comment: comment);
+    commentController.clear();
+    widget.dormitory.comments!.add(comment);
+    setState(() {
+      isLoading = false;
+    });
   }
+
+  Future<void> deleteComment(int commentId) async {
+    final commentManager = ref.read(commentManagerProvider.notifier);
+    setState(() {
+      widget.dormitory.comments!.removeWhere((comment) => comment!.commentId == commentId);
+    });
+    await commentManager.deleteCommentByID(commentId: commentId);
+  }
+
+  final _formKey = GlobalKey<FormState>();
+  final commentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(userManagerProvider);
+    ref.watch(dormManagerProvider);
 
 
     return Scaffold(
@@ -136,8 +184,8 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                                 SizedBox(height: 8),
                                  */
                                 ElevatedButton(
-                                  onPressed: user == null ? null : () => book(),
-                                  child: const Text('Book Now'),
+                                  onPressed: user == null || isBooked ? null : () => book(),
+                                  child: isBooked ? const Text("Booked") : const Text('Book Now'),
                                 ),
                               ],
                             ),
@@ -166,35 +214,65 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 50),
+                      widget.dormitory.comments != null && widget.dormitory.comments!.isNotEmpty ?
                       ListView.builder(
                         itemCount: widget.dormitory.comments!.length,
+                        shrinkWrap: true,
                         itemBuilder: (context, index){
                           Comment? comment = widget.dormitory.comments![index];
-                          return CommentWidget(
-                          username: comment!.user!.name!,
-                          timeAgo: '2 days ago',
-                          comment: comment.commentContent!,
+                          debugPrint("comment: $comment");
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CommentWidget(
+                              username: comment!.user!.name!,
+                              timeAgo: timeago.format(comment.createdAt!),
+                              comment: comment.commentContent!,
+                              onPressed: (){
+                                deleteComment(comment.commentId!);
+                              },
+                              canDelete: comment.user!.userId == user?.userId ? true : false,
+                            ),
                           );
                         },
+                      ) : Center(
+                        child: Text("There is no comment yet."),
                       ),
                       SizedBox(height: 50),
                       user != null ?
-                          Column(
-                            children: [
-                              const TextField(
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Write a review',
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                 TextFormField(
+                                   controller: commentController,
+                                  validator: (v){
+                                     if(v!.isEmpty){
+                                       return "Field is required";
+                                     }else{
+                                       return null;
+                                     }
+                                  },
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: 'Write a review',
+                                  ),
+                                  maxLines: 3,
                                 ),
-                                maxLines: 3,
-                              ),
-                              const SizedBox(height: 50),
-                              ElevatedButton(
-                                onPressed: () {},
-                                child: const Text('Submit Review'),
-                              ),
-                            ],
-                          ) : Container(),
+                                const SizedBox(height: 50),
+                                ElevatedButton(
+                                  onPressed: isLoading ? null : () {
+                                    _formKey.currentState!.save();
+                                    if(_formKey.currentState!.validate()){
+                                      saveComment();
+                                    }
+                                  },
+                                  child: isLoading ? ButtonLoading(buttonText: "Submit Review") : const Text('Submit Review'),
+                                ),
+                              ],
+                            ),
+                          ) : Center(
+                        child: Text("Please signin to write a comment."),
+                      ),
 
                     ],
                   ),
@@ -255,11 +333,15 @@ class CommentWidget extends StatelessWidget {
   final String username;
   final String timeAgo;
   final String comment;
+  final bool canDelete;
+  final Function()? onPressed;
 
   CommentWidget({
     required this.username,
     required this.timeAgo,
     required this.comment,
+    required this.onPressed,
+    this.canDelete = false,
   });
 
   @override
@@ -280,6 +362,11 @@ class CommentWidget extends StatelessWidget {
             ],
           ),
         ),
+        canDelete ?
+        IconButton(
+          onPressed: onPressed,
+          icon: const Icon(Icons.delete, color: Colors.red,),
+        ) : Container()
       ],
     );
   }

@@ -10,8 +10,13 @@ class Booking {
   final int? dormitoryId;
   final int? roomId;
   final String? status;
+  final String? paymentStatus;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final DateTime? inMin;
+  final DateTime? inMax;
+  final DateTime? outMin;
+  final DateTime? outMax;
 
   Booking({
     required this.bookingId,
@@ -19,8 +24,13 @@ class Booking {
     required this.dormitoryId,
     required this.roomId,
     this.status,
+    this.paymentStatus,
     this.createdAt,
-    this.updatedAt
+    this.updatedAt,
+    this.inMin,
+    this.inMax,
+    this.outMin,
+    this.outMax,
   });
 
 

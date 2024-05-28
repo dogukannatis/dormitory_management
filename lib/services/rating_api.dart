@@ -50,6 +50,31 @@ class RatingApi extends Api{
 
   }
 
+  /// Get rating with [ratingId]
+  /// Works properly
+  Future<List<Rating>?> getRatingByDormitoryId({required int dormitoryId}) async {
+
+    try{
+      final response = await dio.get("$baseUrl/Rating/getRatingByDormitoryId", queryParameters: {"id" : dormitoryId}, options: options);
+      debugPrint("response: $response");
+      List<Rating> ratings = [];
+
+      List? responseData = response.data;
+
+      if(responseData != null && responseData.isNotEmpty){
+        for(int i = 0; i < responseData.length; i++){
+          ratings.add(Rating.fromJson(responseData[i]));
+        }
+      }
+
+      return ratings;
+    } on DioException catch (e, str) {
+       debugPrint("HATA: $e, $str");
+       return null;
+    }
+
+  }
+
 
 
   /// Delete rating with [ratingId]
