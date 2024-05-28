@@ -68,7 +68,7 @@ class Repository {
     for(Dormitory dorm in dorms){
       dorm.dormitoryDetails = await _dormitoryDetailsApi.getDormitoryDetailsByDormitoryID(dormitoryId: dorm.dormitoryId!);
       dorm.comments = await getAllCommentByDormitoryId(dormitoryId: dorm.dormitoryId!);
-      //dorm.ratings = await _ratingApi.getRatingByDormitoryId(dormitoryId: dorm.dormitoryId!);
+      dorm.ratings = await _ratingApi.getRatingByDormitoryId(dormitoryId: dorm.dormitoryId!);
       debugPrint("details ${dorm.dormitoryDetails}");
     }
     return dorms;
@@ -77,6 +77,7 @@ class Repository {
   Future<void> saveDormitory({required Dormitory dormitory}) async {
     await _dormitoryApi.saveDormitory(dormitory: dormitory);
   }
+
 
   Future<void> updateDormitory({required Dormitory dormitory}) async {
     await _dormitoryApi.updateDormitory(dormitory: dormitory);

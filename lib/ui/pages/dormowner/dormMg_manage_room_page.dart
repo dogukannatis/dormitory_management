@@ -32,6 +32,7 @@ class _DormMGManageRoomState extends ConsumerState<DormMGManageRoom> {
   bool isLoading = false;
   bool isUpdateLoading = false;
 
+
   Future<void> saveRoom() async {
     final dormManager = ref.read(dormManagerProvider.notifier);
     final user = ref.read(userManagerProvider);
@@ -62,7 +63,6 @@ class _DormMGManageRoomState extends ConsumerState<DormMGManageRoom> {
     });
   }
 
-
   Future<void> updateRoom() async {
     final dormManager = ref.read(dormManagerProvider.notifier);
     final user = ref.read(userManagerProvider);
@@ -90,6 +90,7 @@ class _DormMGManageRoomState extends ConsumerState<DormMGManageRoom> {
       isUpdateLoading = false;
     });
   }
+
 
 
   @override

@@ -46,7 +46,7 @@ class _DormMGBookingHistoryState extends ConsumerState<DormMGBookingHistory> {
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: color),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       child: Text(
         label,
         style: TextStyle(
