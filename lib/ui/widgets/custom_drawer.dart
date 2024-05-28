@@ -13,6 +13,7 @@ import 'package:dormitory_management/ui/pages/dormowner/dormMg_manage_room_page.
 import 'package:dormitory_management/ui/pages/dormowner/dormMg_payment_status_page.dart';
 import 'package:dormitory_management/ui/pages/dormowner/dormMg_booking_history_page.dart';
 import 'package:dormitory_management/ui/pages/dormowner/dormMg_reviews_and_ratings_page.dart';
+import 'package:dormitory_management/ui/pages/systemadmin/admin_send_notifications_page.dart';
 import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -131,9 +132,9 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
           ),
           ListTile(
             onTap: (){
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormOccupancyRates()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminSendNotifications()));
             },
-            title: const Text("Dorm Occupancy Rates"),
+            title: const Text("Admin SendNotifications"),
           ),
         ],
       ),
