@@ -13,6 +13,7 @@ class Comment {
   String? commentContent;
   DateTime? createdAt;
   DateTime? updatedAt;
+   @JsonKey(ignore: true)
   User? user;
 
   Comment({

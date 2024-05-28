@@ -9,6 +9,7 @@ class Rating {
   final int? dormitoryId;
   final int? userId;
   final int? ratingNo;
+  final String? review;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -17,6 +18,7 @@ class Rating {
     required this.dormitoryId,
     required this.userId,
     required this.ratingNo,
+    required this.review,
     this.createdAt,
     this.updatedAt
   });

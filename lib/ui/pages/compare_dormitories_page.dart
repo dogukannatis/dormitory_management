@@ -6,6 +6,8 @@ import 'package:dormitory_management/viewmodels/dorm_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../models/rating.dart';
+
 
 /// Sayfalar State yönetimi riverpod ile yapıldığından dolayı ConsumerStatefulWidget olarak yapılandırılmalı.
 class CompareDormitoriesPage extends ConsumerStatefulWidget {
@@ -26,6 +28,15 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
     'Balcony',
     'Microwave'
   ];
+
+  bool hasMicrowave = true;
+  bool hasKitchen = true;
+  bool hasCleanService = true;
+  bool hasShowerAndToilet = true;
+  bool hasBalcony = true;
+  bool hasTV = true;
+  bool hasAirConditioning = true;
+  bool internetSpeed = true;
 
   Set<String> selectedFilters = Set();
 
@@ -61,6 +72,32 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
   Widget build(BuildContext context) {
     ref.watch(dormManagerProvider); // State otomatik yenilenecek
 
+    List<Dormitory> filteredDormitories = dormitories.where((dormitory){
+      if(dormitory.dormitoryDetails!.hasMicrowave == true && hasMicrowave){
+        return true;
+      }else if(dormitory.dormitoryDetails!.hasKitchen == true && hasKitchen){
+        return true;
+      }else if(dormitory.dormitoryDetails!.hasCleanService == true && hasCleanService){
+        return true;
+      }else if(dormitory.dormitoryDetails!.hasShowerAndToilet == true && hasShowerAndToilet){
+        return true;
+      }else if(dormitory.dormitoryDetails!.hasBalcony == true && hasBalcony){
+        return true;
+      }else if(dormitory.dormitoryDetails!.hasTV == true && hasTV){
+        return true;
+      }else if(dormitory.dormitoryDetails!.hasAirConditioning == true && hasAirConditioning){
+        return true;
+      }else if(dormitory.dormitoryDetails!.internetSpeed!.isNotEmpty && internetSpeed ){
+        return true;
+      }else{
+        return false;
+      }
+
+    }).toList();
+
+
+
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: getCustomAppBar(context),
@@ -73,7 +110,19 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
             Expanded(
               flex: 2,
               child: ListView(
-                children: dormitories.map((dormitory) {
+                children: filteredDormitories.map((dormitory) {
+                  double rate = 0.0;
+
+                  if(dormitory.ratings != null){
+                    for(Rating rating in dormitory.ratings!){
+                      rate += rating.ratingNo!;
+                    }
+                    if(rate != 0){
+                      rate / dormitory.ratings!.length;
+                    }
+                  }
+
+
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Card(
@@ -118,7 +167,7 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
                                   ),
                                   const SizedBox(height: 16),
                                   Text(
-                                    'Rating: ${dormitory.rating?.ratingNo.toString()} stars',
+                                    'Rating: $rate stars',
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -171,6 +220,111 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
                           ),
                         ),
                         SizedBox(height: 10),
+                        FilterChip(
+                          label: Text("Clean Service"),
+                          selected: hasCleanService,
+                          onSelected: (bool selected) {
+                            setState(() {
+                              hasCleanService = !hasCleanService;
+                            });
+                          },
+                          selectedColor: Colors.green,
+                          checkmarkColor: Colors.white,
+                          backgroundColor:
+                          hasCleanService ? Colors.green : Colors.red,
+                        ),
+                        FilterChip(
+                          label: Text("TV"),
+                          selected: hasTV,
+                          onSelected: (bool selected) {
+                            setState(() {
+                              hasTV = !hasTV;
+                            });
+                          },
+                          selectedColor: Colors.green,
+                          checkmarkColor: Colors.white,
+                          backgroundColor:
+                          hasTV ? Colors.green : Colors.red,
+                        ),
+                        FilterChip(
+                          label: Text("AC"),
+                          selected: hasAirConditioning,
+                          onSelected: (bool selected) {
+                            setState(() {
+                              hasAirConditioning = !hasAirConditioning;
+                            });
+                          },
+                          selectedColor: Colors.green,
+                          checkmarkColor: Colors.white,
+                          backgroundColor:
+                          hasAirConditioning ? Colors.green : Colors.red,
+                        ),
+                        FilterChip(
+                          label: Text("Shower"),
+                          selected: hasShowerAndToilet,
+                          onSelected: (bool selected) {
+                            setState(() {
+                              hasShowerAndToilet = !hasShowerAndToilet;
+                            });
+                          },
+                          selectedColor: Colors.green,
+                          checkmarkColor: Colors.white,
+                          backgroundColor:
+                          hasShowerAndToilet ? Colors.green : Colors.red,
+                        ),
+                        FilterChip(
+                          label: Text("Internet"),
+                          selected: internetSpeed,
+                          onSelected: (bool selected) {
+                            setState(() {
+                              internetSpeed = !internetSpeed;
+                            });
+                          },
+                          selectedColor: Colors.green,
+                          checkmarkColor: Colors.white,
+                          backgroundColor:
+                          internetSpeed ? Colors.green : Colors.red,
+                        ),
+                        FilterChip(
+                          label: Text("Kitchen"),
+                          selected: hasKitchen,
+                          onSelected: (bool selected) {
+                            setState(() {
+                              hasKitchen = !hasKitchen;
+                            });
+                          },
+                          selectedColor: Colors.green,
+                          checkmarkColor: Colors.white,
+                          backgroundColor:
+                          hasKitchen ? Colors.green : Colors.red,
+                        ),
+                        FilterChip(
+                          label: Text("Balcony"),
+                          selected: hasBalcony,
+                          onSelected: (bool selected) {
+                            setState(() {
+                              hasBalcony = !hasBalcony;
+                            });
+                          },
+                          selectedColor: Colors.green,
+                          checkmarkColor: Colors.white,
+                          backgroundColor:
+                          hasBalcony ? Colors.green : Colors.red,
+                        ),
+                        FilterChip(
+                          label: Text("Microwave"),
+                          selected: hasMicrowave,
+                          onSelected: (bool selected) {
+                            setState(() {
+                              hasMicrowave = !hasMicrowave;
+                            });
+                          },
+                          selectedColor: Colors.green,
+                          checkmarkColor: Colors.white,
+                          backgroundColor:
+                          hasMicrowave ? Colors.green : Colors.red,
+                        ),
+                        /*
                         Wrap(
                           spacing: 8,
                           runSpacing: 4,
@@ -195,6 +349,7 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
                               ),
                           ],
                         ),
+                         */
                         SizedBox(height: 20),
                         Text(
                           'Price Range: ${_currentPriceRangeValues.start.toInt()} TL - ${_currentPriceRangeValues.end.toInt()} TL',
