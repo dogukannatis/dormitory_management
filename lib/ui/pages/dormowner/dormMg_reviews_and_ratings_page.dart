@@ -13,11 +13,11 @@ class DormMGReviewAndRatings extends ConsumerStatefulWidget {
 
 class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings> {
   List<Rating> ratings = [
-    Rating(id: 1, dormitoryId: 1, userId: 1, ratingNo: 5),
-    Rating(id: 2, dormitoryId: 2, userId: 2, ratingNo: 4),
-    Rating(id: 3, dormitoryId: 3, userId: 3, ratingNo: 3),
-    Rating(id: 4, dormitoryId: 4, userId: 4, ratingNo: 2),
-    Rating(id: 5, dormitoryId: 5, userId: 5, ratingNo: 1),
+    Rating(id: 1, dormitoryId: 1, userId: 1, ratingNo: 5, review: "Great place!"),
+    Rating(id: 2, dormitoryId: 2, userId: 2, ratingNo: 4, review: "Nice environment."),
+    Rating(id: 3, dormitoryId: 3, userId: 3, ratingNo: 3, review: "Could be better."),
+    Rating(id: 4, dormitoryId: 4, userId: 4, ratingNo: 2, review: "Not satisfied."),
+    Rating(id: 5, dormitoryId: 5, userId: 5, ratingNo: 1, review: "Awful experience."),
   ];
 
   Widget _buildRatingChip(int ratingNo) {
@@ -70,10 +70,8 @@ class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings>
       onSelected: (item) {
         switch (item) {
           case 0:
-          // Action 1 selected
             break;
           case 1:
-          // Action 2 selected
             break;
         }
       },
@@ -116,16 +114,18 @@ class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings>
                         DataTable(
                           columnSpacing: 12.0,
                           columns: [
+                            DataColumn(label: Text('User')),
                             DataColumn(label: Text('Dormitory')),
                             DataColumn(label: Text('Rating')),
-                            DataColumn(label: Text('User')),
+                            DataColumn(label: Text('Review')),
                             DataColumn(label: Text('Action')),
                           ],
                           rows: ratings.map((rating) {
                             return DataRow(cells: [
+                              DataCell(Text('User ${rating.userId}')),
                               DataCell(Text('Dormitory ${rating.dormitoryId}')),
                               DataCell(_buildRatingChip(rating.ratingNo ?? 0)),
-                              DataCell(Text('User ${rating.userId}')),
+                              DataCell(Text(rating.review ?? "")),
                               DataCell(_buildActionPopupMenu()),
                             ]);
                           }).toList(),
