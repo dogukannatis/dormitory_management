@@ -89,7 +89,7 @@ class _DormMGBookingHistoryState extends ConsumerState<DormMGBookingHistory> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Payment Status',
+                    'Booking History',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 20),
