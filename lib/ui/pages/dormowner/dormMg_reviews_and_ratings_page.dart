@@ -13,11 +13,11 @@ class DormMGReviewAndRatings extends ConsumerStatefulWidget {
 
 class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings> {
   List<Booking> bookings = [
-    Booking(bookingId: 1, userId: 1, dormitoryId: 1, roomId: 3, status: "Current"),
-    Booking(bookingId: 2, userId: 1, dormitoryId: 2, roomId: 3, status: "Former"),
-    Booking(bookingId: 3, userId: 1, dormitoryId: 3, roomId: 3, status: "In Debt"),
-    Booking(bookingId: 4, userId: 1, dormitoryId: 4, roomId: 3, status: "Current"),
-    Booking(bookingId: 5, userId: 1, dormitoryId: 5, roomId: 3, status: "Current"),
+    Booking(bookingId: 1, userId: 1, dormitoryId: 1, roomId: 1, status: "5"),
+    Booking(bookingId: 2, userId: 1, dormitoryId: 2, roomId: 2, status: "4"),
+    Booking(bookingId: 3, userId: 1, dormitoryId: 3, roomId: 3, status: "3"),
+    Booking(bookingId: 4, userId: 1, dormitoryId: 4, roomId: 4, status: "2"),
+    Booking(bookingId: 5, userId: 1, dormitoryId: 5, roomId: 5, status: "1"),
   ];
 
   Widget _buildStatusChip(String status) {
@@ -25,18 +25,26 @@ class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings>
     String label;
 
     switch (status) {
-      case 'Current':
+      case '5':
         color = Colors.green;
-        label = 'Current';
+        label = '5';
         break;
-      case 'In Debt':
+      case '4':
+        color = Colors.lightGreen;
+        label = '4';
+        break;
+      case '3':
+        color = Colors.yellow;
+        label = '3';
+        break;
+      case '2':
         color = Colors.orange;
-        label = 'In Debt';
+        label = '2';
         break;
-      case 'Former':
+      case '1':
       default:
         color = Colors.red;
-        label = 'Former';
+        label = '1';
         break;
     }
 
@@ -89,7 +97,7 @@ class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Payment Status',
+                    'Reviews & Ratings',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 20),
