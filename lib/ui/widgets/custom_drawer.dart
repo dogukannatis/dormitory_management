@@ -9,6 +9,7 @@ import 'package:dormitory_management/ui/pages/student/user_profile_chat_page.dar
 import 'package:dormitory_management/ui/pages/dormowner/dormMg_set_dateRange_page.dart';
 import 'package:dormitory_management/ui/pages/dormowner/dormMg_edit_dormitory_page.dart';
 import 'package:dormitory_management/ui/pages/dormowner/dormMg_send_notifications_page.dart';
+import 'package:dormitory_management/ui/pages/dormowner/dormMg_manage_room_page.dart';
 import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -101,7 +102,36 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
             },
             title: const Text("Dorm Occupancy Rates"),
           ),
-
+          ListTile(
+            onTap: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGManageRoom()));
+            },
+            title: const Text("DormMG ManageRoom"),
+          ),
+          ListTile(
+            onTap: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormOccupancyRates()));
+            },
+            title: const Text("Dorm Occupancy Rates"),
+          ),
+          ListTile(
+            onTap: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormOccupancyRates()));
+            },
+            title: const Text("Dorm Occupancy Rates"),
+          ),
+          ListTile(
+            onTap: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormOccupancyRates()));
+            },
+            title: const Text("Dorm Occupancy Rates"),
+          ),
+          ListTile(
+            onTap: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormOccupancyRates()));
+            },
+            title: const Text("Dorm Occupancy Rates"),
+          ),
         ],
       ),
     );
