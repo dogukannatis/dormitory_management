@@ -16,6 +16,7 @@ import 'package:dormitory_management/ui/pages/dormowner/dormMg_reviews_and_ratin
 import 'package:dormitory_management/ui/pages/systemadmin/admin_send_notifications_page.dart';
 import 'package:dormitory_management/ui/pages/systemadmin/admin_manage_dormitory_page.dart';
 import 'package:dormitory_management/ui/pages/systemadmin/admin_add_dormitory_page.dart';
+import 'package:dormitory_management/ui/pages/systemadmin/admin_edit_user_profile_page.dart';
 import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -152,15 +153,9 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
           ),
           ListTile(
             onTap: (){
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminSendNotifications()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminEditUserProfile()));
             },
-            title: const Text("Admin SendNotifications"),
-          ),
-          ListTile(
-            onTap: (){
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminSendNotifications()));
-            },
-            title: const Text("Admin SendNotifications"),
+            title: const Text("Admin EditUserProfile"),
           ),
         ],
       ),
