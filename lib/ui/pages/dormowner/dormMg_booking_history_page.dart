@@ -27,16 +27,16 @@ class _DormMGBookingHistoryState extends ConsumerState<DormMGBookingHistory> {
     switch (status) {
       case 'Current':
         color = Colors.green;
-        label = 'Current';
+        label = 'Active';
         break;
       case 'In Debt':
         color = Colors.orange;
-        label = 'In Debt';
+        label = 'Pending';
         break;
       case 'Former':
       default:
         color = Colors.red;
-        label = 'Former';
+        label = 'Declined';
         break;
     }
 
