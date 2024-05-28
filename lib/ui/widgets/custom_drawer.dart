@@ -59,103 +59,103 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
             onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const EditProfilePage()));
             },
-            title: const Text("Edit Profile"),
+            title: const Text("STD Edit Profile"),
           ),
           ListTile(
             onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const UserProfileDormitory()));
             },
-            title: const Text("My Dormitory"),
+            title: const Text("STD My Dormitory"),
           ),
           ListTile(
             onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const UserBookingHistory()));
             },
-            title: const Text("Booking History"),
+            title: const Text("STD Booking History"),
           ),
           ListTile(
             onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const UserProfileNotifications()));
             },
-            title: const Text("User Profile Notifications"),
+            title: const Text("STD Notifications"),
           ),
           ListTile(
             onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const UserProfileChats()));
             },
-            title: const Text("User Profile Chats"),
+            title: const Text("STD Chats"),
           ),
           ListTile(
             onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGSetDateRange()));
             },
-            title: const Text("Set Date Range"),
+            title: const Text("DORM Set Date Range"),
           ),
           ListTile(
             onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGEditDorm()));
             },
-            title: const Text("DORM MG - Edit Dorm"),
+            title: const Text("DORM Edit Dorm"),
           ),
           ListTile(
             onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGSendNotifications()));
             },
-            title: const Text("DormMG SendNotifications"),
+            title: const Text("DORM Send Notifications"),
           ),
           ListTile(
             onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormOccupancyRates()));
             },
-            title: const Text("Dorm Occupancy Rates"),
+            title: const Text("DORM Occupancy Rates"),
           ),
           ListTile(
             onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGManageRoom()));
             },
-            title: const Text("DormMG ManageRoom"),
+            title: const Text("DORM Manage Room"),
           ),
           ListTile(
             onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGPaymentStatus()));
             },
-            title: const Text("DormMG PaymentStatus"),
+            title: const Text("DORM Payment Status"),
           ),
           ListTile(
             onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGBookingHistory()));
             },
-            title: const Text("DormMG BookingHistory"),
+            title: const Text("DORM Booking History"),
           ),
           ListTile(
             onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGReviewAndRatings()));
             },
-            title: const Text("DormMG ReviewAndRatings"),
+            title: const Text("DORM Review And Ratings"),
           ),
           ListTile(
             onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminSendNotifications()));
             },
-            title: const Text("Admin SendNotifications"),
+            title: const Text("ADMIN Send Notifications"),
           ),
           ListTile(
             onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminManageDorm()));
             },
-            title: const Text("Admin ManageDorm"),
+            title: const Text("ADMIN Manage Dorm"),
           ),
           ListTile(
             onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminAddDorm()));
             },
-            title: const Text("Admin AddDorm"),
+            title: const Text("ADMIN Add Dorm"),
           ),
           ListTile(
             onTap: (){
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminEditUserProfile()));
             },
-            title: const Text("Admin EditUserProfile"),
+            title: const Text("ADMIN Edit User Profile"),
           ),
         ],
       ),
