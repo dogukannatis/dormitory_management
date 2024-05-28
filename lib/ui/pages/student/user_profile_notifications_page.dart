@@ -1,8 +1,11 @@
 import 'package:dormitory_management/models/app_notification.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
+import 'package:dormitory_management/viewmodels/notification_manager.dart';
+import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class UserProfileNotifications extends ConsumerStatefulWidget {
   const UserProfileNotifications({super.key});
@@ -12,62 +15,27 @@ class UserProfileNotifications extends ConsumerStatefulWidget {
 }
 
 class _UserProfileNotificationsState extends ConsumerState<UserProfileNotifications> {
-  List<AppNotification> notifications = [
-    AppNotification(
-      id: 1,
-      title: "Dormitory Status Update",
-      description: "Your dormitory status changed to Approved.",
-      senderId: 1,
-      receiverId: 1,
-      seen: false,
-      createdAt: DateTime.now(),
-    ),
-    AppNotification(
-      id: 2,
-      title: "Dormitory Status Update",
-      description: "Your dormitory status changed to Pending.",
-      senderId: 1,
-      receiverId: 1,
-      seen: false,
-      createdAt: DateTime.now().subtract(Duration(hours: 12)),
-    ),
-    AppNotification(
-      id: 3,
-      title: "You Got a Message!",
-      description: "You have an unread message!",
-      senderId: 1,
-      receiverId: 1,
-      seen: false,
-      createdAt: DateTime.now().subtract(Duration(hours: 10)),
-    ),
-  ];
+  List<AppNotification> notifications = [];
 
-  String _formatDateTime(DateTime dateTime) {
-    final now = DateTime.now();
-    final difference = now.difference(dateTime);
 
-    if (difference.inMinutes < 1) {
-      return 'Just now';
-    } else if (difference.inMinutes < 60) {
-      return '${difference.inMinutes} minutes ago';
-    } else if (difference.inHours < 24) {
-      return '${difference.inHours} hours ago';
-    } else {
-      final days = difference.inDays;
-      if (days == 1) {
-        return 'Yesterday';
-      } else if (days < 7) {
-        return '$days days ago';
-      } else {
-        final weeks = (days / 7).floor();
-        return '$weeks week${weeks > 1 ? 's' : ''} ago';
-      }
-    }
-  }
-  
-  
+  bool isLoading = false;
+
   Future<void> getNotifications() async {
+    final notificationManager = ref.read(notificationManagerProvider.notifier);
+    final user = ref.read(userManagerProvider);
+    setState(() {
+      isLoading = true;
+    });
+    notifications = await notificationManager.getAllNotificationsByStudentId(studentId: user!.userId!);
+    setState(() {
+      isLoading = false;
+    });
+  }
 
+  @override
+  void initState() {
+    getNotifications();
+    super.initState();
   }
   
 
@@ -76,7 +44,7 @@ class _UserProfileNotificationsState extends ConsumerState<UserProfileNotificati
     return Scaffold(
       appBar: getCustomAppBar(context),
       drawer: const CustomDrawer(),
-      body: Padding(
+      body: isLoading ? const Center(child: CircularProgressIndicator(),) : Padding(
         padding: const EdgeInsets.all(16.0),
         child: Align(
           alignment: Alignment.topLeft,
@@ -88,15 +56,15 @@ class _UserProfileNotificationsState extends ConsumerState<UserProfileNotificati
             ),
             child: Container(
               padding: const EdgeInsets.all(24.0),
-              constraints: BoxConstraints(maxWidth: 1000),
+              constraints: const BoxConstraints(maxWidth: 1000),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Notifications',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Expanded(
                     child: ListView.builder(
                       itemCount: notifications.length,
@@ -115,7 +83,7 @@ class _UserProfileNotificationsState extends ConsumerState<UserProfileNotificati
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             subtitle: Text(notification.description!),
-                            trailing: Text(_formatDateTime(notification.createdAt!)),
+                            trailing: Text(timeago.format(notification.createdAt!)),
                           ),
                         );
                       },

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dormitory_management/models/users/dormitory_owner.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
 import 'package:dormitory_management/viewmodels/user_manager.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../models/users/admin.dart';
 import '../../../models/users/student.dart';
 import '../../../models/users/user.dart';
 import '../../widgets/button_loading.dart';
@@ -44,31 +46,70 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   Future<void> updateProfile() async {
     final userManager = ref.read(userManagerProvider.notifier);
     final user = ref.watch(userManagerProvider);
-    Student? tempUser = Student(
-      userId: user?.userId,
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
-      name: nameController.text.trim(),
-      surName: surnameController.text.trim(),
-      phoneNo: phoneController.text.trim(),
-      dob: user?.dob,
-      createdAt: user?.createdAt,
-      updatedAt: user?.updatedAt,
-      department: (user as Student).department,
-      gender: user.gender,
-      profileUrl: user.profileUrl,
-      isEmailVerified: user.isEmailVerified,
-      emergencyContactNo: user.emergencyContactNo,
-      address: user.address,
-      studentNumber: user.studentNumber,
-      userType: user.userType,
-    );
-
     setState(() {
       isSaving = true;
     });
+    if(user is Student){
+      Student? tempUser = Student(
+        userId: user?.userId,
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+        name: nameController.text.trim(),
+        surName: surnameController.text.trim(),
+        phoneNo: phoneController.text.trim(),
+        dob: user?.dob,
+        createdAt: user?.createdAt,
+        updatedAt: user?.updatedAt,
+        department: (user as Student).department,
+        gender: user.gender,
+        profileUrl: user.profileUrl,
+        isEmailVerified: user.isEmailVerified,
+        emergencyContactNo: user.emergencyContactNo,
+        address: user.address,
+        studentNumber: user.studentNumber,
+        userType: user.userType,
+      );
 
-    await userManager.updateStudent(user: tempUser);
+      await userManager.updateStudent(user: tempUser);
+    }else if(user is DormitoryOwner){
+      DormitoryOwner? tempUser = DormitoryOwner(
+        userId: user.userId,
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+        name: nameController.text.trim(),
+        surName: surnameController.text.trim(),
+        phoneNo: phoneController.text.trim(),
+        dob: user.dob,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+        profileUrl: user.profileUrl,
+        isEmailVerified: user.isEmailVerified,
+        address: user.address,
+        dormitoryId: user.dormitoryId,
+        userType: user.userType,
+      );
+
+      await userManager.updateDormitoryOwner(user: tempUser);
+    }else if(user is Admin){
+      Admin? tempUser = Admin(
+        userId: user.userId,
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+        name: nameController.text.trim(),
+        surName: surnameController.text.trim(),
+        phoneNo: phoneController.text.trim(),
+        dob: user.dob,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+        profileUrl: user.profileUrl,
+        isEmailVerified: user.isEmailVerified,
+        address: user.address,
+        userType: user.userType,
+      );
+
+      await userManager.updateAdmin(user: tempUser);
+    }
+
 
     setState(() {
       isSaving = false;
@@ -129,7 +170,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
 
                           });
                         },
-                        child: Text('Upload Profile Photo'),
+                        child: const Text('Upload Profile Photo'),
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.blue,

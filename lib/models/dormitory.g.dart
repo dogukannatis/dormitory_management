@@ -28,6 +28,10 @@ Dormitory _$DormitoryFromJson(Map<String, dynamic> json) => Dormitory(
       ..comments = (json['comments'] as List<dynamic>?)
           ?.map((e) =>
               e == null ? null : Comment.fromJson(e as Map<String, dynamic>))
+          .toList()
+      ..rooms = (json['rooms'] as List<dynamic>?)
+          ?.map((e) =>
+              e == null ? null : Room.fromJson(e as Map<String, dynamic>))
           .toList();
 
 Map<String, dynamic> _$DormitoryToJson(Dormitory instance) {
@@ -48,5 +52,6 @@ Map<String, dynamic> _$DormitoryToJson(Dormitory instance) {
   val['dormitoryDetails'] = instance.dormitoryDetails;
   val['ratings'] = instance.ratings;
   val['comments'] = instance.comments;
+  val['rooms'] = instance.rooms;
   return val;
 }

@@ -26,6 +26,10 @@ class NotificationManager extends StateNotifier<List<AppNotification>> {
     await _repository.saveNotification(notification: notification);
   }
 
+  Future<List<AppNotification>> getAllNotificationsByStudentId({required int studentId}) async {
+    return state = await _repository.getAllNotificationsByStudentId(studentId: studentId);
+  }
+
 
 
 

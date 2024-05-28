@@ -4,11 +4,16 @@ import 'package:dormitory_management/models/booking.dart';
 import 'package:dormitory_management/models/comment.dart';
 import 'package:dormitory_management/models/dormitory.dart';
 import 'package:dormitory_management/models/dormitory_details.dart';
+import 'package:dormitory_management/models/room.dart';
+import 'package:dormitory_management/models/users/admin.dart';
+import 'package:dormitory_management/models/users/dormitory_owner.dart';
 import 'package:dormitory_management/models/users/student.dart';
 import 'package:dormitory_management/models/users/user.dart';
+import 'package:dormitory_management/services/admin_api.dart';
 import 'package:dormitory_management/services/comment_api.dart';
 import 'package:dormitory_management/services/dormitory_api.dart';
 import 'package:dormitory_management/services/dormitory_details.dart';
+import 'package:dormitory_management/services/dormitory_owner_api.dart';
 import 'package:dormitory_management/services/login_api.dart';
 import 'package:dormitory_management/services/notification_api.dart';
 import 'package:dormitory_management/services/rating_api.dart';
@@ -17,6 +22,7 @@ import 'package:dormitory_management/services/student_api.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../services/booking_api.dart';
+import '../services/room_api.dart';
 
 
 class Repository {
@@ -28,6 +34,9 @@ class Repository {
   final _commentApi = locator<CommentApi>();
   final _loginApi = locator<LoginApi>();
   final _notificationApi = locator<NotificationApi>();
+  final _dormitoryOwnerApi = locator<DormitoryOwnerApi>();
+  final _adminApi = locator<AdminApi>();
+  final _roomApi = locator<RoomApi>();
 
   Future<void> saveStudent({required Student user}) async {
     await _studentApi.saveStudent(user: user);
@@ -37,8 +46,20 @@ class Repository {
     await _notificationApi.saveNotification(notification: notification);
   }
 
+  Future<List<AppNotification>> getAllNotificationsByStudentId({required int studentId}) async {
+    return await _notificationApi.getAllNotificationsByStudentId(studentId: studentId);
+  }
+
   Future<void> updateStudent({required Student user}) async {
     await _studentApi.updateStudent(user: user);
+  }
+
+  Future<void> updateDormitoryOwner({required DormitoryOwner user}) async {
+    await _dormitoryOwnerApi.updateDormitoryOwner(user: user);
+  }
+
+  Future<void> updateAdmin({required Admin user}) async {
+    await _adminApi.updateAdmin(user: user);
   }
 
   Future<List<Dormitory>> getAllDormitories() async {
@@ -63,6 +84,14 @@ class Repository {
 
   Future<void> deleteDormitoryByID({required int dormitoryId}) async {
     await _dormitoryApi.deleteDormitoryByID(dormitoryId: dormitoryId);
+  }
+
+  Future<void> saveRoom({required Room room}) async {
+    await _roomApi.saveRoom(room: room);
+  }
+
+  Future<void> updateRoom({required Room room}) async {
+    await _roomApi.updateRoom(room: room);
   }
 
   Future<Dormitory?> getDormitoryByID({required int dormitoryId}) async {
