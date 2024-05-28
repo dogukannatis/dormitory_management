@@ -1,5 +1,6 @@
 
 import 'package:dormitory_management/locator.dart';
+import 'package:dormitory_management/models/room.dart';
 import 'package:dormitory_management/repository/repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,6 +42,26 @@ class DormManager extends StateNotifier<List<Dormitory>> {
   Future<void> saveDormitory({required Dormitory dormitory}) async {
     state = [...state, dormitory];
     await _repository.saveDormitory(dormitory: dormitory);
+  }
+
+  Future<void> saveRoom({required Room room}) async {
+    for(Dormitory dorm in state){
+      dorm.rooms = [...?dorm.rooms, room];
+    }
+    state = state;
+    await _repository.saveRoom(room: room);
+  }
+
+  Future<void> updateRoom({required Room room}) async {
+    for(Dormitory dorm in state){
+      for(Room? dormRoom in dorm.rooms!){
+        if(dormRoom!.dormitoryId == room.dormitoryId && dormRoom.roomId == room.roomId){
+          dormRoom = room;
+        }
+      }
+    }
+    state = state;
+    await _repository.updateRoom(room: room);
   }
 
   Future<void> deleteDormitoryByID({required int dormitoryId}) async {

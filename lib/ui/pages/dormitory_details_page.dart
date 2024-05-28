@@ -1,5 +1,6 @@
 import 'package:dormitory_management/models/booking.dart';
 import 'package:dormitory_management/models/dormitory_details.dart';
+import 'package:dormitory_management/models/users/student.dart';
 import 'package:dormitory_management/ui/widgets/button_loading.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
@@ -184,7 +185,7 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                                 SizedBox(height: 8),
                                  */
                                 ElevatedButton(
-                                  onPressed: user == null || isBooked ? null : () => book(),
+                                  onPressed: !(user != null && user is Student) || isBooked ? null : () => book(),
                                   child: isBooked ? const Text("Booked") : const Text('Book Now'),
                                 ),
                               ],
@@ -238,7 +239,10 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                         child: Text("There is no comment yet."),
                       ),
                       SizedBox(height: 50),
-                      user != null ?
+                      user == null ? Center(
+                        child: Text("Please sign in to write a comment."),
+                      ) :
+                      user is Student ?
                           Form(
                             key: _formKey,
                             child: Column(
@@ -271,7 +275,7 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                               ],
                             ),
                           ) : Center(
-                        child: Text("Please signin to write a comment."),
+                        child: Text("Please sign in as a Student to write a comment."),
                       ),
 
                     ],

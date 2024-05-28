@@ -1,5 +1,7 @@
 
 import 'package:dormitory_management/locator.dart';
+import 'package:dormitory_management/models/users/admin.dart';
+import 'package:dormitory_management/models/users/dormitory_owner.dart';
 import 'package:dormitory_management/models/users/student.dart';
 import 'package:dormitory_management/models/users/user.dart';
 import 'package:dormitory_management/repository/repository.dart';
@@ -48,6 +50,16 @@ class UserManager extends StateNotifier<User?> {
   Future<void> updateStudent({required Student user}) async {
     state = user;
     await _repository.updateStudent(user: user);
+  }
+
+  Future<void> updateDormitoryOwner({required DormitoryOwner user}) async {
+    state = user;
+    await _repository.updateDormitoryOwner(user: user);
+  }
+
+  Future<void> updateAdmin({required Admin user}) async {
+    state = user;
+    await _repository.updateAdmin(user: user);
   }
 
   void signOut(){

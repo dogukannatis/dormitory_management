@@ -1,4 +1,5 @@
 import 'package:dormitory_management/models/rating.dart';
+import 'package:dormitory_management/models/room.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'comment.dart';
@@ -18,6 +19,7 @@ class Dormitory {
   DormitoryDetails? dormitoryDetails;
   List<Rating>? ratings;
   List<Comment?>? comments;
+  List<Room?>? rooms;
 
   Dormitory({
     required this.dormitoryId,

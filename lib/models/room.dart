@@ -1,42 +1,28 @@
+import 'package:json_annotation/json_annotation.dart';
 
+part 'room.g.dart';
+
+@JsonSerializable()
 class Room {
-  final String id;
-  final String dormitoryID;
+  @JsonKey(includeIfNull: false)
+  final int? roomId;
+  final int? dormitoryId;
   String? roomType;
   int? price;
   DateTime? createdAt;
   DateTime? updatedAt;
 
   Room({
-    required this.id,
-    required this.dormitoryID,
+    required this.roomId,
+    required this.dormitoryId,
     this.roomType,
     this.price,
     this.createdAt,
     this.updatedAt
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      "id"        : id,
-      "dormitoryID"     : dormitoryID,
-      "roomType"      : roomType,
-      "price"   : price,
-      "createdAt" : createdAt,
-      "updatedAt" : updatedAt,
-    };
-  }
+  factory Room.fromJson(Map<String, dynamic> json) => _$RoomFromJson(json);
 
-  Room.fromMap(Map<String, dynamic> map) :
-        id = map["id"],
-        dormitoryID = map["dormitoryID"],
-        roomType = map["roomType"],
-        price = map["price"],
-        createdAt = map["createdAt"],
-        updatedAt = map["updatedAt"];
+  Map<String, dynamic> toJson() => _$RoomToJson(this);
 
-  @override
-  String toString() {
-    return 'Room{id: $id, dormitoryID: $dormitoryID, roomType: $roomType, price: $price, createdAt: $createdAt, updatedAt: $updatedAt}';
-  }
 }
