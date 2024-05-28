@@ -1,5 +1,7 @@
 
 import 'package:dormitory_management/locator.dart';
+import 'package:dormitory_management/models/dormitory_details.dart';
+import 'package:dormitory_management/models/rating.dart';
 import 'package:dormitory_management/models/room.dart';
 import 'package:dormitory_management/repository/repository.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,6 +44,15 @@ class DormManager extends StateNotifier<List<Dormitory>> {
   Future<void> saveDormitory({required Dormitory dormitory}) async {
     state = [...state, dormitory];
     await _repository.saveDormitory(dormitory: dormitory);
+  }
+
+
+  Future<void> deleteRating({required int ratingId}) async {
+    await _repository.deleteRating(ratingId: ratingId);
+  }
+
+  Future<List<Rating>> getRatingByDormitoryId({required int dormitoryId}) async {
+    return await _repository.getRatingByDormitoryId(dormitoryId: dormitoryId);
   }
 
   Future<void> saveRoom({required Room room}) async {

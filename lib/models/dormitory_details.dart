@@ -5,8 +5,8 @@ part 'dormitory_details.g.dart';
 @JsonSerializable()
 class DormitoryDetails {
   @JsonKey(includeIfNull: false)
-  final int? detailId;
-  final int? dormitoryId;
+   int? detailId;
+   int? dormitoryId;
   String? contactNo;
   String? email;
   String? faxNo;

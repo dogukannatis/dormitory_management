@@ -21,6 +21,7 @@ import 'package:dormitory_management/services/rating_api.dart';
 import 'package:dormitory_management/services/student_api.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../models/rating.dart';
 import '../services/booking_api.dart';
 import '../services/room_api.dart';
 
@@ -74,8 +75,24 @@ class Repository {
     return dorms;
   }
 
+  Future<List<Rating>> getRatingByDormitoryId({required int dormitoryId}) async {
+    List<Rating> ratings = await _ratingApi.getRatingByDormitoryId(dormitoryId: dormitoryId);
+    for(Rating rating in ratings){
+      rating.user = await _studentApi.getStudentByID(id: rating.userId!);
+    }
+    return ratings;
+  }
+
+  Future<void> deleteRating({required int ratingId}) async {
+    await _ratingApi.deleteRatingByID(ratingId: ratingId);
+  }
+
   Future<void> saveDormitory({required Dormitory dormitory}) async {
-    await _dormitoryApi.saveDormitory(dormitory: dormitory);
+    Dormitory? dorm = await _dormitoryApi.saveDormitory(dormitory: dormitory);
+    if(dorm != null){
+      dormitory.dormitoryDetails!.dormitoryId = dorm.dormitoryId;
+      await _dormitoryDetailsApi.saveDormitoryDetails(dormitoryDetails: dormitory.dormitoryDetails!);
+    }
   }
 
 

@@ -7,7 +7,7 @@ part of 'rating.dart';
 // **************************************************************************
 
 Rating _$RatingFromJson(Map<String, dynamic> json) => Rating(
-      id: json['id'] as int?,
+      ratingId: json['ratingId'] as int?,
       dormitoryId: json['dormitoryId'] as int?,
       userId: json['userId'] as int?,
       ratingNo: json['ratingNo'] as int?,
@@ -29,7 +29,7 @@ Map<String, dynamic> _$RatingToJson(Rating instance) {
     }
   }
 
-  writeNotNull('id', instance.id);
+  writeNotNull('ratingId', instance.ratingId);
   val['dormitoryId'] = instance.dormitoryId;
   val['userId'] = instance.userId;
   val['ratingNo'] = instance.ratingNo;
