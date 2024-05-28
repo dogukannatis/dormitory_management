@@ -53,7 +53,7 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
 
   Widget _getStudentDrawer(){
     return Drawer(
-      child: Column(
+      child: ListView(
         children: [
           ListTile(
             onTap: (){
