@@ -27,16 +27,16 @@ class _DormMGPaymentStatusState extends ConsumerState<DormMGPaymentStatus> {
     switch (status) {
       case 'Current':
         color = Colors.green;
-        label = 'Current';
+        label = 'Paid';
         break;
       case 'In Debt':
         color = Colors.orange;
-        label = 'In Debt';
+        label = 'In Progess';
         break;
       case 'Former':
       default:
         color = Colors.red;
-        label = 'Former';
+        label = 'Not Paid';
         break;
     }
 
