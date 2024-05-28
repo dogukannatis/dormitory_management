@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildImageSection() {
     return Image.asset(
-      'assets/images/home_img2.png',
+      'assets/images/home_img3.png',
       fit: BoxFit.contain,
     );
   }
