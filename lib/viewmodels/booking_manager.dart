@@ -27,7 +27,7 @@ class BookingManager extends StateNotifier<List<Booking>> {
     return state;
   }
 
-  Future<void> saveDormitory({required Booking booking}) async {
+  Future<void> saveBooking({required Booking booking}) async {
     state = [...state, booking];
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -40,7 +40,7 @@ class BookingManager extends StateNotifier<List<Booking>> {
   }
 
 
-  Future<void> deleteDormitoryByID({required int bookingId}) async {
+  Future<void> deleteBookingByID({required int bookingId}) async {
     state.removeWhere((booking) => booking.bookingId == bookingId);
     state = state;
     await _repository.deleteDormitoryByID(dormitoryId: bookingId);
