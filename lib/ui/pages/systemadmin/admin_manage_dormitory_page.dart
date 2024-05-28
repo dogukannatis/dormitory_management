@@ -232,278 +232,288 @@ class _AdminManageDormState extends ConsumerState<AdminManageDorm> {
     return Scaffold(
       appBar: getCustomAppBar(context),
       drawer: const CustomDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-          children: [
-          Row(
-          children: [
+      body: Row(
+        children: [
+          Container(
+            width: 250,
+            child: const CustomDrawer(),
+          ),
           Expanded(
-          child: Card(
-          color: Colors.white,
-          elevation: 5,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Create New Room',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Card(
+                            color: Colors.white,
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Create New Room',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  buildNewRoomForm(),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Card(
+                            color: Colors.white,
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Edit Room',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  buildEditRoomForm(existingRoom),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Card(
+                        color: Colors.white,
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Edit Dormitory',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 16),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: _statusController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Status',
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(8),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 16),
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: _createdDateController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Created Date',
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(8),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 16),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: _phoneController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Phone',
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(8),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 16),
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: _faxController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Fax',
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(8),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 16),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: _nameController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Name',
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(8),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 16),
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: _quotaController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Quota',
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(8),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 16),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: _emailController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Email',
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(8),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 16),
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: _passwordController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Password',
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(8),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 16),
+                              TextFormField(
+                                controller: _descriptionController,
+                                decoration: InputDecoration(
+                                  labelText: 'Description',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 16),
+                              Wrap(
+                                spacing: 8,
+                                runSpacing: 4,
+                                children: [
+                                  for (var feature in dormitoryFeatures)
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          feature.toggleSelection();
+                                        });
+                                      },
+                                      child: Chip(
+                                        label: Text(feature.name),
+                                        backgroundColor: feature.isSelected
+                                            ? Colors.green[100]
+                                            : Colors.red[100],
+                                      ),
+                                    ),
+                                ],
+                              ),
+                              SizedBox(height: 16),
+                              ElevatedButton(
+                                onPressed: () {},
+                                child: Text('Save'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 10),
-                buildNewRoomForm(),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
-      const SizedBox(width: 16),
-      Expanded(
-        child: Card(
-          color: Colors.white,
-          elevation: 5,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Edit Room',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 10),
-                buildEditRoomForm(existingRoom),
-              ],
-            ),
-          ),
-        ),
-      ),
-      ],
-    ),
-    const SizedBox(height: 16),
-    SizedBox(
-    width: double.infinity,
-    child: Card(
-    color: Colors.white,
-    elevation: 5,
-    shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(12),
-    ),
-    child: Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-    Text(
-    'Edit Dormitory',
-    style: TextStyle(
-    fontSize: 24,
-    fontWeight: FontWeight.bold,
-    ),
-    ),
-    SizedBox(height: 16),
-    Row(
-    children: [
-    Expanded(
-    child: TextFormField(
-    controller: _statusController,
-    decoration: InputDecoration(
-    labelText: 'Status',
-    filled: true,
-    fillColor: Colors.white,
-    border: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(8),
-    borderSide: BorderSide.none,
-    ),
-    ),
-    ),
-    ),
-    SizedBox(width: 16),
-    Expanded(
-    child: TextFormField(
-    controller: _createdDateController,
-    decoration: InputDecoration(
-    labelText: 'Created Date',
-    filled: true,
-    fillColor: Colors.white,
-    border: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(8),
-    borderSide: BorderSide.none,
-    ),
-    ),
-    ),
-    ),
-    ],
-    ),
-    SizedBox(height: 16),
-    Row(
-    children: [
-    Expanded(
-    child: TextFormField(
-    controller: _phoneController,
-    decoration: InputDecoration(
-    labelText: 'Phone',
-    filled: true,
-    fillColor: Colors.white,
-    border: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(8),
-    borderSide: BorderSide.none,
-    ),
-    ),
-    ),
-    ),
-    SizedBox(width: 16),
-    Expanded(
-    child: TextFormField(
-    controller: _faxController,
-    decoration: InputDecoration(
-    labelText: 'Fax',
-    filled: true,
-    fillColor: Colors.white,
-    border: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(8),
-    borderSide: BorderSide.none,
-    ),
-    ),
-    ),
-    ),
-    ],
-    ),
-    SizedBox(height: 16),
-    Row(
-    children: [
-    Expanded(
-    child: TextFormField(
-    controller: _nameController,
-    decoration: InputDecoration(
-    labelText: 'Name',
-    filled: true,
-    fillColor: Colors.white,
-    border: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(8),
-    borderSide: BorderSide.none,
-    ),
-    ),
-    ),
-    ),
-    SizedBox(width: 16),
-    Expanded(
-    child: TextFormField(
-    controller: _quotaController,
-    decoration: InputDecoration(
-    labelText: 'Quota',
-    filled: true,
-    fillColor: Colors.white,
-    border: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(8),
-    borderSide: BorderSide.none,
-    ),
-    ),
-    ),
-    ),
-    ],
-    ),
-    SizedBox(height: 16),
-    Row(
-    children: [
-    Expanded(
-    child: TextFormField(
-    controller: _emailController,
-    decoration: InputDecoration(
-    labelText: 'Email',
-    filled: true,
-    fillColor: Colors.white,
-    border: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(8),
-    borderSide: BorderSide.none,
-    ),
-    ),
-    ),
-    ),
-    SizedBox(width: 16),
-    Expanded(
-    child: TextFormField(
-    controller: _passwordController,
-    decoration: InputDecoration(
-    labelText: 'Password',
-    filled: true,
-    fillColor: Colors.white,
-    border: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(8),
-    borderSide: BorderSide.none,
-    ),
-    ),
-    ),
-    ),
-    ],
-    ),
-    SizedBox(height: 16),
-    TextFormField(
-    controller: _descriptionController,
-    decoration: InputDecoration(
-    labelText: 'Description',
-    filled: true,
-    fillColor: Colors.white,
-    border: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(8),
-    borderSide: BorderSide.none,
-    ),
-    ),
-    ),
-    SizedBox(height: 16),
-    Wrap(
-    spacing: 8,
-    runSpacing: 4,
-    children: [
-    for (var feature in dormitoryFeatures)
-    GestureDetector(
-    onTap: () {
-    setState(() {
-    feature.toggleSelection();
-    });
-    },
-    child: Chip(
-    label: Text(feature.name),
-    backgroundColor: feature.isSelected
-    ? Colors.green[100]
-        : Colors.red[100],
-    ),
-    ),
-    ],
-    ),
-    SizedBox(height: 16),
-    ElevatedButton(
-    onPressed: () {},
-    child: Text('Save'),
-    ),
-    ],
-    ),
-    ),
-    ),
-    ),
-    ],
-          ),
-    ),
-    ),
     );
   }
 
