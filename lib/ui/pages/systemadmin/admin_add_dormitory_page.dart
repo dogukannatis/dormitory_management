@@ -284,7 +284,6 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
 
     return Scaffold(
       appBar: getCustomAppBar(context),
-      drawer: const CustomDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

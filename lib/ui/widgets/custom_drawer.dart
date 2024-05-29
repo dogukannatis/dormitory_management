@@ -43,6 +43,7 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
   Widget build(BuildContext context) {
     User? user = ref.watch(userManagerProvider);
 
+/*
 
     if(user is Student){
       return _getStudentDrawer();
@@ -54,8 +55,9 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
       return Container();
     }
 
+*/
 
-  //return _getMockDrawer();
+  return _getMockDrawer();
 
   }
 

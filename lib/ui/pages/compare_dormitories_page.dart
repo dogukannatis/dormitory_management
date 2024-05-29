@@ -91,12 +91,10 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: getCustomAppBar(context),
-      drawer: const CustomDrawer(),
-      body: isLoading ? const Center(child: CircularProgressIndicator()) : Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Row(
+      body: isLoading ? const Center(child: CircularProgressIndicator()) : Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const CustomDrawer(),
             Expanded(
               flex: 2,
               child: ListView(
@@ -368,7 +366,6 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
             ),
           ],
         ),
-      ),
     );
   }
 }
