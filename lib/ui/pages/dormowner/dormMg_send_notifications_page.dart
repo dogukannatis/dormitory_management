@@ -61,7 +61,7 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
       appBar: getCustomAppBar(context),
       body: Row(
         children: [
-          CustomDrawer(),
+          CustomDrawer(activePage: ActivePages.dormMGsendNotifications,),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),

@@ -61,7 +61,7 @@ class _AdminSendNotificationsState extends ConsumerState<AdminSendNotifications>
       appBar: getCustomAppBar(context),
       body: Row(
         children: [
-          CustomDrawer(),
+          CustomDrawer(activePage: ActivePages.adminSendNotifications,),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),

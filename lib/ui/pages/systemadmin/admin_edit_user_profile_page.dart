@@ -14,9 +14,9 @@ class _AdminEditUserProfileState extends State<AdminEditUserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: getCustomAppBar(context),
-      drawer: const CustomDrawer(),
       body: Row(
         children: [
+          CustomDrawer(activePage: ActivePages.adminEditUserProfile,),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Align(

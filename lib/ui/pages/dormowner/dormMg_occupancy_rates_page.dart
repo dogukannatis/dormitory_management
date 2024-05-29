@@ -7,14 +7,14 @@ import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DormOccupancyRates extends ConsumerStatefulWidget {
-  const DormOccupancyRates({super.key});
+class DormMGOccupancyRates extends ConsumerStatefulWidget {
+  const DormMGOccupancyRates({super.key});
 
   @override
-  ConsumerState createState() => _DormOccupancyRatesState();
+  ConsumerState createState() => _DormMGOccupancyRatesState();
 }
 
-class _DormOccupancyRatesState extends ConsumerState<DormOccupancyRates> {
+class _DormMGOccupancyRatesState extends ConsumerState<DormMGOccupancyRates> {
 
   Dormitory? dormitory;
   bool isLoading = false;
@@ -77,7 +77,7 @@ class _DormOccupancyRatesState extends ConsumerState<DormOccupancyRates> {
       appBar: getCustomAppBar(context),
       body: Row(
         children: [
-          const CustomDrawer(),
+          CustomDrawer(activePage: ActivePages.dormMGocuupancyRates,),
           isLoading ? const Expanded(child: Center(child: CircularProgressIndicator(),)) : Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),

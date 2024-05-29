@@ -234,10 +234,7 @@ class _AdminManageDormState extends ConsumerState<AdminManageDorm> {
       drawer: const CustomDrawer(),
       body: Row(
         children: [
-          Container(
-            width: 250,
-            child: const CustomDrawer(),
-          ),
+          CustomDrawer(activePage: ActivePages.adminManageDrom,),
           Expanded(
             child: SingleChildScrollView(
               child: Padding(

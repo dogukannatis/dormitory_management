@@ -12,9 +12,7 @@ class DormMGSetDateRange extends StatelessWidget {
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            child: const CustomDrawer(),
-          ),
+          CustomDrawer(activePage: ActivePages.dormMGsetDateRange,),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),

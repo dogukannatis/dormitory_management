@@ -97,10 +97,7 @@ class _UserBookingHistoryState extends ConsumerState<UserBookingHistory> {
           : Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 250,
-            child: const CustomDrawer(),
-          ),
+          CustomDrawer(activePage: ActivePages.userBookingHistory,),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),

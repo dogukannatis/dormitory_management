@@ -91,7 +91,7 @@ class _DormMGBookingHistoryState extends ConsumerState<DormMGBookingHistory> {
       appBar: getCustomAppBar(context),
       body: Row(
         children: [
-          CustomDrawer(),
+          CustomDrawer(activePage: ActivePages.dormMGbookingHistory,),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),

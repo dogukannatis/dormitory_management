@@ -14,10 +14,7 @@ class UserProfileDormitory extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              width: 250,
-              child: const CustomDrawer(),
-            ),
+            CustomDrawer(activePage: ActivePages.userProfileDormitory,),
             SizedBox(width: 16),
             Expanded(
               child: Card(

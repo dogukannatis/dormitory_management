@@ -122,7 +122,7 @@ class _DormMGManageRoomState extends ConsumerState<DormMGManageRoom> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomDrawer(),
+          CustomDrawer(activePage: ActivePages.dormMGmanageRoom,),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),

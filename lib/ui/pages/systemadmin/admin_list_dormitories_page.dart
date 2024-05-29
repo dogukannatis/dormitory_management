@@ -43,7 +43,7 @@ class _AdminListDormState extends State<AdminListDorm> {
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CustomDrawer(),
+          CustomDrawer(activePage: ActivePages.adminListDorm,),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),

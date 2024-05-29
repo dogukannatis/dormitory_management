@@ -43,16 +43,12 @@ class _UserProfileNotificationsState extends ConsumerState<UserProfileNotificati
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: getCustomAppBar(context),
-      drawer: const CustomDrawer(),
       body: isLoading
           ? const Center(child: CircularProgressIndicator(),)
           : Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 250, // Custom drawer genişliği
-            child: const CustomDrawer(), // Custom drawer içeriği
-          ),
+          CustomDrawer(activePage: ActivePages.profileNotifications,),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),

@@ -73,7 +73,7 @@ class _DormMGPaymentStatusState extends ConsumerState<DormMGPaymentStatus> {
       appBar: getCustomAppBar(context),
       body: Row(
         children: [
-          CustomDrawer(),
+          CustomDrawer(activePage: ActivePages.dormMGpaymentStatus,),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),

@@ -118,7 +118,7 @@ class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings>
           ? const Center(child: CircularProgressIndicator())
           : Row(
             children: [
-              const CustomDrawer(),
+              CustomDrawer(activePage: ActivePages.dormMGreviewsAndRatings,),
               const SizedBox(width: 16,),
               Expanded(
                 child: Padding(

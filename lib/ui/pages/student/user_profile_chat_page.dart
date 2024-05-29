@@ -43,9 +43,7 @@ class _UserProfileChatsState extends State<UserProfileChats> {
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            child: const CustomDrawer(),
-          ),
+          CustomDrawer(activePage: ActivePages.profileChats,),
           SizedBox(width: 16),
           Expanded(
             child: Row(
