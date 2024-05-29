@@ -71,62 +71,68 @@ class _DormMGBookingHistoryState extends ConsumerState<DormMGBookingHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: getCustomAppBar(context),
-      drawer: const CustomDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Align(
-          alignment: Alignment.topLeft,
-          child: Card(
-            color: Colors.white,
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Container(
-              padding: const EdgeInsets.all(24.0),
-              constraints: BoxConstraints(maxWidth: 1000),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Booking History',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      body: Row(
+        children: [
+          CustomDrawer(),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Card(
+                  color: Colors.white,
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  SizedBox(height: 20),
-                  Expanded(
-                    child: ListView(
+                  child: Container(
+                    padding: const EdgeInsets.all(24.0),
+                    constraints: BoxConstraints(maxWidth: 1000),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        DataTable(
-                          columnSpacing: 12.0,
-                          columns: [
-                            DataColumn(label: Text('User')),
-                            DataColumn(label: Text('Status')),
-                            DataColumn(label: Text('Room')),
-                            DataColumn(label: Text('SKU')),
-                            DataColumn(label: Text('Contact')),
-                            DataColumn(label: Text('Price TRY')),
-                            DataColumn(label: Text('Action')),
-                          ],
-                          rows: bookings.map((booking) {
-                            return DataRow(cells: [
-                              DataCell(Text('Universe ${booking.dormitoryId}')),
-                              DataCell(_buildStatusChip(booking.status ?? 'Unknown')),
-                              DataCell(Text('Room ${booking.roomId}')),
-                              DataCell(Text('23-24 / F-S')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
-                              DataCell(Text('+90 555 555 55 55')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
-                              DataCell(Text('TRY 75000.00')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
-                              DataCell(_buildActionButton()),
-                            ]);
-                          }).toList(),
+                        Text(
+                          'Booking History',
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 20),
+                        Expanded(
+                          child: ListView(
+                            children: [
+                              DataTable(
+                                columnSpacing: 12.0,
+                                columns: [
+                                  DataColumn(label: Text('User')),
+                                  DataColumn(label: Text('Status')),
+                                  DataColumn(label: Text('Room')),
+                                  DataColumn(label: Text('SKU')),
+                                  DataColumn(label: Text('Contact')),
+                                  DataColumn(label: Text('Price TRY')),
+                                  DataColumn(label: Text('Action')),
+                                ],
+                                rows: bookings.map((booking) {
+                                  return DataRow(cells: [
+                                    DataCell(Text('Universe ${booking.dormitoryId}')),
+                                    DataCell(_buildStatusChip(booking.status ?? 'Unknown')),
+                                    DataCell(Text('Room ${booking.roomId}')),
+                                    DataCell(Text('23-24 / F-S')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
+                                    DataCell(Text('+90 555 555 55 55')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
+                                    DataCell(Text('TRY 75000.00')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
+                                    DataCell(_buildActionButton()),
+                                  ]);
+                                }).toList(),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

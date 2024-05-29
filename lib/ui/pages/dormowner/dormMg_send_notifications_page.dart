@@ -59,137 +59,143 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: getCustomAppBar(context),
-      drawer: const CustomDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Align(
-          alignment: Alignment.topLeft,
-          child: Card(
-            color: Colors.white,
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Container(
-              padding: const EdgeInsets.all(24.0),
-              constraints: BoxConstraints(maxWidth: 1000),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Send Notifications & Alerts',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      body: Row(
+        children: [
+          CustomDrawer(),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Card(
+                  color: Colors.white,
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  SizedBox(height: 20),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
+                  child: Container(
+                    padding: const EdgeInsets.all(24.0),
+                    constraints: BoxConstraints(maxWidth: 1000),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Send Notifications & Alerts',
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 20),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TextFormField(
-                              controller: _groupController,
-                              decoration: InputDecoration(labelText: 'Group'),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  TextFormField(
+                                    controller: _groupController,
+                                    decoration: InputDecoration(labelText: 'Group'),
+                                  ),
+                                  SizedBox(height: 16),
+                                  TextFormField(
+                                    controller: _titleController,
+                                    decoration: InputDecoration(labelText: 'Notification Title'),
+                                  ),
+                                  SizedBox(height: 16),
+                                  TextFormField(
+                                    controller: _descriptionController,
+                                    maxLines: 5,
+                                    decoration: InputDecoration(labelText: 'Notification Description'),
+                                  ),
+                                  SizedBox(height: 16),
+                                  Container(
+                                    height: 100,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: _images.length,
+                                      itemBuilder: (context, index) {
+                                        return Stack(
+                                          alignment: Alignment.topRight,
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.symmetric(horizontal: 5),
+                                              width: 100,
+                                              height: 100,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10),
+                                                image: DecorationImage(
+                                                  image: FileImage(_images[index]),
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ),
+                                            IconButton(
+                                              icon: Icon(Icons.delete, color: Colors.red),
+                                              onPressed: () => _deleteImage(index),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(height: 16),
+                                  ElevatedButton(
+                                    onPressed: _pickImage,
+                                    child: Text('Add Photo'),
+                                  ),
+                                  SizedBox(height: 16),
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      await _uploadImages();
+                                      //kaydetme fonksiyonu buraya gelecek, _uploadedImageUrls +
+                                    },
+                                    child: Text('Save'),
+                                  ),
+                                ],
+                              ),
                             ),
-                            SizedBox(height: 16),
-                            TextFormField(
-                              controller: _titleController,
-                              decoration: InputDecoration(labelText: 'Notification Title'),
-                            ),
-                            SizedBox(height: 16),
-                            TextFormField(
-                              controller: _descriptionController,
-                              maxLines: 5,
-                              decoration: InputDecoration(labelText: 'Notification Description'),
-                            ),
-                            SizedBox(height: 16),
-                            Container(
-                              height: 100,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: _images.length,
-                                itemBuilder: (context, index) {
-                                  return Stack(
-                                    alignment: Alignment.topRight,
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.symmetric(horizontal: 5),
-                                        width: 100,
-                                        height: 100,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                          image: DecorationImage(
-                                            image: FileImage(_images[index]),
-                                            fit: BoxFit.cover,
-                                          ),
+                            VerticalDivider(thickness: 1, color: Colors.grey),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Preview',
+                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(height: 16),
+                                  if (_images.isNotEmpty)
+                                    Container(
+                                      width: double.infinity,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: FileImage(_images.first),
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
-                                      IconButton(
-                                        icon: Icon(Icons.delete, color: Colors.red),
-                                        onPressed: () => _deleteImage(index),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ),
-                            ),
-                            SizedBox(height: 16),
-                            ElevatedButton(
-                              onPressed: _pickImage,
-                              child: Text('Add Photo'),
-                            ),
-                            SizedBox(height: 16),
-                            ElevatedButton(
-                              onPressed: () async {
-                                await _uploadImages();
-                              //kaydetme fonksiyonu buraya gelecek, _uploadedImageUrls +
-                              },
-                              child: Text('Save'),
-                            ),
-                          ],
-                        ),
-                      ),
-                      VerticalDivider(thickness: 1, color: Colors.grey),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Text(
-                              'Preview',
-                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(height: 16),
-                            if (_images.isNotEmpty)
-                              Container(
-                                width: double.infinity,
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                    image: FileImage(_images.first),
-                                    fit: BoxFit.cover,
+                                    ),
+                                  SizedBox(height: 16),
+                                  Text(
+                                    _titleController.text,
+                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                   ),
-                                ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    _descriptionController.text,
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ],
                               ),
-                            SizedBox(height: 16),
-                            Text(
-                              _titleController.text,
-                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              _descriptionController.text,
-                              style: TextStyle(fontSize: 16),
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ],
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
