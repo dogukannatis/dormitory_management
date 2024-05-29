@@ -65,7 +65,7 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
 
   Widget _getStudentDrawer() {
     return SizedBox(
-      width: 250,
+      width: 300,
       child: Drawer(
         child: ListView(
           children: [
