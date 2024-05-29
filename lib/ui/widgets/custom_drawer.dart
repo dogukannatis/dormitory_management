@@ -73,31 +73,31 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const EditProfilePage()));
               },
-              title: Text("Edit Profile", style: widget.activePage == ActivePages.editProfilePage ? TextStyle(color: Colors.green) : null,),
+              title: Text("Edit Profile", style: widget.activePage == ActivePages.editProfilePage ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const UserProfileDormitory()));
               },
-              title: Text("My Dormitory", style: widget.activePage == ActivePages.userProfileDormitory ? TextStyle(color: Colors.green) : null,),
+              title: Text("My Dormitory", style: widget.activePage == ActivePages.userProfileDormitory ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const UserBookingHistory()));
               },
-              title: Text("Booking History", style: widget.activePage == ActivePages.userBookingHistory ? TextStyle(color: Colors.green) : null,),
+              title: Text("Booking History", style: widget.activePage == ActivePages.userBookingHistory ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const UserProfileNotifications()));
               },
-              title: Text("Notifications", style: widget.activePage == ActivePages.profileNotifications ? TextStyle(color: Colors.green) : null,),
+              title: Text("Notifications", style: widget.activePage == ActivePages.profileNotifications ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const UserProfileChats()));
               },
-              title: Text("Chats", style: widget.activePage == ActivePages.profileChats ? TextStyle(color: Colors.green) : null,),
+              title: Text("Chats", style: widget.activePage == ActivePages.profileChats ? TextStyle(color: Colors.blue) : null,),
             ),
           ],
         ),
@@ -115,55 +115,55 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const EditProfilePage()));
               },
-              title: Text("Edit Profile", style: widget.activePage == ActivePages.editProfilePage ? TextStyle(color: Colors.green) : null,),
+              title: Text("Edit Profile", style: widget.activePage == ActivePages.editProfilePage ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGEditDorm()));
               },
-              title: Text("Edit Dorm", style: widget.activePage == ActivePages.dormMGeditDorm ? TextStyle(color: Colors.green) : null,),
+              title: Text("Edit Dorm", style: widget.activePage == ActivePages.dormMGeditDorm ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGSetDateRange()));
               },
-              title: Text("Edit Dorm", style: widget.activePage == ActivePages.dormMGsetDateRange ? TextStyle(color: Colors.green) : null,),
+              title: Text("Edit Dorm", style: widget.activePage == ActivePages.dormMGsetDateRange ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGSendNotifications()));
               },
-              title: Text("Send Notifications", style: widget.activePage == ActivePages.dormMGsendNotifications ? TextStyle(color: Colors.green) : null,),
+              title: Text("Send Notifications", style: widget.activePage == ActivePages.dormMGsendNotifications ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGOccupancyRates()));
               },
-              title: Text("Occupancy Rates", style: widget.activePage == ActivePages.dormMGocuupancyRates ? TextStyle(color: Colors.green) : null,),
+              title: Text("Occupancy Rates", style: widget.activePage == ActivePages.dormMGocuupancyRates ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGManageRoom()));
               },
-              title: Text("Manage Room", style: widget.activePage == ActivePages.dormMGmanageRoom ? TextStyle(color: Colors.green) : null,),
+              title: Text("Manage Room", style: widget.activePage == ActivePages.dormMGmanageRoom ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGPaymentStatus()));
               },
-              title: Text("Payment Status", style: widget.activePage == ActivePages.dormMGpaymentStatus ? TextStyle(color: Colors.green) : null,),
+              title: Text("Payment Status", style: widget.activePage == ActivePages.dormMGpaymentStatus ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGBookingHistory()));
               },
-              title: Text("Booking History", style: widget.activePage == ActivePages.dormMGbookingHistory ? TextStyle(color: Colors.green) : null,),
+              title: Text("Booking History", style: widget.activePage == ActivePages.dormMGbookingHistory ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGReviewAndRatings()));
               },
-              title: Text("Review And Ratings", style: widget.activePage == ActivePages.dormMGreviewsAndRatings ? TextStyle(color: Colors.green) : null,),
+              title: Text("Review And Ratings", style: widget.activePage == ActivePages.dormMGreviewsAndRatings ? TextStyle(color: Colors.blue) : null,),
             ),
           ],
         ),
@@ -181,43 +181,43 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const EditProfilePage()));
               },
-              title: Text("Edit Profile", style: widget.activePage == ActivePages.editProfilePage ? TextStyle(color: Colors.green) : null,),
+              title: Text("Edit Profile", style: widget.activePage == ActivePages.editProfilePage ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminSendNotifications()));
               },
-              title: Text("Send Notifications", style: widget.activePage == ActivePages.adminSendNotifications ? TextStyle(color: Colors.green) : null,),
+              title: Text("Send Notifications", style: widget.activePage == ActivePages.adminSendNotifications ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminManageDorm()));
               },
-              title: Text("Manage Dorm", style: widget.activePage == ActivePages.adminManageDrom ? TextStyle(color: Colors.green) : null,),
+              title: Text("Manage Dorm", style: widget.activePage == ActivePages.adminManageDrom ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminAddDorm()));
               },
-              title: Text("Add Dorm", style: widget.activePage == ActivePages.adminAddDorm ? TextStyle(color: Colors.green) : null,),
+              title: Text("Add Dorm", style: widget.activePage == ActivePages.adminAddDorm ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminListDorm()));
               },
-              title: Text("List Dorm", style: widget.activePage == ActivePages.adminListDorm ? TextStyle(color: Colors.green) : null,),
+              title: Text("List Dorm", style: widget.activePage == ActivePages.adminListDorm ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminListUser()));
               },
-              title: Text("List User", style: widget.activePage == ActivePages.adminListUser ? TextStyle(color: Colors.green) : null,),
+              title: Text("List User", style: widget.activePage == ActivePages.adminListUser ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminEditUserProfile()));
               },
-              title: Text("Edit User Profile", style: widget.activePage == ActivePages.adminEditUserProfile ? TextStyle(color: Colors.green) : null,),
+              title: Text("Edit User Profile", style: widget.activePage == ActivePages.adminEditUserProfile ? TextStyle(color: Colors.blue) : null,),
             ),
           ],
         ),
@@ -235,115 +235,115 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const EditProfilePage()));
               },
-              title: Text("STD Edit Profile", style: widget.activePage == ActivePages.editProfilePage ? TextStyle(color: Colors.green) : null,),
+              title: Text("STD Edit Profile", style: widget.activePage == ActivePages.editProfilePage ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const UserProfileDormitory()));
               },
-              title: Text("STD My Dormitory", style: widget.activePage == ActivePages.userProfileDormitory ? TextStyle(color: Colors.green) : null,),
+              title: Text("STD My Dormitory", style: widget.activePage == ActivePages.userProfileDormitory ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const UserBookingHistory()));
               },
-              title: Text("STD Booking History", style: widget.activePage == ActivePages.userBookingHistory ? TextStyle(color: Colors.green) : null,),
+              title: Text("STD Booking History", style: widget.activePage == ActivePages.userBookingHistory ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const UserProfileNotifications()));
               },
-              title: Text("STD Notifications", style: widget.activePage == ActivePages.profileNotifications ? TextStyle(color: Colors.green) : null,),
+              title: Text("STD Notifications", style: widget.activePage == ActivePages.profileNotifications ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const UserProfileChats()));
               },
-              title: Text("STD Chats", style: widget.activePage == ActivePages.profileChats ? TextStyle(color: Colors.green) : null,),
+              title: Text("STD Chats", style: widget.activePage == ActivePages.profileChats ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGSetDateRange()));
               },
-              title: Text("DORM Set Date Range", style: widget.activePage == ActivePages.dormMGsetDateRange ? TextStyle(color: Colors.green) : null,),
+              title: Text("DORM Set Date Range", style: widget.activePage == ActivePages.dormMGsetDateRange ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGEditDorm()));
               },
-              title: Text("DORM Edit Dorm", style: widget.activePage == ActivePages.dormMGeditDorm ? TextStyle(color: Colors.green) : null,),
+              title: Text("DORM Edit Dorm", style: widget.activePage == ActivePages.dormMGeditDorm ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGSendNotifications()));
               },
-              title: Text("DORM Send Notifications", style: widget.activePage == ActivePages.dormMGsendNotifications ? TextStyle(color: Colors.green) : null,),
+              title: Text("DORM Send Notifications", style: widget.activePage == ActivePages.dormMGsendNotifications ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGOccupancyRates()));
               },
-              title: Text("DORM Occupancy Rates", style: widget.activePage == ActivePages.dormMGocuupancyRates ? TextStyle(color: Colors.green) : null,),
+              title: Text("DORM Occupancy Rates", style: widget.activePage == ActivePages.dormMGocuupancyRates ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGManageRoom()));
               },
-              title: Text("DORM Manage Room", style: widget.activePage == ActivePages.dormMGmanageRoom ? TextStyle(color: Colors.green) : null,),
+              title: Text("DORM Manage Room", style: widget.activePage == ActivePages.dormMGmanageRoom ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGPaymentStatus()));
               },
-              title: Text("DORM Payment Status", style: widget.activePage == ActivePages.dormMGpaymentStatus ? TextStyle(color: Colors.green) : null,),
+              title: Text("DORM Payment Status", style: widget.activePage == ActivePages.dormMGpaymentStatus ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGBookingHistory()));
               },
-              title: Text("DORM Booking History", style: widget.activePage == ActivePages.dormMGbookingHistory ? TextStyle(color: Colors.green) : null,),
+              title: Text("DORM Booking History", style: widget.activePage == ActivePages.dormMGbookingHistory ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGReviewAndRatings()));
               },
-              title: Text("DORM Review And Ratings", style: widget.activePage == ActivePages.dormMGreviewsAndRatings ? TextStyle(color: Colors.green) : null,),
+              title: Text("DORM Review And Ratings", style: widget.activePage == ActivePages.dormMGreviewsAndRatings ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminSendNotifications()));
               },
-              title: Text("ADMIN Send Notifications", style: widget.activePage == ActivePages.adminSendNotifications ? TextStyle(color: Colors.green) : null,),
+              title: Text("ADMIN Send Notifications", style: widget.activePage == ActivePages.adminSendNotifications ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminManageDorm()));
               },
-              title: Text("ADMIN Manage Dorm", style: widget.activePage == ActivePages.adminManageDrom ? TextStyle(color: Colors.green) : null,),
+              title: Text("ADMIN Manage Dorm", style: widget.activePage == ActivePages.adminManageDrom ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminAddDorm()));
               },
-              title: Text("ADMIN Add Dorm", style: widget.activePage == ActivePages.adminAddDorm ? TextStyle(color: Colors.green) : null,),
+              title: Text("ADMIN Add Dorm", style: widget.activePage == ActivePages.adminAddDorm ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminListDorm()));
               },
-              title: Text("ADMIN List Dorm", style: widget.activePage == ActivePages.adminListDorm ? TextStyle(color: Colors.green) : null,),
+              title: Text("ADMIN List Dorm", style: widget.activePage == ActivePages.adminListDorm ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminListUser()));
               },
-              title: Text("ADMIN List User", style: widget.activePage == ActivePages.adminListUser ? TextStyle(color: Colors.green) : null,),
+              title: Text("ADMIN List User", style: widget.activePage == ActivePages.adminListUser ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminEditUserProfile()));
               },
-              title: Text("ADMIN Edit User Profile", style: widget.activePage == ActivePages.adminEditUserProfile ? TextStyle(color: Colors.green) : null,),
+              title: Text("ADMIN Edit User Profile", style: widget.activePage == ActivePages.adminEditUserProfile ? TextStyle(color: Colors.blue) : null,),
             ),
           ],
         ),
