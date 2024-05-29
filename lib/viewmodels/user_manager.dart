@@ -1,4 +1,5 @@
 
+import 'package:dio/dio.dart';
 import 'package:dormitory_management/locator.dart';
 import 'package:dormitory_management/models/users/admin.dart';
 import 'package:dormitory_management/models/users/dormitory_owner.dart';
@@ -19,6 +20,10 @@ class UserManager extends StateNotifier<User?> {
   UserManager(this.ref) : super(null);
 
   final _repository = locator<Repository>();
+
+  Future<List<User>> getAllUsers() async {
+    return await _repository.getAllUsers();
+  }
 
   Future<User?> login({required String email, required String password}) async {
 
@@ -47,20 +52,36 @@ class UserManager extends StateNotifier<User?> {
     await _repository.saveStudent(user: user);
   }
 
-  Future<void> updateStudent({required Student user}) async {
-    state = user;
+  Future<void> updateStudent({required Student user, bool? disableState = false}) async {
+    if(disableState != true){
+      state = user;
+    }
     await _repository.updateStudent(user: user);
   }
 
-  Future<void> updateDormitoryOwner({required DormitoryOwner user}) async {
-    state = user;
+  Future<void> updateDormitoryOwner({required DormitoryOwner user, bool? disableState}) async {
+    if(disableState != true){
+      state = user;
+    }
     await _repository.updateDormitoryOwner(user: user);
   }
 
-  Future<void> updateAdmin({required Admin user}) async {
-    state = user;
+  Future<void> updateAdmin({required Admin user, bool? disableState}) async {
+    if(disableState != true){
+      state = user;
+    }
     await _repository.updateAdmin(user: user);
   }
+
+  /*
+  Future<void> uploadPhoto({required FormData formData, bool? disableState}) async {
+    String? url = await _repository.uploadPhoto(formData: formData);
+    if(disableState != true){
+      state!.profileUrl = url;
+      state = state;
+    }
+  }
+   */
 
   void signOut(){
     state = null;

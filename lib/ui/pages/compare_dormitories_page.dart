@@ -309,6 +309,7 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
                           ],
                         ),
                         const SizedBox(height: 20),
+                       /*
                         const Text(
                           'Price Range',
                           style: TextStyle(
@@ -358,6 +359,7 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
                           activeColor: Colors.black,
                           inactiveColor: Colors.black38,
                         ),
+                        */
                       ],
                     ),
                   ),

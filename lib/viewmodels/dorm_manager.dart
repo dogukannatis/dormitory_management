@@ -1,4 +1,5 @@
 
+import 'package:dio/dio.dart';
 import 'package:dormitory_management/locator.dart';
 import 'package:dormitory_management/models/dormitory_details.dart';
 import 'package:dormitory_management/models/rating.dart';
@@ -65,6 +66,15 @@ class DormManager extends StateNotifier<List<Dormitory>> {
     }
     state = state;
     await _repository.saveRoom(room: room);
+  }
+
+  Future<void> deleteRoom({required int roomId}) async {
+    await _repository.deleteRoom(roomId: roomId);
+  }
+
+  Future<void> uploadPhoto({required FormData formData, bool? disableState, required int detailId}) async {
+    await _repository.uploadPhoto(formData: formData, detailId: detailId);
+
   }
 
   Future<void> updateRoom({required Room room}) async {

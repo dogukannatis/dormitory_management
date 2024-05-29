@@ -17,22 +17,10 @@ Dormitory _$DormitoryFromJson(Map<String, dynamic> json) => Dormitory(
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
-    )
-      ..dormitoryDetails = json['dormitoryDetails'] == null
-          ? null
-          : DormitoryDetails.fromJson(
-              json['dormitoryDetails'] as Map<String, dynamic>)
-      ..ratings = (json['ratings'] as List<dynamic>?)
-          ?.map((e) => Rating.fromJson(e as Map<String, dynamic>))
-          .toList()
-      ..comments = (json['comments'] as List<dynamic>?)
-          ?.map((e) =>
-              e == null ? null : Comment.fromJson(e as Map<String, dynamic>))
-          .toList()
-      ..rooms = (json['rooms'] as List<dynamic>?)
-          ?.map((e) =>
-              e == null ? null : Room.fromJson(e as Map<String, dynamic>))
-          .toList();
+    )..dormitoryDetails = json['dormitoryDetails'] == null
+        ? null
+        : DormitoryDetails.fromJson(
+            json['dormitoryDetails'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$DormitoryToJson(Dormitory instance) {
   final val = <String, dynamic>{};
@@ -50,8 +38,5 @@ Map<String, dynamic> _$DormitoryToJson(Dormitory instance) {
   val['createdAt'] = instance.createdAt?.toIso8601String();
   val['updatedAt'] = instance.updatedAt?.toIso8601String();
   val['dormitoryDetails'] = instance.dormitoryDetails;
-  val['ratings'] = instance.ratings;
-  val['comments'] = instance.comments;
-  val['rooms'] = instance.rooms;
   return val;
 }

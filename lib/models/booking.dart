@@ -8,20 +8,23 @@ part 'booking.g.dart';
 @JsonSerializable()
 class Booking {
   @JsonKey(includeIfNull: false)
-  final int? bookingId;
-  final int? userId;
-  final int? dormitoryId;
-  final int? roomId;
-  final String? status;
-  final String? paymentStatus;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
-  final DateTime? inMin;
-  final DateTime? inMax;
-  final DateTime? outMin;
-  final DateTime? outMax;
+  int? bookingId;
+  int? userId;
+  int? dormitoryId;
+  int? roomId;
+  String? status;
+  String? paymentStatus;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  DateTime? inMin;
+  DateTime? inMax;
+  DateTime? outMin;
+  DateTime? outMax;
+  @JsonKey(ignore: true)
   Dormitory? dormitory;
+  @JsonKey(ignore: true)
   Room? room;
+  @JsonKey(ignore: true)
   User? user;
 
   Booking({

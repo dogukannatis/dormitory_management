@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/app_notification.dart';
 import '../models/dormitory.dart';
 
 
@@ -69,6 +70,10 @@ class BookingManager extends StateNotifier<List<Booking>> {
 
   Future<Booking?> getApprovedBookingByUserId({required int userId}) async {
     return await _repository.getApprovedBookingByUserId(userId: userId);
+  }
+
+  Future<bool?> approveStudentsBookingRequest({required int bookingId}) async {
+    return await _repository.approveStudentsBookingRequest(bookingId: bookingId);
   }
 
 

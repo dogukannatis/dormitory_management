@@ -31,9 +31,7 @@ Booking _$BookingFromJson(Map<String, dynamic> json) => Booking(
       outMax: json['outMax'] == null
           ? null
           : DateTime.parse(json['outMax'] as String),
-    )..dormitory = json['dormitory'] == null
-        ? null
-        : Dormitory.fromJson(json['dormitory'] as Map<String, dynamic>);
+    );
 
 Map<String, dynamic> _$BookingToJson(Booking instance) {
   final val = <String, dynamic>{};
@@ -56,6 +54,5 @@ Map<String, dynamic> _$BookingToJson(Booking instance) {
   val['inMax'] = instance.inMax?.toIso8601String();
   val['outMin'] = instance.outMin?.toIso8601String();
   val['outMax'] = instance.outMax?.toIso8601String();
-  val['dormitory'] = instance.dormitory;
   return val;
 }

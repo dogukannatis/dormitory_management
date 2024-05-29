@@ -17,8 +17,11 @@ class Dormitory {
   DateTime? createdAt;
   DateTime? updatedAt;
   DormitoryDetails? dormitoryDetails;
+  @JsonKey(ignore: true)
   List<Rating>? ratings;
+  @JsonKey(ignore: true)
   List<Comment?>? comments;
+  @JsonKey(ignore: true)
   List<Room?>? rooms;
 
   Dormitory({

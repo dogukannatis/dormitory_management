@@ -1,81 +1,29 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
 
-class Room {
-  final String id;
-  final String dormitoryID;
-  String? roomType;
-  int? price;
+import '../../../models/dormitory.dart';
+import '../../../models/dormitory_details.dart';
+import '../../../viewmodels/dorm_manager.dart';
+import '../../widgets/button_loading.dart';
+import '../dormowner/dormMg_manage_room_page.dart';
 
-  Room({
-    required this.id,
-    required this.dormitoryID,
-    this.roomType,
-    this.price,
-  });
 
-  Room.fromMap(Map<String, dynamic> map)
-      : id = map["id"],
-        dormitoryID = map["dormitoryID"],
-        roomType = map["roomType"],
-        price = map["price"];
-
-  Map<String, dynamic> toMap() {
-    return {
-      "id": id,
-      "dormitoryID": dormitoryID,
-      "roomType": roomType,
-      "price": price,
-    };
-  }
-
-  @override
-  String toString() {
-    return 'Room{id: $id, dormitoryID: $dormitoryID, roomType: $roomType, price: $price}';
-  }
-}
-
-final roomProvider = Provider<List<Room>>((ref) {
-  return [
-    Room(id: '1', dormitoryID: 'A', roomType: 'A101', price: 500),
-    Room(id: '2', dormitoryID: 'B', roomType: 'B101', price: 750),
-  ];
-});
-
-final dormitoryDetailsProvider = Provider((ref) {
-  return DormitoryDetails(
-    detailId: 1,
-    dormitoryId: 1,
-    contactNo: '+90 1111111110',
-    email: 'universe@dorm.com',
-    faxNo: '+90 1111111110',
-    address: 'Universe A Block',
-    capacity: 400,
-    description: 'Sample Description',
-    internetSpeed: '100 Mbps',
-    hasKitchen: true,
-    hasCleanService: true,
-    hasShowerAndToilet: true,
-    hasBalcony: false,
-    hasTV: true,
-    hasMicrowave: true,
-    hasAirConditioning: true,
-    createdAt: DateTime.now(),
-    updatedAt: DateTime.now(),
-  );
-});
 
 class AdminManageDorm extends ConsumerStatefulWidget {
-  const AdminManageDorm({Key? key}) : super(key: key);
+  final Dormitory dormitory;
+  const AdminManageDorm({Key? key, required this.dormitory}) : super(key: key);
 
   @override
   _AdminManageDormState createState() => _AdminManageDormState();
 }
 
 class _AdminManageDormState extends ConsumerState<AdminManageDorm> {
+  final _formKey = GlobalKey<FormState>();
+
   late TextEditingController _statusController;
   late TextEditingController _createdDateController;
   late TextEditingController _phoneController;
@@ -85,386 +33,142 @@ class _AdminManageDormState extends ConsumerState<AdminManageDorm> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   late TextEditingController _descriptionController;
+  late TextEditingController _addressController;
+  late TextEditingController _capacityController;
+  late TextEditingController _priceController;
+
+  bool hasMicrowave = true;
+  bool hasKitchen = true;
+  bool hasCleanService = true;
+  bool hasShowerAndToilet = true;
+  bool hasBalcony = true;
+  bool hasTV = true;
+  bool hasAirConditioning = true;
+  bool internetSpeed = true;
+
+  bool isSaving = false;
+
 
   @override
   void initState() {
     super.initState();
+    hasMicrowave = widget.dormitory.dormitoryDetails!.hasMicrowave ?? false;
+    hasKitchen = widget.dormitory.dormitoryDetails!.hasKitchen ?? false;
+    hasCleanService = widget.dormitory.dormitoryDetails!.hasCleanService ?? false;
+    hasShowerAndToilet = widget.dormitory.dormitoryDetails!.hasShowerAndToilet ?? false;
+    hasBalcony = widget.dormitory.dormitoryDetails!.hasBalcony ?? false;
+    hasTV = widget.dormitory.dormitoryDetails!.hasTV ?? false;
+    hasAirConditioning = widget.dormitory.dormitoryDetails!.hasAirConditioning ?? false;
+    internetSpeed = widget.dormitory.dormitoryDetails!.internetSpeed != null && widget.dormitory.dormitoryDetails!.internetSpeed!.isNotEmpty ? true : false;
+
+
     _statusController = TextEditingController(text: 'Creating');
-    _createdDateController = TextEditingController(text: 'May 1, 2023');
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController(text: '********');
-    _nameController = TextEditingController();
-    _phoneController = TextEditingController();
-    _faxController = TextEditingController();
-    _quotaController = TextEditingController();
-    _descriptionController = TextEditingController();
+    _createdDateController = TextEditingController(text: widget.dormitory.createdAt.toString());
+    _emailController = TextEditingController(text: widget.dormitory.dormitoryDetails!.email);
+    _addressController = TextEditingController(text: widget.dormitory.dormitoryDetails!.address);
+    _passwordController = TextEditingController();
+    _nameController = TextEditingController(text: widget.dormitory.name);
+    _phoneController = TextEditingController(text: widget.dormitory.dormitoryDetails!.contactNo);
+    _faxController = TextEditingController(text: widget.dormitory.dormitoryDetails!.faxNo);
+    _quotaController = TextEditingController(text: widget.dormitory.quota.toString());
+    _descriptionController = TextEditingController(text: widget.dormitory.dormitoryDetails!.description);
+    _capacityController = TextEditingController(text: widget.dormitory.dormitoryDetails!.capacity.toString());
+    _priceController = TextEditingController(text: widget.dormitory.dormitoryDetails!.price.toString());
   }
 
-  Widget buildNewRoomForm() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'ID',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Dormitory ID',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
-            Expanded(
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Room Type',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Price',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: () {},
-          child: Text('Save'),
-        ),
-      ],
+  Future<void> updateDormitory() async {
+    final dormManager = ref.read(dormManagerProvider.notifier);
+    Dormitory dorm = Dormitory(
+        dormitoryId: widget.dormitory.dormitoryId,
+        universityId: widget.dormitory.universityId,
+        name: _nameController.text.trim(),
+        quota: int.parse(_quotaController.text.trim()),
+        createdAt: widget.dormitory.createdAt,
+        updatedAt: DateTime.now()
     );
+
+    DormitoryDetails details = DormitoryDetails(
+        detailId: widget.dormitory.dormitoryDetails!.detailId,
+        dormitoryId: widget.dormitory.dormitoryId,
+        email: _emailController.text.trim(),
+        faxNo: _faxController.text.trim(),
+        contactNo: _phoneController.text.trim(),
+        address: _addressController.text.trim(),
+        capacity: int.parse(_capacityController.text.trim()),
+        description: _descriptionController.text.trim(),
+        internetSpeed: internetSpeed ? "100" : "",
+        hasMicrowave: hasMicrowave,
+        hasKitchen: hasKitchen,
+        hasCleanService: hasCleanService,
+        hasShowerAndToilet: hasShowerAndToilet,
+        hasBalcony: hasBalcony,
+        hasTV: hasTV,
+        hasAirConditioning: hasAirConditioning,
+        photoUrls: [],
+        createdAt: widget.dormitory.dormitoryDetails!.createdAt,
+        price: int.parse(_priceController.text.trim()),
+        updatedAt: DateTime.now()
+    );
+
+    dorm.dormitoryDetails = details;
+
+    setState(() {
+      isSaving = true;
+    });
+    await dormManager.updateDormitory(dormitory: dorm);
+    const snackBar = SnackBar(
+      content: Text('Details has been updated!'),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    setState(() {
+      isSaving = false;
+    });
   }
 
-  Widget buildEditRoomForm(Room room) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-    Row(
-    children: [
-    Expanded(
-    child: TextFormField(
-      initialValue: room.id,
-      decoration: InputDecoration(
-        labelText: 'ID',
-        border: OutlineInputBorder(),
-      ),
-    ),
-    ),
-    const SizedBox(width: 10),
-    Expanded(
-    child: TextFormField(
-    initialValue: room.dormitoryID,
-    decoration: InputDecoration(
-    labelText: 'Dormitory ID',
-    border: OutlineInputBorder(),
-    ),
-    ),
-    ),
-    ],
-    ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
-            Expanded(
-              child: TextFormField(
-                initialValue: room.roomType,
-                decoration: InputDecoration(
-                  labelText: 'Room Type',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: TextFormField(
-                initialValue: room.price?.toString(),
-                decoration: InputDecoration(
-                  labelText: 'Price',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: () {},
-          child: Text('Save'),
-        ),
-      ],
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
-    final dormitoryDetails = ref.watch(dormitoryDetailsProvider);
-    final rooms = ref.watch(roomProvider);
-    Room existingRoom = rooms[0];
-
-    _emailController.text = dormitoryDetails.email ?? '';
-    _nameController.text = dormitoryDetails.address ?? '';
-    _phoneController.text = dormitoryDetails.contactNo ?? '';
-    _faxController.text = dormitoryDetails.faxNo ?? '';
-    _quotaController.text = dormitoryDetails.capacity.toString();
-    _descriptionController.text = dormitoryDetails.description ?? '';
 
     return Scaffold(
       appBar: getCustomAppBar(context),
       drawer: const CustomDrawer(),
-      body: Row(
-        children: [
-          CustomDrawer(activePage: ActivePages.adminManageDrom,),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+      body: SizedBox(
+        //width: MediaQuery.of(context).size.height,
+        child: Card(
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                Form(
+                  key: _formKey,
+                  child: Expanded(
+                    flex: 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: Card(
-                            color: Colors.white,
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    'Create New Room',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  buildNewRoomForm(),
-                                ],
-                              ),
-                            ),
+                        Text(
+                          'Edit Dormitory',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Card(
-                            color: Colors.white,
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    'Edit Room',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  buildEditRoomForm(existingRoom),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Card(
-                        color: Colors.white,
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Edit Dormitory',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(height: 16),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: TextFormField(
-                                      controller: _statusController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Status',
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 16),
-                                  Expanded(
-                                    child: TextFormField(
-                                      controller: _createdDateController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Created Date',
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 16),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: TextFormField(
-                                      controller: _phoneController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Phone',
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 16),
-                                  Expanded(
-                                    child: TextFormField(
-                                      controller: _faxController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Fax',
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 16),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: TextFormField(
-                                      controller: _nameController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Name',
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 16),
-                                  Expanded(
-                                    child: TextFormField(
-                                      controller: _quotaController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Quota',
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 16),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: TextFormField(
-                                      controller: _emailController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Email',
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 16),
-                                  Expanded(
-                                    child: TextFormField(
-                                      controller: _passwordController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Password',
-                                        filled: true,
-                                        fillColor: Colors.white,
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8),
-                                          borderSide: BorderSide.none,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 16),
-                              TextFormField(
-                                controller: _descriptionController,
+                        SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller: _statusController,
+                                enabled: false,
                                 decoration: InputDecoration(
-                                  labelText: 'Description',
+                                  labelText: 'Active',
                                   filled: true,
                                   fillColor: Colors.white,
                                   border: OutlineInputBorder(
@@ -473,43 +177,446 @@ class _AdminManageDormState extends ConsumerState<AdminManageDorm> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 16),
-                              Wrap(
-                                spacing: 8,
-                                runSpacing: 4,
-                                children: [
-                                  for (var feature in dormitoryFeatures)
-                                    GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          feature.toggleSelection();
-                                        });
-                                      },
-                                      child: Chip(
-                                        label: Text(feature.name),
-                                        backgroundColor: feature.isSelected
-                                            ? Colors.green[100]
-                                            : Colors.red[100],
-                                      ),
-                                    ),
+                            ),
+                            SizedBox(width: 16),
+                            Expanded(
+                              child: TextFormField(
+                                controller: _createdDateController,
+                                decoration: InputDecoration(
+                                  enabled: false,
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller: _phoneController,
+                                validator: (v){
+                                  if(v!.isEmpty){
+                                    return "Field is required";
+                                  }else{
+                                    return null;
+                                  }
+                                },
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                                 ],
+                                decoration: InputDecoration(
+                                  labelText: 'Phone',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
                               ),
-                              SizedBox(height: 16),
-                              ElevatedButton(
-                                onPressed: () {},
-                                child: Text('Save'),
+                            ),
+                            SizedBox(width: 16),
+                            Expanded(
+                              child: TextFormField(
+                                validator: (v){
+                                  if(v!.isEmpty){
+                                    return "Field is required";
+                                  }else{
+                                    return null;
+                                  }
+                                },
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                ],
+                                controller: _faxController,
+                                decoration: InputDecoration(
+                                  labelText: 'Fax',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
                               ),
-                            ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                validator: (v){
+                                  if(v!.isEmpty){
+                                    return "Field is required";
+                                  }else{
+                                    return null;
+                                  }
+                                },
+                                controller: _nameController,
+                                decoration: InputDecoration(
+                                  labelText: 'Name',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            Expanded(
+                              child: TextFormField(
+                                validator: (v){
+                                  if(v!.isEmpty){
+                                    return "Field is required";
+                                  }else{
+                                    return null;
+                                  }
+                                },
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                ],
+                                controller: _quotaController,
+                                decoration: InputDecoration(
+                                  labelText: 'Quota',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 16),
+                        /*
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                validator: (v){
+                                  if(v!.isEmpty){
+                                    return "Field is required";
+                                  }else{
+                                    return null;
+                                  }
+                                },
+                                controller: _emailController,
+                                decoration: InputDecoration(
+                                  labelText: 'Email',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            Expanded(
+                              child: TextFormField(
+                                validator: (v){
+                                  if(v!.isEmpty){
+                                    return "Field is required";
+                                  }else{
+                                    return null;
+                                  }
+                                },
+                                controller: _passwordController,
+                                decoration: InputDecoration(
+                                  labelText: 'Password',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                         */
+                        SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                validator: (v){
+                                  if(v!.isEmpty){
+                                    return "Field is required";
+                                  }else{
+                                    return null;
+                                  }
+                                },
+                                controller: _capacityController,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                ],
+                                decoration: InputDecoration(
+                                  labelText: 'Capacity',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            Expanded(
+                              child: TextFormField(
+                                validator: (v){
+                                  if(v!.isEmpty){
+                                    return "Field is required";
+                                  }else{
+                                    return null;
+                                  }
+                                },
+                                controller: _priceController,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                ],
+                                decoration: InputDecoration(
+                                  labelText: 'Price',
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 16),
+                        Expanded(
+                          child: TextFormField(
+                            validator: (v){
+                              if(v!.isEmpty){
+                                return "Field is required";
+                              }else{
+                                return null;
+                              }
+                            },
+                            controller: _descriptionController,
+                            decoration: InputDecoration(
+                              labelText: 'Description',
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Expanded(
+                          child: TextFormField(
+                            validator: (v){
+                              if(v!.isEmpty){
+                                return "Field is required";
+                              }else{
+                                return null;
+                              }
+                            },
+                            controller: _addressController,
+                            decoration: InputDecoration(
+                              labelText: 'Address',
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 4,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  hasCleanService = !hasCleanService;
+                                });
+                              },
+                              child: Chip(
+                                label: Text("Celan Service"),
+                                backgroundColor: hasCleanService
+                                    ? Colors.green[100]
+                                    : Colors.red[100],
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  hasMicrowave = !hasMicrowave;
+                                });
+                              },
+                              child: Chip(
+                                label: Text("Microwave"),
+                                backgroundColor: hasMicrowave
+                                    ? Colors.green[100]
+                                    : Colors.red[100],
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  hasKitchen = !hasKitchen;
+                                });
+                              },
+                              child: Chip(
+                                label: Text("Kitchen"),
+                                backgroundColor: hasKitchen
+                                    ? Colors.green[100]
+                                    : Colors.red[100],
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  hasShowerAndToilet = !hasShowerAndToilet;
+                                });
+                              },
+                              child: Chip(
+                                label: Text("Shower and Toilet"),
+                                backgroundColor: hasShowerAndToilet
+                                    ? Colors.green[100]
+                                    : Colors.red[100],
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  hasBalcony = !hasBalcony;
+                                });
+                              },
+                              child: Chip(
+                                label: Text("Balcony"),
+                                backgroundColor: hasBalcony
+                                    ? Colors.green[100]
+                                    : Colors.red[100],
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  hasTV = !hasTV;
+                                });
+                              },
+                              child: Chip(
+                                label: Text("TV"),
+                                backgroundColor: hasTV
+                                    ? Colors.green[100]
+                                    : Colors.red[100],
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  hasAirConditioning = !hasAirConditioning;
+                                });
+                              },
+                              child: Chip(
+                                label: Text("AC"),
+                                backgroundColor: hasAirConditioning
+                                    ? Colors.green[100]
+                                    : Colors.red[100],
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  internetSpeed = !internetSpeed;
+                                });
+                              },
+                              child: Chip(
+                                label: const Text("Internet"),
+                                backgroundColor: internetSpeed
+                                    ? Colors.green[100]
+                                    : Colors.red[100],
+                              ),
+                            ),
+
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: isSaving ? null : () {
+                            _formKey.currentState!.save();
+                            if(_formKey.currentState!.validate()){
+                              updateDormitory();
+                            }
+                          },
+                          child: isSaving ? const ButtonLoading(buttonText: "Saving") : const Text('Save'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const Padding(
+                    padding: EdgeInsets.all(10),
+                    child: VerticalDivider(thickness: 1, color: Colors.grey)),
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Text(
+                        'Room Management',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => DormMGManageRoom(dormitory: widget.dormitory
+                            ,)));
+
+                        },
+                        child: Text('Go To Room Management'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          padding: EdgeInsets.symmetric(vertical: 16.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -529,68 +636,3 @@ class _AdminManageDormState extends ConsumerState<AdminManageDorm> {
   }
 }
 
-class DormitoryDetails {
-  final int? detailId;
-  final int? dormitoryId;
-  final String? contactNo;
-  final String? email;
-  final String? faxNo;
-  final String? address;
-  final int? capacity;
-  final String? description;
-  final String? internetSpeed;
-  final bool? hasKitchen;
-  final bool? hasCleanService;
-  final bool? hasShowerAndToilet;
-  final bool? hasBalcony;
-  final bool? hasTV;
-  final bool? hasMicrowave;
-  final bool? hasAirConditioning;
-  final List? photoUrls;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
-
-  DormitoryDetails({
-    required this.detailId,
-    required this.dormitoryId,
-    this.contactNo,
-    this.email,
-    this.faxNo,
-    this.address,
-    this.capacity,
-    this.description,
-    this.internetSpeed,
-    this.hasKitchen,
-    this.hasCleanService,
-    this.hasShowerAndToilet,
-    this.hasBalcony,
-    this.hasTV,
-    this.hasMicrowave,
-    this.hasAirConditioning,
-    this.photoUrls,
-    this.createdAt,
-    this.updatedAt,
-  });
-}
-
-class DormitoryFeature {
-  final String name;
-  bool isSelected;
-
-  DormitoryFeature(this.name, {this.isSelected = false});
-
-  void toggleSelection() {
-    isSelected = !isSelected;
-  }
-}
-
-final List<DormitoryFeature> dormitoryFeatures = [
-  DormitoryFeature('Clean Service', isSelected: true),
-  DormitoryFeature('Shower'),
-  DormitoryFeature('Balcony', isSelected: true),
-  DormitoryFeature('TV'),
-  DormitoryFeature('Internet'),
-  DormitoryFeature('Microwave'),
-  DormitoryFeature('AC'),
-  DormitoryFeature('Kitchen', isSelected: true),
-];

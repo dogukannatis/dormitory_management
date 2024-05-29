@@ -1,3 +1,4 @@
+import 'package:dormitory_management/models/app_notification.dart';
 import 'package:dormitory_management/models/booking.dart';
 import 'package:dormitory_management/models/users/dormitory_owner.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
@@ -24,13 +25,13 @@ class _DormMGBookingHistoryState extends ConsumerState<DormMGBookingHistory> {
     switch (status) {
       case 'Approved':
         color = Colors.green;
-        label = 'Active';
+        label = 'Approved';
         break;
       case 'Pending':
         color = Colors.orange;
         label = 'Pending';
         break;
-      case 'Former':
+      case 'Decline':
       default:
         color = Colors.red;
         label = 'Declined';
@@ -54,12 +55,42 @@ class _DormMGBookingHistoryState extends ConsumerState<DormMGBookingHistory> {
     );
   }
 
-  Widget _buildActionButton() {
+  Future<void> approveBooking(int bookingId) async {
+    final bookingManager = ref.read(bookingManagerProvider.notifier);
+    int i = bookings.indexWhere((element) => (element.bookingId == bookingId));
+    setState(() {
+      bookings[i].status = "Approved";
+    });
+
+    await bookingManager.approveStudentsBookingRequest(bookingId: bookingId);
+  }
+
+  Future<void> deleteBooking(int bookingId) async {
+    final bookingManager = ref.read(bookingManagerProvider.notifier);
+    setState(() {
+      bookings.removeWhere((element) => element.bookingId == bookingId);
+    });
+    await bookingManager.deleteBookingByID(bookingId: bookingId);
+  }
+
+
+  Widget _buildActionButton(int bookingId) {
     return PopupMenuButton<int>(
-      onSelected: (item) => print('Selected item: $item'),
       itemBuilder: (context) => [
-        PopupMenuItem<int>(value: 0, child: Text('Action 1')),
-        PopupMenuItem<int>(value: 1, child: Text('Action 2')),
+        PopupMenuItem<int>(
+            value: 0,
+            child: const Text('Approve'),
+            onTap: (){
+              approveBooking(bookingId);
+            }
+        ),
+        PopupMenuItem<int>(
+            value: 1,
+            child: const Text('Delete'),
+            onTap: (){
+              deleteBooking(bookingId);
+            }
+        ),
       ],
     );
   }
@@ -136,7 +167,7 @@ class _DormMGBookingHistoryState extends ConsumerState<DormMGBookingHistory> {
                                     DataCell(Text('23-24 / F-S')),
                                     DataCell(Text("${booking.user?.phoneNo}")),
                                     DataCell(Text('${booking.room?.price}')),
-                                    DataCell(_buildActionButton()),
+                                    DataCell(_buildActionButton(booking.bookingId!)),
                                   ]);
                                 }).toList(),
                               ),

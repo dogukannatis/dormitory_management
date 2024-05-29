@@ -66,6 +66,29 @@ class DormitoryDetailsApi extends Api{
 
   }
 
+  Future<void> uploadPhoto({required FormData formData}) async {
+
+    try{
+      final response = await dio.post("$baseUrl/DormitoryDetail/uploadImage", data: formData, options: Options(contentType: Headers.multipartFormDataContentType));
+      debugPrint("response: $response");
+    } on DioException catch (e, str) {
+       debugPrint("HATA: $e, $str");
+    }
+
+  }
+
+
+  Future<List<String>> getPhoto({required int detailId}) async {
+    try{
+      final response = await dio.post("$baseUrl/DormitoryDetail/getImages", queryParameters: {"detailId" : detailId}, options: options);
+      debugPrint("response: $response");
+      return response.data;
+    } on DioException catch (e, str) {
+       debugPrint("HATA: $e, $str");
+       return [];
+    }
+  }
+
 
 
 

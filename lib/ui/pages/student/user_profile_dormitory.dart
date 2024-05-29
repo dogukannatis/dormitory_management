@@ -73,7 +73,7 @@ class _UserProfileDormitoryState extends ConsumerState<UserProfileDormitory> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        '${booking!.dormitory?.name}',
+                        '${booking!.dormitory?.name?.toUpperCase()}',
                         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),

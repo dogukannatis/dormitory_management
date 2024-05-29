@@ -31,6 +31,22 @@ class RoomApi extends Api{
   }
 
 
+  Future<bool?> deleteRoom({required int roomId}) async {
+
+debugPrint("dada: $roomId");
+    try{
+      final response = await dio.delete("$baseUrl/Room/delete", queryParameters: {"id" : roomId}, options: options);
+      debugPrint("response: $response");
+      return true;
+    } on DioException catch (e, str) {
+      debugPrint("HATA: $e, $str");
+      return false;
+    }
+
+
+  }
+
+
 
   /// Update booking with [booking] object.
   /// Works properly

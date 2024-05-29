@@ -1,3 +1,4 @@
+import 'package:dormitory_management/models/dormitory.dart';
 import 'package:dormitory_management/models/users/dormitory_owner.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,8 @@ import '../../../viewmodels/user_manager.dart';
 import '../../../ui/widgets/custom_drawer.dart';
 
 class DormMGManageRoom extends ConsumerStatefulWidget {
-  const DormMGManageRoom({Key? key}) : super(key: key);
+  final Dormitory? dormitory;
+  const DormMGManageRoom({Key? key, this.dormitory}) : super(key: key);
 
   @override
   ConsumerState<DormMGManageRoom> createState() => _DormMGManageRoomState();
@@ -30,7 +32,7 @@ class _DormMGManageRoomState extends ConsumerState<DormMGManageRoom> {
   bool isLoading = false;
   bool isUpdateLoading = false;
 
-  List<Room> rooms = [];
+  List<Room?> rooms = [];
 
   @override
   void initState() {
@@ -44,7 +46,7 @@ class _DormMGManageRoomState extends ConsumerState<DormMGManageRoom> {
 
     Room _room = Room(
       roomId: null,
-      dormitoryId: (user as DormitoryOwner).dormitoryId,
+      dormitoryId: widget.dormitory != null ? widget.dormitory!.dormitoryId : (user as DormitoryOwner).dormitoryId,
       roomType: roomTypeController.text.trim(),
       price: int.parse(priceController.text.trim()),
       createdAt: DateTime.now(),
@@ -71,13 +73,38 @@ class _DormMGManageRoomState extends ConsumerState<DormMGManageRoom> {
     });
   }
 
+  Future<void> deleteRoom(int roomId) async {
+    final dormManager = ref.read(dormManagerProvider.notifier);
+
+    debugPrint("roomId: $roomId");
+
+    setState(() {
+      isLoading = true;
+    });
+
+    await dormManager.deleteRoom(roomId: roomId);
+    const snackBar = SnackBar(
+      content: Text('Room has been deleted!'),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    roomTypeController.clear();
+    roomIdController.clear();
+    priceController.clear();
+
+    setState(() {
+      rooms.removeWhere((element) => element!.roomId == roomId);
+      isLoading = false;
+    });
+  }
+
   Future<void> updateRoom() async {
     final dormManager = ref.read(dormManagerProvider.notifier);
     final user = ref.read(userManagerProvider);
 
     Room _room = Room(
       roomId: int.parse(updateRoomIdController.text.trim()),
-      dormitoryId: (user as DormitoryOwner).dormitoryId,
+      dormitoryId: widget.dormitory != null ? widget.dormitory!.dormitoryId : (user as DormitoryOwner).dormitoryId,
       roomType: updateRoomTypeController.text.trim(),
       price: int.parse(updatePriceController.text.trim()),
       createdAt: DateTime.now(),
@@ -96,7 +123,7 @@ class _DormMGManageRoomState extends ConsumerState<DormMGManageRoom> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
     selectedRoom = false;
 
-    var i = rooms.indexWhere((element) => element.roomId == _room.roomId);
+    var i = rooms.indexWhere((element) => element!.roomId == _room.roomId);
     rooms[i] = _room;
 
     setState(() {
@@ -107,7 +134,12 @@ class _DormMGManageRoomState extends ConsumerState<DormMGManageRoom> {
   Future<void> getRooms() async {
     final dormManager = ref.read(dormManagerProvider.notifier);
     final user = ref.read(userManagerProvider);
-    rooms = await dormManager.getRoomByDormitoryId(dormitoryId: (user as DormitoryOwner).dormitoryId!);
+    if(widget.dormitory != null){
+      rooms = widget.dormitory!.rooms!;
+    }else{
+      rooms = await dormManager.getRoomByDormitoryId(dormitoryId: (user as DormitoryOwner).dormitoryId!);
+    }
+
     setState(() {});
   }
 
@@ -115,7 +147,6 @@ class _DormMGManageRoomState extends ConsumerState<DormMGManageRoom> {
 
   @override
   Widget build(BuildContext context) {
-    final user = ref.read(userManagerProvider);
     return Scaffold(
       appBar: getCustomAppBar(context),
       body: Row(
@@ -135,15 +166,15 @@ class _DormMGManageRoomState extends ConsumerState<DormMGManageRoom> {
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: SizedBox(
                                                 width: MediaQuery.of(context).size.width,
-                                                height: 150,
+                                                height: 200,
                                                 child: ListView.builder(
                           itemCount: rooms.length,
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return SizedBox(
-                              height: 150,
-                              width: 150,
+                              height: 200,
+                              width: 200,
                               child: Card(
                                 color: Colors.white,
                                 elevation: 5,
@@ -160,18 +191,25 @@ class _DormMGManageRoomState extends ConsumerState<DormMGManageRoom> {
                                         style: TextStyle(fontWeight: FontWeight.bold),
                                       ),
                                       SizedBox(height: 10),
-                                      Text(rooms[index].roomType!),
+                                      Text(rooms[index]!.roomType!),
                                       SizedBox(height: 10),
                                       ElevatedButton(
                                         onPressed: () {
                                           setState(() {
                                             selectedRoom = true;
-                                            updateRoomTypeController.text = rooms[index].roomType!;
-                                            updatePriceController.text = rooms[index].price.toString();
-                                            updateRoomIdController.text = rooms[index].roomId.toString();
+                                            updateRoomTypeController.text = rooms[index]!.roomType!;
+                                            updatePriceController.text = rooms[index]!.price.toString();
+                                            updateRoomIdController.text = rooms[index]!.roomId.toString();
                                           });
                                         },
                                         child: Text('Edit'),
+                                      ),
+                                      SizedBox(height: 10),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          deleteRoom(rooms[index]!.roomId!);
+                                        },
+                                        child: Text('Delete'),
                                       ),
                                     ],
                                   ),

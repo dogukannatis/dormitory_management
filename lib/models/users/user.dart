@@ -9,7 +9,7 @@ abstract class User {
   final String? surName;
   final bool? isEmailVerified;
   final DateTime? dob;
-  final String? profileUrl;
+  String? profileUrl;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final String? address;

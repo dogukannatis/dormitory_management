@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:dormitory_management/models/users/dormitory_owner.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
 import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -22,24 +24,48 @@ class EditProfilePage extends ConsumerStatefulWidget {
 
 class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   final _formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final surnameController = TextEditingController();
-  final emailController = TextEditingController();
-  final phoneController = TextEditingController();
-  final passwordController = TextEditingController();
+  late TextEditingController nameController;
+  late TextEditingController surnameController;
+  late TextEditingController emailController;
+  late TextEditingController phoneController;
+  late TextEditingController passwordController;
 
   bool isSaving = false;
   XFile? image;
 
   final ImagePicker picker = ImagePicker();
 
+/*
+  Future<void> uploadPhoto() async {
+    final userManager = ref.read(userManagerProvider.notifier);
+
+    if(image != null){
+      var bytes = image!.readAsBytes();
+
+      final formData = FormData.fromMap({
+        'name': 'dio',
+        'date': DateTime.now().toIso8601String(),
+        'file': await MultipartFile.fromFile(image!.path),
+      });
+
+      await userManager.uploadPhoto(formData: formData);
+    }
+
+
+  }
+ */
+
+
+
   @override
   void initState() {
     final user = ref.read(userManagerProvider);
-    nameController.text = user?.name ?? '';
-    surnameController.text = user?.surName ?? '';
-    emailController.text = user?.email ?? '';
-    phoneController.text = user?.phoneNo ?? '';
+    nameController = TextEditingController(text: user!.name);
+    surnameController = TextEditingController(text: user.surName);
+    emailController = TextEditingController(text: user.email);
+    phoneController = TextEditingController(text: user.phoneNo);
+    passwordController = TextEditingController();
+
     super.initState();
   }
 
@@ -162,6 +188,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                       onPressed: () async {
                         image = await picker.pickImage(source: ImageSource.gallery);
                         setState(() {});
+                       // await uploadPhoto();
                       },
                       child: const Text('Upload Profile Photo'),
                       style: TextButton.styleFrom(
@@ -189,7 +216,13 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                       children: [
                         Icon(Icons.person, size: 16, color: Colors.grey),
                         SizedBox(width: 5),
-                        Text(
+                        user.userType == "admin" ? Text(
+                          'Admin',
+                          style: TextStyle(fontSize: 14, color: Colors.grey),
+                        ) : user.userType == "dormitoryOwner" ? Text(
+                          'Dormitory Owner',
+                          style: TextStyle(fontSize: 14, color: Colors.grey),
+                        ) : Text(
                           'Student',
                           style: TextStyle(fontSize: 14, color: Colors.grey),
                         ),
@@ -253,9 +286,15 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                           Expanded(
                             child: TextFormField(
                               controller: nameController,
+                              validator: (v){
+                                if(v!.isEmpty){
+                                  return "Field is required";
+                                }else{
+                                  return null;
+                                }
+                              },
                               decoration: InputDecoration(
                                 labelText: 'First Name',
-                                hintText: user.name,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -266,9 +305,15 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                           Expanded(
                             child: TextFormField(
                               controller: surnameController,
+                              validator: (v){
+                                if(v!.isEmpty){
+                                  return "Field is required";
+                                }else{
+                                  return null;
+                                }
+                              },
                               decoration: InputDecoration(
                                 labelText: 'Last Name',
-                                hintText: user.surName,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -280,9 +325,15 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                       SizedBox(height: 20),
                       TextFormField(
                         controller: emailController,
+                        validator: (v){
+                          if(v!.isEmpty){
+                            return "Field is required";
+                          }else{
+                            return null;
+                          }
+                        },
                         decoration: InputDecoration(
                           labelText: 'Email',
-                          hintText: user.email,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -309,7 +360,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                                 );
                               }).toList(),
                               onChanged: (String? newValue) {
-                                phoneController.text = newValue!;
+                               // phoneController.text = newValue!;
                               },
                             ),
                           ),
@@ -318,9 +369,12 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                             flex: 3,
                             child: TextField(
                               controller: phoneController,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                              ],
                               decoration: InputDecoration(
                                 labelText: 'Phone Number',
-                                hintText: '1111111111',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -332,6 +386,13 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                       SizedBox(height: 20),
                       TextFormField(
                         controller: passwordController,
+                        validator: (v){
+                          if(v!.isEmpty){
+                            return "Field is required";
+                          }else{
+                            return null;
+                          }
+                        },
                         decoration: InputDecoration(
                           labelText: 'Password',
                           hintText: 'Change Password',
@@ -340,7 +401,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       DropdownButtonFormField<String>(
                         decoration: InputDecoration(
                           labelText: 'Nationality',
@@ -358,12 +419,15 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                         }).toList(),
                         onChanged: (String? newValue) {},
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       ElevatedButton(
                         onPressed: () {
-                          updateProfile();
+                          _formKey.currentState!.save();
+                          if(_formKey.currentState!.validate()){
+                            updateProfile();
+                          }
                         },
-                        child: isSaving ? ButtonLoading(buttonText: "saving",) : Text('Save'),
+                        child: isSaving ? const ButtonLoading(buttonText: "saving",) : Text('Save'),
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.blue,

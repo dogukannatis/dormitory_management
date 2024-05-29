@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:dormitory_management/locator.dart';
 import 'package:dormitory_management/models/app_notification.dart';
 import 'package:dormitory_management/models/booking.dart';
@@ -39,6 +40,13 @@ class Repository {
   final _adminApi = locator<AdminApi>();
   final _roomApi = locator<RoomApi>();
 
+  Future<List<User>> getAllUsers() async {
+    List<User> students = await _studentApi.getAllStudents();
+    List<User> admins = await _adminApi.getAllAdmins();
+    List<User> dormOwners = await _dormitoryOwnerApi.getAllDormitoryOwners();
+    return [...admins, ...dormOwners, ...students];
+  }
+
   Future<void> saveStudent({required Student user}) async {
     await _studentApi.saveStudent(user: user);
   }
@@ -63,12 +71,18 @@ class Repository {
     await _adminApi.updateAdmin(user: user);
   }
 
+  Future<List<String>> uploadPhoto({required FormData formData, required int detailId}) async {
+    await _dormitoryDetailsApi.uploadPhoto(formData: formData);
+    return await _dormitoryDetailsApi.getPhoto(detailId: detailId);
+  }
+
   Future<List<Dormitory>> getAllDormitories() async {
     List<Dormitory> dorms = [];
     dorms = await _dormitoryApi.getAllDormitories();
     for(Dormitory dorm in dorms){
       dorm.dormitoryDetails = await _dormitoryDetailsApi.getDormitoryDetailsByDormitoryID(dormitoryId: dorm.dormitoryId!);
       dorm.comments = await getAllCommentByDormitoryId(dormitoryId: dorm.dormitoryId!);
+      dorm.rooms = await _roomApi.getRoomByDormitoryId(dormitoryId: dorm.dormitoryId!);
       dorm.ratings = await _ratingApi.getRatingByDormitoryId(dormitoryId: dorm.dormitoryId!);
       debugPrint("details ${dorm.dormitoryDetails}");
     }
@@ -113,6 +127,10 @@ class Repository {
     await _roomApi.saveRoom(room: room);
   }
 
+  Future<void> deleteRoom({required int roomId}) async {
+    await _roomApi.deleteRoom(roomId: roomId);
+  }
+
   Future<void> updateRoom({required Room room}) async {
     await _roomApi.updateRoom(room: room);
   }
@@ -128,6 +146,10 @@ class Repository {
 
   Future<void> deleteCommentByID({required int commentId}) async {
     await _commentApi.deleteCommentByID(commentId: commentId);
+  }
+
+  Future<bool?> approveStudentsBookingRequest({required int bookingId,}) async {
+    return await _dormitoryOwnerApi.approveStudentsBookingRequest(bookingId: bookingId);
   }
 
   Future<Booking?> getApprovedBookingByUserId({required int userId}) async {

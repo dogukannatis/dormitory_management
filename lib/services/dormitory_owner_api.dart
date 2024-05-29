@@ -115,6 +115,20 @@ class DormitoryOwnerApi extends Api{
   }
 
 
+  Future<bool?> approveStudentsBookingRequest({required int bookingId}) async {
+
+    try{
+      final response = await dio.put("$baseUrl/DormitoryOwner/ApproveStudentsBookingRequest", queryParameters: {"bookingId": bookingId}, options: options);
+      debugPrint("response: $response");
+      return true;
+    } on DioException catch (e, str) {
+       debugPrint("HATA: $e, $str");
+       return false;
+    }
+
+  }
+
+
   /// Get dormitory owner with [id]
   /// Works properly
   Future<DormitoryOwner?> getDormitoryOwnerByID({required int id}) async {
@@ -189,13 +203,6 @@ class DormitoryOwnerApi extends Api{
   }
 
 
-  /// Approve student's booking request with userId
-  /// !!!Should be impelemented!!!
-  Future<bool?> approveStudentsBookingRequest({required int bookingId}) async {
-  
-    return false;
-
-  }
 
 
 

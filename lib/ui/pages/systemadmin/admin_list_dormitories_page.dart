@@ -1,46 +1,53 @@
+import 'package:dormitory_management/ui/pages/systemadmin/admin_manage_dormitory_page.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
+import 'package:dormitory_management/viewmodels/dorm_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Dormitory {
-  final String name;
-  final int dormitoryId;
+import '../../../models/dormitory.dart';
 
-  Dormitory({required this.name, required this.dormitoryId});
-}
 
-class AdminListDorm extends StatefulWidget {
+class AdminListDorm extends ConsumerStatefulWidget {
   const AdminListDorm({Key? key}) : super(key: key);
 
   @override
-  State<AdminListDorm> createState() => _AdminListDormState();
+  ConsumerState createState() => _AdminListDormState();
 }
 
-class _AdminListDormState extends State<AdminListDorm> {
+class _AdminListDormState extends ConsumerState<AdminListDorm> {
   TextEditingController _dormitoryIdController = TextEditingController();
   String dormName = "";
   bool addRoom = false;
+  bool isLoading = false;
 
-  List<Dormitory> dormitories = [
-    Dormitory(name: "Dorm 1", dormitoryId: 1),
-    Dormitory(name: "Dorm 2", dormitoryId: 2),
-    Dormitory(name: "Dorm 3", dormitoryId: 2),
-    Dormitory(name: "Dorm 4", dormitoryId: 2),
-    Dormitory(name: "Dorm 5", dormitoryId: 2),
-    Dormitory(name: "Dorm 6", dormitoryId: 2),
-    Dormitory(name: "Dorm 7", dormitoryId: 2),
-    Dormitory(name: "Dorm 8", dormitoryId: 2),
-    Dormitory(name: "Dorm 9", dormitoryId: 2),
-    Dormitory(name: "Dorm 10", dormitoryId: 2),
-    Dormitory(name: "Dorm 11", dormitoryId: 2),
 
-  ];
+  Future<void> getDormitories() async {
+    final dormManager = ref.read(dormManagerProvider.notifier);
+    setState(() {
+      isLoading = true;
+    });
+    dormitories = await dormManager.getAllDormitories();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    getDormitories();
+    super.initState();
+  }
+
+  List<Dormitory> dormitories = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: getCustomAppBar(context),
-      body: Row(
+      body: isLoading ? const Center(
+        child: CircularProgressIndicator(),
+      ) : Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomDrawer(activePage: ActivePages.adminListDorm,),
@@ -69,17 +76,11 @@ class _AdminListDormState extends State<AdminListDorm> {
                             padding: const EdgeInsets.all(16.0),
                             child: Column(
                               children: [
-                                Text(dormitories[index].name),
+                                Text(dormitories[index].name!),
                                 ElevatedButton(
                                   onPressed: () {
-                                    _dormitoryIdController.text =
-                                        dormitories[index]
-                                            .dormitoryId
-                                            .toString();
-                                    dormName = dormitories[index].name;
-                                    setState(() {
-                                      addRoom = true;
-                                    });
+                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminManageDorm(dormitory: dormitories[index],)));
+
                                   },
                                   child: Text("Edit Dorm"),
                                 ),
