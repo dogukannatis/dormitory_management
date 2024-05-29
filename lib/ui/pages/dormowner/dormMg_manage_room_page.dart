@@ -119,65 +119,69 @@ class _DormMGManageRoomState extends ConsumerState<DormMGManageRoom> {
     return Scaffold(
       appBar: getCustomAppBar(context),
       body: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomDrawer(),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     rooms.isNotEmpty
-                        ? SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: 150,
-                      child: ListView.builder(
-                        itemCount: rooms.length,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return SizedBox(
-                            height: 150,
-                            width: 150,
-                            child: Card(
-                              color: Colors.white,
-                              elevation: 5,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      "Room",
-                                      style: TextStyle(fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(height: 10),
-                                    Text(rooms[index].roomType!),
-                                    SizedBox(height: 10),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          selectedRoom = true;
-                                          updateRoomTypeController.text = rooms[index].roomType!;
-                                          updatePriceController.text = rooms[index].price.toString();
-                                          updateRoomIdController.text = rooms[index].roomId.toString();
-                                        });
-                                      },
-                                      child: Text('Edit'),
-                                    ),
-                                  ],
+                        ? Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: SizedBox(
+                                                width: MediaQuery.of(context).size.width,
+                                                height: 150,
+                                                child: ListView.builder(
+                          itemCount: rooms.length,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return SizedBox(
+                              height: 150,
+                              width: 150,
+                              child: Card(
+                                color: Colors.white,
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        "Room",
+                                        style: TextStyle(fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Text(rooms[index].roomType!),
+                                      SizedBox(height: 10),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            selectedRoom = true;
+                                            updateRoomTypeController.text = rooms[index].roomType!;
+                                            updatePriceController.text = rooms[index].price.toString();
+                                            updateRoomIdController.text = rooms[index].roomId.toString();
+                                          });
+                                        },
+                                        child: Text('Edit'),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
-                    )
+                            );
+                          },
+                                                ),
+                                              ),
+                        )
                         : Container(),
                     selectedRoom == false
                         ? SizedBox(

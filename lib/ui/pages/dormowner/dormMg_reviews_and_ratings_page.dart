@@ -4,6 +4,7 @@ import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
 import 'package:dormitory_management/viewmodels/dorm_manager.dart';
 import 'package:dormitory_management/viewmodels/user_manager.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -113,59 +114,66 @@ class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings>
 
     return Scaffold(
       appBar: getCustomAppBar(context),
-      drawer: const CustomDrawer(),
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
-          : Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Align(
-          alignment: Alignment.topLeft,
-          child: Card(
-            color: Colors.white,
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Container(
-              padding: const EdgeInsets.all(24.0),
-              constraints: BoxConstraints(maxWidth: 1000),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Ratings',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 20),
-                  Expanded(
-                    child: ListView(
-                      children: [
-                        DataTable(
-                          columnSpacing: 12.0,
-                          columns: const [
-                            DataColumn(label: Text('Student Name')),
-                            DataColumn(label: Text('Dormitory')),
-                            DataColumn(label: Text('Rating')),
-                            DataColumn(label: Text('Action')),
+          ? const Center(child: CircularProgressIndicator())
+          : Row(
+            children: [
+              const CustomDrawer(),
+              const SizedBox(width: 16,),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Card(
+                      color: Colors.white,
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.all(24.0),
+                        constraints: BoxConstraints(maxWidth: 1000),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Ratings',
+                              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(height: 20),
+                            Expanded(
+                              child: ListView(
+                                children: [
+                                  DataTable(
+                                    columnSpacing: 12.0,
+                                    columns: const [
+                                      DataColumn(label: Text('Student Name')),
+                                      DataColumn(label: Text('Dormitory')),
+                                      DataColumn(label: Text('Rating')),
+                                      DataColumn(label: Text('Action')),
+                                    ],
+                                    rows: ratings.map((rating) {
+                                      return DataRow(cells: [
+                                        DataCell(Text('${rating.user!.name} ${rating.user!.surName}')),
+                                        DataCell(Text('${user.name}')),
+                                        DataCell(_buildRatingChip(rating.ratingNo ?? 0)),
+                                        DataCell(_buildActionPopupMenu(rating.ratingId!)),
+                                      ]);
+                                    }).toList(),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
-                          rows: ratings.map((rating) {
-                            return DataRow(cells: [
-                              DataCell(Text('${rating.user!.name} ${rating.user!.surName}')),
-                              DataCell(Text('${user.name}')),
-                              DataCell(_buildRatingChip(rating.ratingNo ?? 0)),
-                              DataCell(_buildActionPopupMenu(rating.ratingId!)),
-                            ]);
-                          }).toList(),
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        ),
-      ),
     );
   }
 }

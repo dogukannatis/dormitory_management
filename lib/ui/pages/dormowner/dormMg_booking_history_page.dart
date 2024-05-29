@@ -12,13 +12,7 @@ class DormMGBookingHistory extends ConsumerStatefulWidget {
 }
 
 class _DormMGBookingHistoryState extends ConsumerState<DormMGBookingHistory> {
-  List<Booking> bookings = [
-    Booking(bookingId: 1, userId: 1, dormitoryId: 1, roomId: 3, status: "Current"),
-    Booking(bookingId: 2, userId: 1, dormitoryId: 2, roomId: 3, status: "Former"),
-    Booking(bookingId: 3, userId: 1, dormitoryId: 3, roomId: 3, status: "In Debt"),
-    Booking(bookingId: 4, userId: 1, dormitoryId: 4, roomId: 3, status: "Current"),
-    Booking(bookingId: 5, userId: 1, dormitoryId: 5, roomId: 3, status: "Current"),
-  ];
+  List<Booking> bookings = [];
 
   Widget _buildStatusChip(String status) {
     Color color;
@@ -65,6 +59,10 @@ class _DormMGBookingHistoryState extends ConsumerState<DormMGBookingHistory> {
         PopupMenuItem<int>(value: 1, child: Text('Action 2')),
       ],
     );
+  }
+
+  Future<void> getBookings() async {
+
   }
 
   @override
