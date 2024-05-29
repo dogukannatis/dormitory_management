@@ -119,7 +119,7 @@ class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings>
           : Row(
             children: [
               CustomDrawer(activePage: ActivePages.dormMGreviewsAndRatings,),
-              const SizedBox(width: 16,),
+              //const SizedBox(width: 16,),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
