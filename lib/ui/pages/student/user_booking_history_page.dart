@@ -131,7 +131,7 @@ class _UserBookingHistoryState extends ConsumerState<UserBookingHistory> {
                                 columns: const [
                                   DataColumn(label: Text('Dormitory')),
                                   DataColumn(label: Text('Status')),
-                                  DataColumn(label: Text('Room')),
+                                  DataColumn(label: Text('Room ID')),
                                   DataColumn(label: Text('Year & Term')),
                                   DataColumn(label: Text('Contact')),
                                   //DataColumn(label: Text('Price TRY')),
@@ -141,7 +141,8 @@ class _UserBookingHistoryState extends ConsumerState<UserBookingHistory> {
                                   return DataRow(cells: [
                                     DataCell(Text('${booking.dormitory?.name}')),
                                     DataCell(_buildStatusChip(booking.status ?? 'Unknown')),
-                                    DataCell(Text('Room ${booking.roomId}')),
+                                    //DataCell(Text('${booking.room?.roomType}')),
+                                    DataCell(Text('${booking.roomId}')),
                                     const DataCell(Text('23-24 / F-S')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
                                     DataCell(Text("${booking.dormitory?.dormitoryDetails?.email}")), // Bu veri modelde yok, şimdilik manuel ekliyoruz
                                     // DataCell(Text('TRY 75000.00')), // Bu veri modelde yok, şimdilik manuel ekliyoruz

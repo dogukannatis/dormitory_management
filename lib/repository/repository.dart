@@ -157,6 +157,7 @@ class Repository {
     List<Booking> list = await _bookingApi.getBookingHistoryByStudentId(userId: userId);
     for(Booking booking in list){
       booking.dormitory = await getDormitoryByID(dormitoryId: booking.dormitoryId!);
+     // booking.room = await _roomApi.getRoomById(roomId: booking.roomId!);
     }
     return list;
   }

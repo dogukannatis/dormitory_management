@@ -15,6 +15,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import '../../models/comment.dart';
 import '../../models/dormitory.dart';
+import '../../models/room.dart';
 import '../../models/users/admin.dart';
 
 class DormitoryDetailsPage extends ConsumerStatefulWidget {
@@ -30,7 +31,7 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
 
   bool isBooked = false;
 
-  Future<void> book() async {
+  Future<void> book({required int roomId}) async {
     final bookingManager = ref.read(bookingManagerProvider.notifier);
     final user = ref.watch(userManagerProvider);
     Booking booking = Booking(
@@ -39,7 +40,7 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
         dormitoryId: widget.dormitory.dormitoryId,
         status: "pending",
       paymentStatus: "pending",
-        roomId: 0, //TODO: check,
+        roomId: roomId,
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
       inMin: DateTime.now(),
@@ -54,6 +55,8 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
   }
 
   bool isLoading = false;
+
+  List<Room> rooms = [];
 
   Future<void> saveComment() async {
     final commentManager = ref.read(commentManagerProvider.notifier);
@@ -84,6 +87,20 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
       widget.dormitory.comments!.removeWhere((comment) => comment!.commentId == commentId);
     });
     await commentManager.deleteCommentByID(commentId: commentId);
+  }
+
+  Future<void> getRooms() async {
+    final dormManager = ref.read(dormManagerProvider.notifier);
+    rooms = await dormManager.getRoomByDormitoryId(dormitoryId: widget.dormitory.dormitoryId!);
+    setState(() {
+
+    });
+  }
+
+  @override
+  void initState() {
+    getRooms();
+    super.initState();
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -171,27 +188,6 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                             ),
                             const SizedBox(height: 16),
                             getFeatures(),
-                            const SizedBox(height: 16),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                /*
-                                Row(
-                                  children: [
-                                    Text(
-                                      'TRY 90.000',
-                                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 8),
-                                 */
-                                ElevatedButton(
-                                  onPressed: !(user != null && user is Student) || isBooked ? null : () => book(),
-                                  child: isBooked ? const Text("Booked") : const Text('Book Now'),
-                                ),
-                              ],
-                            ),
                           ],
                         ),
                       ),
@@ -199,7 +195,65 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 50),
+              rooms.isNotEmpty ?
+              Column(
+                children: [
+                  /*
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Rooms", style: TextStyle( fontSize: 24,
+                      fontWeight: FontWeight.bold,),),
+                  ),
+                   */
+                  Padding(
+                    padding: const EdgeInsets.all(50.0),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          height: 200,
+                          child: ListView.builder(
+                            itemCount: rooms.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index){
+                              return SizedBox(
+                                height: 200,
+                                width: 200,
+                                child: Card(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
+                                  elevation: 5,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        const Text("Room", style: TextStyle(fontSize: 24 ,fontWeight: FontWeight.bold),),
+                                        SizedBox(height: 10,),
+                                        Text("Room Type: ${rooms[index].roomType!}"),
+                                        SizedBox(height: 10,),
+                                        Text("${rooms[index].price}₺"),
+                                        SizedBox(height: 10,),
+                                        ElevatedButton(
+                                          onPressed: !(user != null && user is Student) || isBooked ? null : () => book(roomId: rooms[index].roomId!),
+                                          child: isBooked ? const Text("Booked") : const Text('Book Now'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ) : Container(),
 
               Card(
                 color: Colors.white,

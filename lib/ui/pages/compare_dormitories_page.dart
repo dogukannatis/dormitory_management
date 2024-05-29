@@ -156,7 +156,7 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
                                   ),
                                   const SizedBox(height: 16),
                                   Text(
-                                    'Rating: $rate stars',
+                                    'Rating: ${rate.toStringAsFixed(1)} stars',
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,

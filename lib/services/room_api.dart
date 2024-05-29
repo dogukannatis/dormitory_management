@@ -72,5 +72,20 @@ class RoomApi extends Api{
 
   }
 
+  Future<Room?> getRoomById({required int roomId}) async {
+
+    try{
+      final response = await dio.get("$baseUrl/Room/getRoomById", queryParameters: {"id" : roomId}, options: options);
+      debugPrint("response: $response");
+      Room room = Room.fromJson(response.data);
+      debugPrint("Room: $room");
+      return room;
+    } on DioException catch (e, str) {
+      debugPrint("HATA: $e, $str");
+      return null;
+    }
+
+  }
+
 
 }
