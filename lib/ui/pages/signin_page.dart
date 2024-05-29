@@ -1,6 +1,7 @@
 
 
 import 'package:dormitory_management/ui/pages/home_page.dart';
+import 'package:dormitory_management/ui/pages/signup_page.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
       await userManager.login(email: email, password: password);
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
     }catch(e,str){
-      debugPrint("HATA: $e $str");
+        debugPrint("ERROR: $e $str");
     }
   }
 
@@ -82,7 +83,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                             onPressed: () {},
                             child: const Text(
                               "Forgot Password",
-                              style: TextStyle(fontSize: 14, color: Colors.black), // Change color to black
+                              style: TextStyle(fontSize: 14, color: Colors.black),
                             ),
                           ),
                         ],
@@ -119,7 +120,9 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                           ),
                           SizedBox(width: 5),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SignupPage()));
+                            },
                             child: Text(
                               "Sign up for free",
                               style: TextStyle(fontSize: 14, color: Colors.black),

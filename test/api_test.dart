@@ -44,9 +44,9 @@ void main() {
   final loginApi = LoginApi();
 
   Student testUser = Student(
-      userId: 7,
-      name: "asf",
-      surName: "cukk",
+      userId: 1,
+      name: "user",
+      surName: "test",
       email: "test@mgmt.com",
       phoneNo: "01020304056",
       dob: DateTime.now(),
@@ -64,8 +64,8 @@ void main() {
 
     Admin testAdmin = Admin(
       userId: null,
-      name: "Test User zort",
-      surName: "cukk",
+      name: "Test",
+      surName: "User",
       email: "test@mgmt.com",
       phoneNo: "01020304056",
       dob: DateTime.now(),
@@ -108,7 +108,7 @@ void main() {
       commentId: 2,
       userId: 1,
       dormitoryId: 1,
-      commentContent: "pırt",
+      commentContent: "selam",
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
@@ -116,7 +116,7 @@ void main() {
     Dormitory testDormitory = Dormitory(
       dormitoryId: 2,
       universityId: 1,
-      name: "emu sa",
+      name: "emu",
       quota: 10,
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
@@ -128,7 +128,7 @@ void main() {
       contactNo: "12366999",
       email: "dorm@mail.com",
       faxNo: "123",
-      address: "dasd",
+      address: "kıbrıs",
       capacity: 100,
       description: "a test dorm details",
       internetSpeed: "10mbps",
@@ -152,7 +152,7 @@ void main() {
       senderId: 1,
       receiverId: 2,
       seen: true,
-      imageUrl: "as",
+      imageUrl: "https://image.com",
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
@@ -162,7 +162,7 @@ void main() {
       userId: 1,
       dormitoryId: 1,
       ratingNo: 5,
-      review: "coki",
+      review: "çok iyi",
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
@@ -317,7 +317,7 @@ void main() {
   });
 
 
-// dormitory owner user test (test edilmedi)
+// dormitory owner user test 
 
   test('saveDormitoryOwner', () async {
     expect(await dormitoryOwnerApi.saveDormitoryOwner(user: testDormitoryOwner), equals(true));
@@ -376,7 +376,7 @@ test('updateDormitory', () async {
   expect(await notificationApi.updateNotification(notification: testNotification), equals(true));
 });
 
-// rating test - (test edilmedi)
+// rating test - 
 
 test('saveRating', () async {
   expect(await ratingApi.saveRating(rating: testRating), equals(true));

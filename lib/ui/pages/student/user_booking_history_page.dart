@@ -141,7 +141,7 @@ class _UserBookingHistoryState extends ConsumerState<UserBookingHistory> {
                                     //DataCell(Text('${booking.room?.roomType}')),
                                     DataCell(Text('${booking.roomId}')),
                                     const DataCell(Text('23-24 / F-S')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
-                                    DataCell(Text("${booking.dormitory?.dormitoryDetails?.email}")), // Bu veri modelde yok, şimdilik manuel ekliyoruz
+                                    DataCell(Text("${booking.dormitory?.dormitoryDetails?.email}")),
                                     // DataCell(Text('TRY 75000.00')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
                                     //DataCell(_buildActionButton()),
                                   ]);
