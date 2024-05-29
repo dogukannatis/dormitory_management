@@ -59,6 +59,10 @@ class BookingManager extends StateNotifier<List<Booking>> {
     return await _repository.getBookingByID(bookingId: bookingId);
   }
 
+  Future<List<Booking>> getBookingsByDormitoryId({required int dormitoryId}) async {
+    return await _repository.getBookingsByDormitoryId(dormitoryId: dormitoryId);
+  }
+
   Future<List<Booking>> getBookingHistoryByStudentId({required int userId}) async {
     return await _repository.getBookingHistoryByStudentId(userId: userId);
   }

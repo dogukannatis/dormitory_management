@@ -1,5 +1,6 @@
 import 'package:dormitory_management/models/dormitory.dart';
 import 'package:dormitory_management/models/room.dart';
+import 'package:dormitory_management/models/users/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'booking.g.dart';
@@ -21,6 +22,7 @@ class Booking {
   final DateTime? outMax;
   Dormitory? dormitory;
   Room? room;
+  User? user;
 
   Booking({
     required this.bookingId,

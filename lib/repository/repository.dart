@@ -153,6 +153,20 @@ class Repository {
     return await _bookingApi.getBookingByID(id: bookingId);
   }
 
+  Future<List<Booking>> getBookingsByDormitoryId({required int dormitoryId}) async {
+    List<Booking> bookings = await _bookingApi.getBookingsByDormitoryId(dormitoryId: dormitoryId);
+    for(Booking booking in bookings){
+      booking.user = await _studentApi.getStudentByID(id: booking.userId!);
+      List<Room> rooms = await _roomApi.getRoomByDormitoryId(dormitoryId: booking.dormitoryId!);
+      for(Room room in rooms){
+        if(room.roomId == booking.roomId){
+          booking.room = room;
+        }
+      }
+    }
+    return bookings;
+  }
+
   Future<List<Booking>> getBookingHistoryByStudentId({required int userId}) async {
     List<Booking> list = await _bookingApi.getBookingHistoryByStudentId(userId: userId);
     for(Booking booking in list){

@@ -1,6 +1,9 @@
 import 'package:dormitory_management/models/booking.dart';
+import 'package:dormitory_management/models/users/dormitory_owner.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
+import 'package:dormitory_management/viewmodels/booking_manager.dart';
+import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,11 +22,11 @@ class _DormMGBookingHistoryState extends ConsumerState<DormMGBookingHistory> {
     String label;
 
     switch (status) {
-      case 'Current':
+      case 'Approved':
         color = Colors.green;
         label = 'Active';
         break;
-      case 'In Debt':
+      case 'Pending':
         color = Colors.orange;
         label = 'Pending';
         break;
@@ -61,8 +64,25 @@ class _DormMGBookingHistoryState extends ConsumerState<DormMGBookingHistory> {
     );
   }
 
-  Future<void> getBookings() async {
+  @override
+  void initState() {
+    getBookings();
+    super.initState();
+  }
 
+  bool isLoading = false;
+
+
+  Future<void> getBookings() async {
+    final bookingManager = ref.read(bookingManagerProvider.notifier);
+    final user = ref.read(userManagerProvider);
+    setState(() {
+      isLoading = true;
+    });
+    bookings = await bookingManager.getBookingsByDormitoryId(dormitoryId: (user as DormitoryOwner).dormitoryId!);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -110,12 +130,12 @@ class _DormMGBookingHistoryState extends ConsumerState<DormMGBookingHistory> {
                                 ],
                                 rows: bookings.map((booking) {
                                   return DataRow(cells: [
-                                    DataCell(Text('Universe ${booking.dormitoryId}')),
+                                    DataCell(Text('${booking.user?.name} ${booking.user?.surName}')),
                                     DataCell(_buildStatusChip(booking.status ?? 'Unknown')),
-                                    DataCell(Text('Room ${booking.roomId}')),
-                                    DataCell(Text('23-24 / F-S')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
-                                    DataCell(Text('+90 555 555 55 55')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
-                                    DataCell(Text('TRY 75000.00')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
+                                    DataCell(Text('${booking.room?.roomType}')),
+                                    DataCell(Text('23-24 / F-S')),
+                                    DataCell(Text("${booking.user?.phoneNo}")),
+                                    DataCell(Text('${booking.room?.price}')),
                                     DataCell(_buildActionButton()),
                                   ]);
                                 }).toList(),

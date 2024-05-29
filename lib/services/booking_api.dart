@@ -100,6 +100,29 @@ class BookingApi extends Api{
 
   }
 
+  Future<List<Booking>> getBookingsByDormitoryId({required int dormitoryId}) async {
+
+    try{
+      final response = await dio.get("$baseUrl/Booking/getBookingsByDormitoryId", queryParameters: {"dormitoryId" : dormitoryId}, options: options);
+      debugPrint("response: $response");
+      List<Booking> bookingList = [];
+
+      List? responseData = response.data;
+
+      if(responseData != null && responseData.isNotEmpty){
+        for(int i = 0; i < responseData.length; i++){
+          bookingList.add(Booking.fromJson(responseData[i]));
+        }
+      }
+
+      return bookingList;
+    } on DioException catch (e, str) {
+       debugPrint("HATA: $e, $str");
+       return [];
+    }
+
+  }
+
 
 
   /// Delete booking with [bookingId]

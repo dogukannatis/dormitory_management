@@ -27,8 +27,10 @@ import '../../models/users/admin.dart';
 import '../../models/users/user.dart';
 
 class CustomDrawer extends ConsumerStatefulWidget {
+  final bool isActive;
   const CustomDrawer({
     super.key,
+    this.isActive = false
   });
 
   @override
@@ -67,7 +69,7 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const EditProfilePage()));
               },
-              title: const Text("Edit Profile"),
+              title: Text("Edit Profile", style: widget.isActive ? TextStyle(color: Colors.green) : null,),
             ),
             ListTile(
               onTap: (){
