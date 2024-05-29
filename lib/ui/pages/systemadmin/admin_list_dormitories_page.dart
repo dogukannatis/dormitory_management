@@ -40,14 +40,10 @@ class _AdminListDormState extends State<AdminListDorm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: getCustomAppBar(context),
-      drawer: const CustomDrawer(),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: MediaQuery.of(context).size.width * 0.2,
-            child: const CustomDrawer(),
-          ),
+          const CustomDrawer(),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
