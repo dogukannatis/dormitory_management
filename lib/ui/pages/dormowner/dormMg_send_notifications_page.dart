@@ -81,16 +81,18 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
               padding: const EdgeInsets.all(16.0),
               child: Align(
                 alignment: Alignment.topLeft,
-                child: Card(
-                  color: Colors.white,
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.all(32.0),
-                    constraints: BoxConstraints(maxWidth: 600),
-                    child: _showPreview ? _buildPreview() : _buildForm(),
+                child: SingleChildScrollView(
+                  child: Card(
+                    color: Colors.white,
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.all(32.0),
+                      constraints: BoxConstraints(maxWidth: 600),
+                      child: _showPreview ? _buildPreview() : _buildForm(),
+                    ),
                   ),
                 ),
               ),
