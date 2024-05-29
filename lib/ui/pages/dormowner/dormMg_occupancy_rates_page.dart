@@ -1,6 +1,9 @@
-import 'package:dormitory_management/models/dormitory_details.dart';
+import 'package:dormitory_management/models/dormitory.dart';
+import 'package:dormitory_management/models/users/dormitory_owner.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
+import 'package:dormitory_management/viewmodels/dorm_manager.dart';
+import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,53 +15,28 @@ class DormOccupancyRates extends ConsumerStatefulWidget {
 }
 
 class _DormOccupancyRatesState extends ConsumerState<DormOccupancyRates> {
-  List<DormitoryDetails> dormitories = [
-    DormitoryDetails(
-      detailId: 1,
-      dormitoryId: 1,
-      contactNo: "+90 555 555 55 55",
-      capacity: 1000,
-      description: "Running",
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    ),
-    DormitoryDetails(
-      detailId: 2,
-      dormitoryId: 2,
-      contactNo: "+90 444 444 44 44",
-      capacity: 1000,
-      description: "Running",
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    ),
-    DormitoryDetails(
-      detailId: 3,
-      dormitoryId: 3,
-      contactNo: "+90 333 333 33 33",
-      capacity: 650,
-      description: "Renovation",
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    ),
-    DormitoryDetails(
-      detailId: 4,
-      dormitoryId: 4,
-      contactNo: "+90 222 222 22 22",
-      capacity: 1500,
-      description: "Running",
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    ),
-    DormitoryDetails(
-      detailId: 5,
-      dormitoryId: 5,
-      contactNo: "+90 111 111 11 11",
-      capacity: 300,
-      description: "Closed",
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    ),
-  ];
+
+  Dormitory? dormitory;
+  bool isLoading = false;
+
+
+  @override
+  void initState() {
+    getDormitory();
+    super.initState();
+  }
+
+  Future<void> getDormitory() async {
+    final dormManager = ref.read(dormManagerProvider.notifier);
+    final user = ref.read(userManagerProvider);
+    setState(() {
+      isLoading = true;
+    });
+    dormitory = await dormManager.getDormitoryByID(dormitoryId: (user as DormitoryOwner).dormitoryId!);
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   Widget _buildStatusChip(String status) {
     Color color;
@@ -81,7 +59,7 @@ class _DormOccupancyRatesState extends ConsumerState<DormOccupancyRates> {
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: color),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       child: Text(
         status,
         style: TextStyle(
@@ -91,82 +69,75 @@ class _DormOccupancyRatesState extends ConsumerState<DormOccupancyRates> {
       ),
     );
   }
-
-  Widget _buildActionButton() {
-    return PopupMenuButton<int>(
-      onSelected: (item) => print('Selected item: $item'),
-      itemBuilder: (context) => [
-        PopupMenuItem<int>(value: 0, child: Text('Action 1')),
-        PopupMenuItem<int>(value: 1, child: Text('Action 2')),
-      ],
-    );
-  }
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: getCustomAppBar(context),
-    body: Row(
-    children: [
-    CustomDrawer(),
-    Expanded(
-    child: Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: Align(
-    alignment: Alignment.topLeft,
-    child: Card(
-    color: Colors.white,
-    elevation: 5,
-    shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(12),
-    ),
-    child: Container(
-    padding: const EdgeInsets.all(24.0),
-    constraints: BoxConstraints(maxWidth: 1000),
-    child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-    Text(
-    'Dorm Occupancy Rates',
-    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-    ),
-    SizedBox(height: 20),
-    Expanded(
-    child: ListView(
-    children: [
-    DataTable(
-    columnSpacing: 12.0,
-    columns: [
-    DataColumn(label: Text('Dormitories')),
-    DataColumn(label: Text('Status')),
-    DataColumn(label: Text('Capacity')),
-    DataColumn(label: Text('Occupancy Rate')),
-    DataColumn(label: Text('Manager Contact')),
-    DataColumn(label: Text('Action')),
-    ],
-    rows: dormitories.map((dormitory) {
-    return DataRow(cells: [
-      DataCell(Text('UniVerse ${dormitory.dormitoryId}')),
-      DataCell(_buildStatusChip(dormitory.description ?? 'Unknown')),
-      DataCell(Text('${dormitory.capacity}')),
-      DataCell(Text(dormitory.description == 'Running' ? '90%' : '0%')),
-      DataCell(Text(dormitory.contactNo ?? 'N/A')),
-      DataCell(_buildActionButton()),
-    ]);
-    }).toList(),
-    ),
-    ],
-    ),
-    ),
-    ],
-    ),
-    ),
-    ),
-    ),
-    ),
-    ),
-    ],
-    ),
+      appBar: getCustomAppBar(context),
+      body: Row(
+        children: [
+          const CustomDrawer(),
+          isLoading ? const Expanded(child: Center(child: CircularProgressIndicator(),)) : Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Card(
+                  color: Colors.white,
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(24.0),
+                    constraints: BoxConstraints(maxWidth: 1000),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Dorm Occupancy Rates',
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 20),
+                        Expanded(
+                          child: ListView(
+                            children: [
+                              DataTable(
+                                columnSpacing: 12.0,
+                                columns: const [
+                                  DataColumn(label: Text('Dormitory Name')),
+                                  DataColumn(label: Text('Status')),
+                                  DataColumn(label: Text('Capacity')),
+                                  DataColumn(label: Text('Quota')),
+                                  DataColumn(label: Text('Left')),
+
+                                ],
+                                rows: [
+                                  DataRow(
+                                      cells: [
+                                        DataCell(Text('${dormitory!.name}')),
+                                        DataCell(_buildStatusChip("Running")),
+                                        DataCell(Text('${dormitory!.dormitoryDetails!.capacity}')),
+                                        DataCell(Text('${dormitory!.quota}')),
+                                        DataCell(Text('${dormitory!.dormitoryDetails!.capacity! - dormitory!.quota!}')),
+
+                                      ]
+                                  )
+                                ]
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
