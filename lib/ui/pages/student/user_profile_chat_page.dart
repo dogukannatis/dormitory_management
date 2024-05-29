@@ -14,9 +14,24 @@ class _UserProfileChatsState extends State<UserProfileChats> {
   List<String> users = ['User A', 'User B', 'User C'];
   String? _selectedUser;
   List<Message> messages = [
-    Message(id: '1', senderID: '1', receiverID: '2', content: 'Hello User A!', createdAt: DateTime.now().subtract(Duration(minutes: 5))),
-    Message(id: '2', senderID: '2', receiverID: '1', content: 'Hi! How are you?', createdAt: DateTime.now().subtract(Duration(minutes: 3))),
-    Message(id: '3', senderID: '1', receiverID: '2', content: 'I\'m good, thanks! How about you?', createdAt: DateTime.now().subtract(Duration(minutes: 1))),
+    Message(
+        id: '1',
+        senderID: '1',
+        receiverID: '2',
+        content: 'Hello User A!',
+        createdAt: DateTime.now().subtract(Duration(minutes: 5))),
+    Message(
+        id: '2',
+        senderID: '2',
+        receiverID: '1',
+        content: 'Hi! How are you?',
+        createdAt: DateTime.now().subtract(Duration(minutes: 3))),
+    Message(
+        id: '3',
+        senderID: '1',
+        receiverID: '2',
+        content: 'I\'m good, thanks! How about you?',
+        createdAt: DateTime.now().subtract(Duration(minutes: 1))),
   ];
 
   final TextEditingController _messageController = TextEditingController();
@@ -25,86 +40,93 @@ class _UserProfileChatsState extends State<UserProfileChats> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: getCustomAppBar(context),
-      drawer: const CustomDrawer(),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: MediaQuery.of(context).size.width * 0.3,
-            child: Drawer(
-              child: Card(
-                elevation: 5,
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+            child: const CustomDrawer(),
+          ),
+          SizedBox(width: 16),
+          Expanded(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  child: Card(
+                    color: Colors.white,
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              _startNewChat(context);
+                            },
+                            child: Text('Start New Chat'),
+                          ),
+                          SizedBox(height: 16),
+                          Expanded(
+                            child: ListView.separated(
+                              itemCount: users.length,
+                              separatorBuilder: (context, index) => Divider(),
+                              itemBuilder: (context, index) {
+                                final user = users[index];
+                                return ListTile(
+                                  title: Text(user),
+                                  onTap: () {
+                                    _startChatWithUser(user);
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 16),
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          _startNewChat(context);
-                        },
-                        child: Text('Start New Chat'),
-                      ),
-                      SizedBox(height: 16),
                       Expanded(
-                        child: ListView.separated(
-                          itemCount: users.length,
-                          separatorBuilder: (context, index) => Divider(),
-                          itemBuilder: (context, index) {
-                            final user = users[index];
-                            return ListTile(
-                              title: Text(user),
-                              onTap: () {
-                                _startChatWithUser(user);
-                              },
-                            );
-                          },
+                        child: _selectedUser != null
+                            ? ChatScreen(user: _selectedUser!, messages: messages)
+                            : Center(child: Text('Select a user to start chatting')),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: _messageController,
+                                decoration: InputDecoration(hintText: 'Type a message'),
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.send),
+                              onPressed: _sendMessage,
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ),
-          ),
-          SizedBox(width: 16),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: _selectedUser != null
-                        ? ChatScreen(user: _selectedUser!, messages: messages)
-                        : Center(child: Text('Select a user to start chatting')),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: _messageController,
-                            decoration: InputDecoration(hintText: 'Type a message'),
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.send),
-                          onPressed: _sendMessage,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              ],
             ),
           ),
         ],
       ),
     );
-
   }
 
   void _startNewChat(BuildContext context) {
@@ -140,7 +162,8 @@ class ChatScreen extends StatelessWidget {
   final String user;
   final List<Message> messages;
 
-  const ChatScreen({Key? key, required this.user, required this.messages}) : super(key: key);
+  const ChatScreen({Key? key, required this.user, required this.messages})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +174,7 @@ class ChatScreen extends StatelessWidget {
         final message = messages[index];
         return ListTile(
           title: Text(
-            message.senderID == '1' ? 'You' : 'Other User',
+            message.senderID == '1' ? 'You' : user,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           subtitle: Text(message.content),
@@ -184,6 +207,7 @@ class ChatScreen extends StatelessWidget {
     }
   }
 }
+
 
 
 

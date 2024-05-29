@@ -1,29 +1,24 @@
+import 'package:flutter/material.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
-import 'package:flutter/material.dart';
 
-class UserProfileDormitory extends StatefulWidget {
-  const UserProfileDormitory({super.key});
+class UserProfileDormitory extends StatelessWidget {
+  const UserProfileDormitory({Key? key}) : super(key: key);
 
-  @override
-  State<UserProfileDormitory> createState() => _UserProfileDormitoryState();
-}
-
-class _UserProfileDormitoryState extends State<UserProfileDormitory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: getCustomAppBar(context),
-      drawer: const CustomDrawer(),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 250, // Custom drawer genişliği
-              child: const CustomDrawer(), // Custom drawer içeriği
+            SizedBox(
+              width: 250,
+              child: const CustomDrawer(),
             ),
+            SizedBox(width: 16),
             Expanded(
               child: Card(
                 color: Colors.white,
@@ -211,6 +206,9 @@ class _UserProfileDormitoryState extends State<UserProfileDormitory> {
     );
   }
 }
+
+
+
 
 
 

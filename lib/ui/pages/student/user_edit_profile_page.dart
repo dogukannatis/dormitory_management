@@ -13,16 +13,14 @@ import '../../../models/users/student.dart';
 import '../../../models/users/user.dart';
 import '../../widgets/button_loading.dart';
 
-
 class EditProfilePage extends ConsumerStatefulWidget {
-  const EditProfilePage({super.key});
+  const EditProfilePage({Key? key}) : super(key: key);
 
   @override
-  ConsumerState createState() => _EditProfilePageState();
+  _EditProfilePageState createState() => _EditProfilePageState();
 }
 
 class _EditProfilePageState extends ConsumerState<EditProfilePage> {
-
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final surnameController = TextEditingController();
@@ -31,17 +29,19 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
   final passwordController = TextEditingController();
 
   bool isSaving = false;
+  XFile? image;
+
+  final ImagePicker picker = ImagePicker();
 
   @override
   void initState() {
     final user = ref.read(userManagerProvider);
-    nameController.text = user?.name ?? "";
-    surnameController.text = user?.surName ?? "";
-    emailController.text = user?.email ?? "";
-    phoneController.text = user?.phoneNo ?? "";
+    nameController.text = user?.name ?? '';
+    surnameController.text = user?.surName ?? '';
+    emailController.text = user?.email ?? '';
+    phoneController.text = user?.phoneNo ?? '';
     super.initState();
   }
-
 
   Future<void> updateProfile() async {
     final userManager = ref.read(userManagerProvider.notifier);
@@ -49,7 +49,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
     setState(() {
       isSaving = true;
     });
-    if(user is Student){
+    if (user is Student) {
       Student? tempUser = Student(
         userId: user?.userId,
         email: emailController.text.trim(),
@@ -71,7 +71,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
       );
 
       await userManager.updateStudent(user: tempUser);
-    }else if(user is DormitoryOwner){
+    } else if (user is DormitoryOwner) {
       DormitoryOwner? tempUser = DormitoryOwner(
         userId: user.userId,
         email: emailController.text.trim(),
@@ -90,7 +90,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
       );
 
       await userManager.updateDormitoryOwner(user: tempUser);
-    }else if(user is Admin){
+    } else if (user is Admin) {
       Admin? tempUser = Admin(
         userId: user.userId,
         email: emailController.text.trim(),
@@ -110,7 +110,6 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
       await userManager.updateAdmin(user: tempUser);
     }
 
-
     setState(() {
       isSaving = false;
     });
@@ -122,270 +121,269 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  final ImagePicker picker = ImagePicker();
-  XFile? image;
-
   @override
   Widget build(BuildContext context) {
-
     final user = ref.watch(userManagerProvider);
 
     return Scaffold(
-      appBar: getCustomAppBar(context),
-      drawer: const CustomDrawer(),
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        appBar: getCustomAppBar(context),
+    drawer: CustomDrawer(),
+    body: Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+    Container(
+    width: 280,
+    child: Card(
+    color: Colors.white,
+    elevation: 2,
+    shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(12),
+    ),
+    child: Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+    image != null
+    ? CircleAvatar(
+    radius: 100,
+    backgroundImage: NetworkImage(image!.path),
+    backgroundColor: Colors.black,
+    )
+        : const CircleAvatar(
+    radius: 100,
+    backgroundImage: AssetImage('assets/images/login_access.png'),
+    backgroundColor: Colors.black,
+    ),
+    const SizedBox(height: 10),
+    TextButton(
+    onPressed: () async {
+    image = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {});
+    },
+    child: const Text('Upload Profile Photo'),
+    style: TextButton.styleFrom(
+    foregroundColor: Colors.white,
+    backgroundColor: Colors.blue,
+    shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(8),
+    ),
+    ),
+    ),
+    SizedBox(height: 10),
+    Divider(color: Colors.grey.shade300),
+    Text(
+    user!.name!,
+    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    ),
+    SizedBox(height: 10),
+    Text(
+    'Turkey',
+    style: TextStyle(fontSize: 16, color: Colors.grey),
+    ),
+    SizedBox(height: 10),
+    Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+    Icon(Icons.person, size: 16, color: Colors.grey),
+    SizedBox(width: 5),
+    Text(
+    'Student',
+    style: TextStyle(fontSize: 14, color: Colors.grey),
+    ),
+    ],
+    ),
+    SizedBox(height: 10),
+    Divider(color: Colors.grey.shade300),
+    SizedBox(height: 10),
+    Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+    Icon(Icons.phone, size: 16, color: Colors.grey),
+    SizedBox(width: 5),
+    Text(
+    user!.phoneNo!,
+    style: TextStyle(fontSize: 14),
+    ),
+    ],
+    ),
+    SizedBox(height: 10),
+    Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+    Icon(Icons.email, size: 16, color: Colors.grey),
+    SizedBox(width: 5),
+    Text(
+    user!.email!,
+    style: TextStyle(fontSize: 14),
+    ),
+    ],
+    ),
+    ],
+    ),
+    ),
+    ),
+    ),
+    SizedBox(width: 16),
+    Expanded(
+    child: Form(
+    key: _formKey,
+    child: Card(
+    color: Colors.white,
+    elevation: 2,
+    shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(12),
+    ),
+    child: Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    mainAxisSize: MainAxisSize.min,
+    children: [
+    Text(
+    'Edit Profile',
+      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+      textAlign: TextAlign.center,
+    ),
+      SizedBox(height: 20),
+      Row(
         children: [
-          Container(
-            width: 280,
-            child: Card(
-              color: Colors.white,
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    image != null
-                        ? CircleAvatar(
-                      radius: 100,
-                      backgroundImage: NetworkImage(image!.path),
-                      backgroundColor: Colors.black,
-                    )
-                        : const CircleAvatar(
-                      radius: 100,
-                      backgroundImage: AssetImage('assets/images/login_access.png'),
-                      backgroundColor: Colors.black,
-                    ),
-                    const SizedBox(height: 10),
-                    TextButton(
-                      onPressed: () async {
-                        image = await picker.pickImage(source: ImageSource.gallery);
-                        setState(() {});
-                      },
-                      child: const Text('Upload Profile Photo'),
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Divider(color: Colors.grey.shade300),
-                    Text(
-                      user!.name!,
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Turkey',
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.person, size: 16, color: Colors.grey),
-                        SizedBox(width: 5),
-                        Text(
-                          'Student',
-                          style: TextStyle(fontSize: 14, color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Divider(color: Colors.grey.shade300),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.phone, size: 16, color: Colors.grey),
-                        SizedBox(width: 5),
-                        Text(
-                          user!.phoneNo!,
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.email, size: 16, color: Colors.grey),
-                        SizedBox(width: 5),
-                        Text(
-                          user!.email!,
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ],
-                    ),
-                  ],
+          Expanded(
+            child: TextFormField(
+              controller: nameController,
+              decoration: InputDecoration(
+                labelText: 'First Name',
+                hintText: user.name,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
             ),
           ),
           SizedBox(width: 16),
-          Form(
-            key: _formKey,
-            child: Expanded(
-              child: Card(
-                color: Colors.white,
-                elevation: 2,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'Edit Profile',
-                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: nameController,
-                              decoration: InputDecoration(
-                                labelText: 'First Name',
-                                hintText: user.name,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 16),
-                          Expanded(
-                            child: TextFormField(
-                              controller: surnameController,
-                              decoration: InputDecoration(
-                                labelText: 'Last Name',
-                                hintText: user.surName,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 20),
-                      TextFormField(
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          hintText: user.email,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: DropdownButtonFormField<String>(
-                              decoration: InputDecoration(
-                                labelText: 'Country Code',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              value: '+90',
-                              items: <String>['+90', '+1', '+44', '+49', '+33']
-                                  .map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              onChanged: (String? newValue) {
-                                phoneController.text = newValue!;
-                              },
-                            ),
-                          ),
-                          SizedBox(width: 16),
-                          Expanded(
-                            flex: 3,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                labelText: 'Phone Number',
-                                hintText: '1111111111',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 20),
-                      TextFormField(
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          hintText: 'Change Password',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      DropdownButtonFormField<String>(
-                        decoration: InputDecoration(
-                          labelText: 'Nationality',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        value: 'Turkey',
-                        items: <String>['Turkey', 'USA', 'UK', 'Germany', 'France']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {},
-                      ),
-                      SizedBox(height: 30),
-                      ElevatedButton(
-                        onPressed: () {
-                          updateProfile();
-                        },
-                        child: isSaving ? ButtonLoading(buttonText: "saving",) : Text('Save'),
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          padding: EdgeInsets.symmetric(vertical: 16),
-                        ),
-                      ),
-                    ],
-                  ),
+          Expanded(
+            child: TextFormField(
+              controller: surnameController,
+              decoration: InputDecoration(
+                labelText: 'Last Name',
+                hintText: user.surName,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
             ),
           ),
         ],
       ),
+      SizedBox(height: 20),
+      TextFormField(
+        controller: emailController,
+        decoration: InputDecoration(
+          labelText: 'Email',
+          hintText: user.email,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      ),
+      SizedBox(height: 20),
+      Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                labelText: 'Country Code',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              value: '+90',
+              items: <String>['+90', '+1', '+44', '+49', '+33']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                phoneController.text = newValue!;
+              },
+            ),
+          ),
+          SizedBox(width: 16),
+          Expanded(
+            flex: 3,
+            child: TextField(
+              controller: phoneController,
+              decoration: InputDecoration(
+                labelText: 'Phone Number',
+                hintText: '1111111111',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      SizedBox(height: 20),
+      TextFormField(
+        controller: passwordController,
+        decoration: InputDecoration(
+          labelText: 'Password',
+          hintText: 'Change Password',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      ),
+      SizedBox(height: 20),
+      DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Nationality',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        value: 'Turkey',
+        items: <String>['Turkey', 'USA', 'UK', 'Germany', 'France']
+            .map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: (String? newValue) {},
+      ),
+      SizedBox(height: 30),
+      ElevatedButton(
+        onPressed: () {
+          updateProfile();
+        },
+        child: isSaving ? ButtonLoading(buttonText: "saving",) : Text('Save'),
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.blue,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          padding: EdgeInsets.symmetric(vertical: 16),
+        ),
+      ),
+    ],
+    ),
+    ),
+    ),
+    ),
+    ),
+    ],
+    ),
     );
   }
 }
+
+
 
 
 
