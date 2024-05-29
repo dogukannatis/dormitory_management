@@ -35,7 +35,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
 
   final ImagePicker picker = ImagePicker();
 
-/*
+
   Future<void> uploadPhoto() async {
     final userManager = ref.read(userManagerProvider.notifier);
 
@@ -48,12 +48,11 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
         'file': await MultipartFile.fromFile(image!.path),
       });
 
-      await userManager.uploadPhoto(formData: formData);
+      await userManager.uploadPhoto(formData: formData, file: image);
     }
 
-
   }
- */
+
 
 
 
@@ -177,6 +176,11 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                       radius: 100,
                       backgroundImage: NetworkImage(image!.path),
                       backgroundColor: Colors.black,
+                    ) : user?.profilePhotoFile != null ?
+                    CircleAvatar(
+                      radius: 100,
+                      backgroundImage: FileImage(File(user!.profilePhotoFile!.path)),
+                      backgroundColor: Colors.black,
                     )
                         : const CircleAvatar(
                       radius: 100,
@@ -188,7 +192,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                       onPressed: () async {
                         image = await picker.pickImage(source: ImageSource.gallery);
                         setState(() {});
-                       // await uploadPhoto();
+                        await uploadPhoto();
                       },
                       child: const Text('Upload Profile Photo'),
                       style: TextButton.styleFrom(

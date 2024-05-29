@@ -7,6 +7,7 @@ import 'package:dormitory_management/models/users/student.dart';
 import 'package:dormitory_management/models/users/user.dart';
 import 'package:dormitory_management/repository/repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -73,15 +74,13 @@ class UserManager extends StateNotifier<User?> {
     await _repository.updateAdmin(user: user);
   }
 
-  /*
-  Future<void> uploadPhoto({required FormData formData, bool? disableState}) async {
-    String? url = await _repository.uploadPhoto(formData: formData);
-    if(disableState != true){
-      state!.profileUrl = url;
-      state = state;
-    }
+
+  Future<void> uploadPhoto({required FormData formData, bool? disableState, XFile? file}) async {
+    //String? url = await _repository.uploadPhoto(formData: formData);
+    state!.profilePhotoFile = file;
+    state = state;
   }
-   */
+
 
   void signOut(){
     state = null;

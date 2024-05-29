@@ -1,5 +1,6 @@
 
 import 'package:dormitory_management/models/users/user.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:json_annotation/json_annotation.dart';
 
  part 'student.g.dart';
@@ -34,6 +35,7 @@ class Student extends User {
     this.department,
     this.gender,
     this.emergencyContactNo,
+    XFile? profilePhotoFile
   }) : super(
     userId: userId,
     name: name,
@@ -47,7 +49,8 @@ class Student extends User {
     address: address,
     isEmailVerified: isEmailVerified,
       userType: userType,
-    password: password
+    password: password,
+      profilePhotoFile: profilePhotoFile
   );
 
  factory Student.fromJson(Map<String, dynamic> json) => _$StudentFromJson(json);

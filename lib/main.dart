@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderScope(
       child: MaterialApp(
+          debugShowCheckedModeBanner: false,
         title: "Dormitory Management",
         theme: ThemeData(
           //colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

@@ -1,3 +1,4 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 
@@ -16,6 +17,7 @@ abstract class User {
   final String? phoneNo;
   final String? password;
   final String? userType;
+  XFile? profilePhotoFile;
 
   User({
     required this.userId,
@@ -30,7 +32,8 @@ abstract class User {
     this.address,
     this.phoneNo,
     this.password,
-    this.userType
+    this.userType,
+    this.profilePhotoFile
   });
 
 

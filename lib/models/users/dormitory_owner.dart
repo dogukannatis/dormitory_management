@@ -1,5 +1,6 @@
 
 import 'package:dormitory_management/models/users/user.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'dormitory_owner.g.dart';
@@ -27,7 +28,8 @@ class DormitoryOwner extends User {
     String? address,
     String? password,
     String? userType,
-    this.dormitoryId
+    this.dormitoryId,
+    XFile? profilePhotoFile
   }) : super(
     userId: userId,
     name: name,
@@ -42,6 +44,7 @@ class DormitoryOwner extends User {
     address: address,
     userType: userType,
     isEmailVerified: isEmailVerified,
+      profilePhotoFile: profilePhotoFile
   );
 
   factory DormitoryOwner.fromJson(Map<String, dynamic> json) => _$DormitoryOwnerFromJson(json);

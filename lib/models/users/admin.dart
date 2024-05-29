@@ -1,5 +1,6 @@
 
 import 'package:dormitory_management/models/users/user.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:json_annotation/json_annotation.dart';
 
   part 'admin.g.dart';
@@ -25,6 +26,7 @@ class Admin extends User {
     String? address,
     String? password,
     String? userType,
+    XFile? profilePhotoFile
   }) : super(
     userId: userId,
     password: password,
@@ -39,6 +41,7 @@ class Admin extends User {
     address: address,
     userType: userType,
     isEmailVerified: isEmailVerified,
+      profilePhotoFile: profilePhotoFile
   );
 
    factory Admin.fromJson(Map<String, dynamic> json) => _$AdminFromJson(json);
