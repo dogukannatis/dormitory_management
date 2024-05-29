@@ -133,8 +133,8 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
                                 child: Image.asset(
                                   'assets/images/home_img1.png',
                                   fit: BoxFit.contain,
-                                  height: 300,
-                                  width: 450,
+                                  height: 200,
+                                  width: 350,
                                 ),
                               ),
                             ),
@@ -158,6 +158,17 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  dormitory.dormitoryDetails!.description!.length > 30 ?
+                                  Text("${dormitory.dormitoryDetails?.description!.substring(0,30)}...",
+                                    style: const TextStyle(
+                                      overflow: TextOverflow.fade,
+                                    ),
+                                  ) : Text("${dormitory.dormitoryDetails?.description}",
+                                    style: const TextStyle(
+                                      overflow: TextOverflow.fade,
                                     ),
                                   ),
                                   const SizedBox(height: 16),
