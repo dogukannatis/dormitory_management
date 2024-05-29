@@ -18,6 +18,7 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   List<File> _images = [];
+  bool _showPreview = false;
 
   Future<void> _pickImage() async {
     final result = await FilePicker.platform.pickFiles(
@@ -29,6 +30,12 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
         _images.add(File(result.files.single.path!));
       });
     }
+  }
+
+  void _deleteImage(int index) {
+    setState(() {
+      _images.removeAt(index);
+    });
   }
 
   Future<void> _uploadImages() async {
@@ -45,7 +52,7 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
-      //bildirimi burda gönderebilirim
+      // Bildirimi burada gönderebilirim
       print(notification.toJson());
     }
   }
@@ -55,11 +62,18 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
     return '';
   }
 
+  void _togglePreview() {
+    setState(() {
+      _showPreview = !_showPreview;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: getCustomAppBar(context),
       body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomDrawer(activePage: ActivePages.dormMGsendNotifications,),
           Expanded(
@@ -74,122 +88,9 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Container(
-                    padding: const EdgeInsets.all(24.0),
-                    constraints: BoxConstraints(maxWidth: 1000),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Send Notifications & Alerts',
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 20),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  TextFormField(
-                                    controller: _groupController,
-                                    decoration: InputDecoration(labelText: 'Group'),
-                                  ),
-                                  SizedBox(height: 16),
-                                  TextFormField(
-                                    controller: _titleController,
-                                    decoration: InputDecoration(labelText: 'Notification Title'),
-                                  ),
-                                  SizedBox(height: 16),
-                                  TextFormField(
-                                    controller: _descriptionController,
-                                    maxLines: 5,
-                                    decoration: InputDecoration(labelText: 'Notification Description'),
-                                  ),
-                                  SizedBox(height: 16),
-                                  Container(
-                                    height: 100,
-                                    child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: _images.length,
-                                      itemBuilder: (context, index) {
-                                        return Stack(
-                                          alignment: Alignment.topRight,
-                                          children: [
-                                            Container(
-                                              margin: EdgeInsets.symmetric(horizontal: 5),
-                                              width: 100,
-                                              height: 100,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                                image: DecorationImage(
-                                                  image: FileImage(_images[index]),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                            IconButton(
-                                              icon: Icon(Icons.delete, color: Colors.red),
-                                              onPressed: () => _deleteImage(index),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(height: 16),
-                                  ElevatedButton(
-                                    onPressed: _pickImage,
-                                    child: Text('Add Photo'),
-                                  ),
-                                  SizedBox(height: 16),
-                                  ElevatedButton(
-                                    onPressed: () async {
-                                      await _uploadImages();
-                                      //kaydetme fonksiyonu buraya gelecek, _uploadedImageUrls +
-                                    },
-                                    child: Text('Save'),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            VerticalDivider(thickness: 1, color: Colors.grey),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Text(
-                                    'Preview',
-                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(height: 16),
-                                  if (_images.isNotEmpty)
-                                    Container(
-                                      width: double.infinity,
-                                      height: 200,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        image: DecorationImage(
-                                          image: FileImage(_images.first),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  SizedBox(height: 16),
-                                  Text(
-                                    _titleController.text,
-                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(height: 8),
-                                  Text(
-                                    _descriptionController.text,
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    padding: const EdgeInsets.all(32.0),
+                    constraints: BoxConstraints(maxWidth: 600),
+                    child: _showPreview ? _buildPreview() : _buildForm(),
                   ),
                 ),
               ),
@@ -200,10 +101,218 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
     );
   }
 
-  void _deleteImage(int index) {
-    setState(() {
-      _images.removeAt(index);
-    });
+  Widget _buildForm() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          'Send Notifications & Alerts',
+          style: TextStyle(
+              fontSize: 24, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 20),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Group',
+              style: TextStyle(color: Colors.grey),
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              controller: _groupController,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Notification Title',
+              style: TextStyle(color: Colors.grey),
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              controller: _titleController,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Notification Description',
+              style: TextStyle(color: Colors.grey),
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              controller: _descriptionController,
+              maxLines: 5,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              height: 100,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: _images.length,
+                itemBuilder: (context, index) {
+                  return Stack(
+                    alignment: Alignment.topRight,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 5),
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                            image: FileImage(_images[index]),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.delete, color: Colors.red),
+                        onPressed: () => _deleteImage(index),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _pickImage,
+              child: Text('Add Photo'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                padding: EdgeInsets.symmetric(
+                    vertical: 16, horizontal: 32),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: _togglePreview,
+                  child: Text('Preview'),
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 32),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await _uploadImages();
+                    // Kaydetme fonksiyonu buraya gelecek, _uploadedImageUrls +
+                  },
+                  child: Text('Send Notification'),
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 32),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPreview() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          'Preview Notification',
+          style: TextStyle(
+              fontSize: 24, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 20),
+        ListTile(
+          leading: Icon(Icons.notifications, color: Colors.blue),
+          title: Text(
+            _titleController.text,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          subtitle: Text(_descriptionController.text),
+          trailing: Text('Just now'),
+        ),
+        const SizedBox(height: 20),
+        if (_images.isNotEmpty)
+          Container(
+            height: 100,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: _images.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                      image: FileImage(_images[index]),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        const SizedBox(height: 20),
+        ElevatedButton(
+          onPressed: _togglePreview,
+          child: Text('Edit'),
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.blue,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: EdgeInsets.symmetric(
+                vertical: 16, horizontal: 32),
+          ),
+        ),
+      ],
+    );
   }
 
   @override

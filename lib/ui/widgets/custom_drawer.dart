@@ -127,7 +127,7 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGSetDateRange()));
               },
-              title: Text("Edit Dorm", style: widget.activePage == ActivePages.dormMGsetDateRange ? TextStyle(color: Colors.blue) : null,),
+              title: Text("Set Date Range", style: widget.activePage == ActivePages.dormMGsetDateRange ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(
               onTap: (){

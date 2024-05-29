@@ -50,7 +50,7 @@ class DormMGSetDateRange extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 10),
                                   TextFormField(
-                                    initialValue: 'Approved',
+                                    initialValue: 'August 10, 2023',
                                     decoration: InputDecoration(
                                       filled: true,
                                       fillColor: Colors.white,
@@ -102,7 +102,7 @@ class DormMGSetDateRange extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 10),
                                   TextFormField(
-                                    initialValue: 'help@universedorm.com',
+                                    initialValue: 'June 10, 2023',
                                     decoration: InputDecoration(
                                       filled: true,
                                       fillColor: Colors.white,
@@ -126,7 +126,7 @@ class DormMGSetDateRange extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 10),
                                   TextFormField(
-                                    initialValue: '+90 533 333 33 33',
+                                    initialValue: 'July 10, 2023',
                                     decoration: InputDecoration(
                                       filled: true,
                                       fillColor: Colors.white,
