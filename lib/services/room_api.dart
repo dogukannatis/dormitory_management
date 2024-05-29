@@ -50,5 +50,27 @@ class RoomApi extends Api{
 
   }
 
+  Future<List<Room>> getRoomByDormitoryId({required int dormitoryId}) async {
+
+    try{
+      final response = await dio.get("$baseUrl/Room/getRoomByDormitoryId", queryParameters: {"dormId" : dormitoryId}, options: options);
+      debugPrint("response: $response");
+      List<Room> rooms = [];
+
+      List? responseData = response.data;
+
+      if(responseData != null && responseData.isNotEmpty){
+        for(int i = 0; i < responseData.length; i++){
+          rooms.add(Room.fromJson(responseData[i]));
+        }
+      }
+      return rooms;
+    } on DioException catch (e, str) {
+      debugPrint("HATA: $e, $str");
+      return [];
+    }
+
+  }
+
 
 }

@@ -85,6 +85,10 @@ class DormManager extends StateNotifier<List<Dormitory>> {
     await _repository.deleteDormitoryByID(dormitoryId: dormitoryId);
   }
 
+  Future<List<Room>> getRoomByDormitoryId({required int dormitoryId}) async {
+    return await _repository.getRoomByDormitoryId(dormitoryId: dormitoryId);
+  }
+
   Future<void> updateDormitory({required Dormitory dormitory}) async {
     for(Dormitory dorm in state){
       if(dorm.dormitoryId == dormitory.dormitoryId){

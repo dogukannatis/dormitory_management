@@ -105,6 +105,10 @@ class Repository {
     await _dormitoryApi.deleteDormitoryByID(dormitoryId: dormitoryId);
   }
 
+  Future<List<Room>> getRoomByDormitoryId({required int dormitoryId}) async {
+    return await _roomApi.getRoomByDormitoryId(dormitoryId: dormitoryId);
+  }
+
   Future<void> saveRoom({required Room room}) async {
     await _roomApi.saveRoom(room: room);
   }

@@ -30,10 +30,7 @@ class _HomePageState extends State<HomePage> {
       appBar: getCustomAppBar(context),
       body: Row(
         children: [
-          Container(
-            width: 250, // Drawer genişliği
-            child: CustomDrawer(), // CustomDrawer içeriği
-          ),
+          CustomDrawer(),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
