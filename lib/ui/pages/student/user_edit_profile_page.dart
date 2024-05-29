@@ -131,7 +131,7 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomDrawer(isActive: true,),
+          CustomDrawer(activePage: ActivePages.editStudentPage,),
           SizedBox(width: 16),
           Container(
             width: 280,

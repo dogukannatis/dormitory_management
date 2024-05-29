@@ -26,11 +26,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/users/admin.dart';
 import '../../models/users/user.dart';
 
+enum ActivePages {editStudentPage,myDormitoryPage, none}
+
 class CustomDrawer extends ConsumerStatefulWidget {
-  final bool isActive;
+  final ActivePages activePage;
   const CustomDrawer({
     super.key,
-    this.isActive = false
+    this.activePage = ActivePages.none
   });
 
   @override
@@ -43,7 +45,7 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
   Widget build(BuildContext context) {
     User? user = ref.watch(userManagerProvider);
 
-/*
+
 
     if(user is Student){
       return _getStudentDrawer();
@@ -55,9 +57,9 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
       return Container();
     }
 
-*/
 
-  return _getMockDrawer();
+
+  //return _getMockDrawer();
 
   }
 
@@ -71,13 +73,13 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const EditProfilePage()));
               },
-              title: Text("Edit Profile", style: widget.isActive ? TextStyle(color: Colors.green) : null,),
+              title: Text("Edit Profile", style: widget.activePage == ActivePages.editStudentPage ? TextStyle(color: Colors.green) : null,),
             ),
             ListTile(
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const UserProfileDormitory()));
               },
-              title: const Text("My Dormitory"),
+              title: Text("My Dormitory", style: widget.activePage == ActivePages.myDormitoryPage ? TextStyle(color: Colors.green) : null,),
             ),
             ListTile(
               onTap: (){
