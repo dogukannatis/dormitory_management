@@ -16,7 +16,6 @@ class DormMGReviewAndRatings extends ConsumerStatefulWidget {
 
 class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings> {
   List<Rating> ratings = [];
-
   bool isLoading = false;
 
   Widget _buildRatingChip(int ratingNo) {
@@ -114,6 +113,7 @@ class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings>
 
     return Scaffold(
       appBar: getCustomAppBar(context),
+      drawer: const CustomDrawer(),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : Padding(
@@ -166,10 +166,10 @@ class _DormMGReviewAndRatingsState extends ConsumerState<DormMGReviewAndRatings>
           ),
         ),
       ),
-      drawer: const CustomDrawer(),
     );
   }
 }
+
 
 
 
