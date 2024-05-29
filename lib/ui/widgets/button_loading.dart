@@ -11,6 +11,7 @@ class ButtonLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(buttonText),
         SizedBox(width: 5,),

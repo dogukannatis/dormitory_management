@@ -21,6 +21,7 @@ class DormitoryDetails {
   bool? hasTV;
   bool? hasMicrowave;
   bool? hasAirConditioning;
+  int? price;
   @JsonKey(includeIfNull: false)
   List? photoUrls;
   DateTime? createdAt;
@@ -45,6 +46,7 @@ class DormitoryDetails {
     this.hasAirConditioning,
     this.createdAt,
     this.photoUrls,
+    this.price,
     this.updatedAt
   });
 

@@ -42,18 +42,18 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
     User? user = ref.watch(userManagerProvider);
 
     if(user is Student){
-      return _getStudentDrawer();
+      return _getMockDrawer();
     }else if(user is DormitoryOwner){
-      return _getStudentDrawer();
+      return _getMockDrawer();
     }else if(user is Admin){
-      return _getStudentDrawer();
+      return _getMockDrawer();
     }else{
-      return _getStudentDrawer();
+      return _getMockDrawer();
     }
 
   }
 
-  Widget _getStudentDrawer(){
+  Widget _getMockDrawer(){
     return Drawer(
       child: ListView(
         children: [

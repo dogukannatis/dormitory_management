@@ -28,6 +28,7 @@ DormitoryDetails _$DormitoryDetailsFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['createdAt'] as String),
       photoUrls: json['photoUrls'] as List<dynamic>?,
+      price: json['price'] as int?,
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
@@ -58,6 +59,7 @@ Map<String, dynamic> _$DormitoryDetailsToJson(DormitoryDetails instance) {
   val['hasTV'] = instance.hasTV;
   val['hasMicrowave'] = instance.hasMicrowave;
   val['hasAirConditioning'] = instance.hasAirConditioning;
+  val['price'] = instance.price;
   writeNotNull('photoUrls', instance.photoUrls);
   val['createdAt'] = instance.createdAt?.toIso8601String();
   val['updatedAt'] = instance.updatedAt?.toIso8601String();

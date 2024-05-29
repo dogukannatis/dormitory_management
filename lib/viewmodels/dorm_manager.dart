@@ -46,6 +46,10 @@ class DormManager extends StateNotifier<List<Dormitory>> {
     await _repository.saveDormitory(dormitory: dormitory);
   }
 
+  Future<Dormitory?> getDormitoryByID({required int dormitoryId}) async {
+    return await _repository.getDormitoryByID(dormitoryId: dormitoryId);
+  }
+
 
   Future<void> deleteRating({required int ratingId}) async {
     await _repository.deleteRating(ratingId: ratingId);

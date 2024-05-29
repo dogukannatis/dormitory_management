@@ -98,6 +98,7 @@ class Repository {
 
   Future<void> updateDormitory({required Dormitory dormitory}) async {
     await _dormitoryApi.updateDormitory(dormitory: dormitory);
+    await _dormitoryDetailsApi.updateDormitoryDetails(dormitoryDetails: dormitory.dormitoryDetails!);
   }
 
   Future<void> deleteDormitoryByID({required int dormitoryId}) async {
