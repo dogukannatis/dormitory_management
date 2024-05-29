@@ -9,6 +9,7 @@ import 'package:dormitory_management/viewmodels/booking_manager.dart';
 import 'package:dormitory_management/viewmodels/comment_manager.dart';
 import 'package:dormitory_management/viewmodels/dorm_manager.dart';
 import 'package:dormitory_management/viewmodels/user_manager.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -119,230 +120,232 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
         child: Row(
           children: [
             const CustomDrawer(),
-            Padding(
-              padding: const EdgeInsets.all(50.0),
-              child: Column(
-                children: [
-                  Card(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    elevation: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.all(50.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 50.0),
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(15.0),
-                                  bottomLeft: Radius.circular(15.0),
-                                ),
-                                child: Image.asset(
-                                  'assets/images/home_img1.png',
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  widget.dormitory.name!,
-                                  style: const TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                                  child: Text(
-                                    "Description",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  widget.dormitory.dormitoryDetails!.description!,
-                                  textAlign: TextAlign.justify,
-                                ),
-                                const Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                  child: Text(
-                                    'Features',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                getFeatures(),
-                              ],
-                            ),
-                          ),
-                        ],
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: Column(
+                  children: [
+                    Card(
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
                       ),
-                    ),
-                  ),
-                  rooms.isNotEmpty ?
-                  Column(
-                    children: [
-                      /*
-                      const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text("Rooms", style: TextStyle( fontSize: 24,
-                          fontWeight: FontWeight.bold,),),
-                      ),
-                       */
-                      Padding(
+                      elevation: 5,
+                      child: Padding(
                         padding: const EdgeInsets.all(50.0),
-                        child: Column(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              width: double.infinity,
-                              height: 200,
-                              child: ListView.builder(
-                                itemCount: rooms.length,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index){
-                                  return SizedBox(
-                                    height: 200,
-                                    width: 200,
-                                    child: Card(
-                                      color: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15.0),
-                                      ),
-                                      elevation: 5,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            const Text("Room", style: TextStyle(fontSize: 24 ,fontWeight: FontWeight.bold),),
-                                            SizedBox(height: 10,),
-                                            Text("Room Type: ${rooms[index].roomType!}"),
-                                            SizedBox(height: 10,),
-                                            Text("${rooms[index].price}₺"),
-                                            SizedBox(height: 10,),
-                                            ElevatedButton(
-                                              onPressed: !(user != null && user is Student) || isBooked ? null : () => book(roomId: rooms[index].roomId!),
-                                              child: isBooked ? const Text("Booked") : const Text('Book Now'),
-                                            ),
-                                          ],
-                                        ),
+                            Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 50.0),
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(15.0),
+                                    bottomLeft: Radius.circular(15.0),
+                                  ),
+                                  child: Image.asset(
+                                    'assets/images/home_img1.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    widget.dormitory.name!,
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                                    child: Text(
+                                      "Description",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.grey,
                                       ),
                                     ),
-                                  );
-                                },
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    widget.dormitory.dormitoryDetails!.description!,
+                                    textAlign: TextAlign.justify,
+                                  ),
+                                  const Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                    child: Text(
+                                      'Features',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  getFeatures(),
+                                ],
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
-                    ],
-                  ) : Container(),
-
-                  Card(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
                     ),
-                    elevation: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.all(50.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Comments',
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 50),
-                          widget.dormitory.comments != null && widget.dormitory.comments!.isNotEmpty ?
-                          ListView.builder(
-                            itemCount: widget.dormitory.comments!.length,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index){
-                              Comment? comment = widget.dormitory.comments![index];
-                              debugPrint("comment: $comment");
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CommentWidget(
-                                  username: comment!.user!.name!,
-                                  timeAgo: timeago.format(comment.createdAt!),
-                                  comment: comment.commentContent!,
-                                  onPressed: (){
-                                    deleteComment(comment.commentId!);
-                                  },
-                                  canDelete: user is Admin ||
-                                  (user is DormitoryOwner && user.userId == comment.dormitoryId)
-                                      || comment.user!.userId == user?.userId ? true : false,
-                                ),
-                              );
-                            },
-                          ) : Center(
-                            child: Text("There is no comment yet."),
-                          ),
-                          SizedBox(height: 50),
-                          user == null ? Center(
-                            child: Text("Please sign in to write a comment."),
-                          ) :
-                          user is Student ?
-                              Form(
-                                key: _formKey,
-                                child: Column(
-                                  children: [
-                                     TextFormField(
-                                       controller: commentController,
-                                      validator: (v){
-                                         if(v!.isEmpty){
-                                           return "Field is required";
-                                         }else{
-                                           return null;
-                                         }
-                                      },
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        labelText: 'Write a review',
+                    rooms.isNotEmpty ?
+                    Column(
+                      children: [
+                        /*
+                        const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text("Rooms", style: TextStyle( fontSize: 24,
+                            fontWeight: FontWeight.bold,),),
+                        ),
+                         */
+                        Padding(
+                          padding: const EdgeInsets.all(50.0),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                width: double.infinity,
+                                height: 200,
+                                child: ListView.builder(
+                                  itemCount: rooms.length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index){
+                                    return SizedBox(
+                                      height: 200,
+                                      width: 200,
+                                      child: Card(
+                                        color: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(15.0),
+                                        ),
+                                        elevation: 5,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              const Text("Room", style: TextStyle(fontSize: 24 ,fontWeight: FontWeight.bold),),
+                                              SizedBox(height: 10,),
+                                              Text("Room Type: ${rooms[index].roomType!}"),
+                                              SizedBox(height: 10,),
+                                              Text("${rooms[index].price}₺"),
+                                              SizedBox(height: 10,),
+                                              ElevatedButton(
+                                                onPressed: !(user != null && user is Student) || isBooked ? null : () => book(roomId: rooms[index].roomId!),
+                                                child: isBooked ? const Text("Booked") : const Text('Book Now'),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                      maxLines: 3,
-                                    ),
-                                    const SizedBox(height: 50),
-                                    ElevatedButton(
-                                      onPressed: isLoading ? null : () {
-                                        _formKey.currentState!.save();
-                                        if(_formKey.currentState!.validate()){
-                                          saveComment();
-                                        }
-                                      },
-                                      child: isLoading ? ButtonLoading(buttonText: "Submit Review") : const Text('Submit Review'),
-                                    ),
-                                  ],
+                                    );
+                                  },
                                 ),
-                              ) : Center(
-                            child: Text("Please sign in as a Student to write a comment."),
+                              )
+                            ],
                           ),
+                        ),
+                      ],
+                    ) : Container(),
 
-                        ],
+                    Card(
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(50.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Comments',
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(height: 50),
+                            widget.dormitory.comments != null && widget.dormitory.comments!.isNotEmpty ?
+                            ListView.builder(
+                              itemCount: widget.dormitory.comments!.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index){
+                                Comment? comment = widget.dormitory.comments![index];
+                                debugPrint("comment: $comment");
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CommentWidget(
+                                    username: comment!.user!.name!,
+                                    timeAgo: timeago.format(comment.createdAt!),
+                                    comment: comment.commentContent!,
+                                    onPressed: (){
+                                      deleteComment(comment.commentId!);
+                                    },
+                                    canDelete: user is Admin ||
+                                    (user is DormitoryOwner && user.userId == comment.dormitoryId)
+                                        || comment.user!.userId == user?.userId ? true : false,
+                                  ),
+                                );
+                              },
+                            ) : Center(
+                              child: Text("There is no comment yet."),
+                            ),
+                            SizedBox(height: 50),
+                            user == null ? Center(
+                              child: Text("Please sign in to write a comment."),
+                            ) :
+                            user is Student ?
+                                Form(
+                                  key: _formKey,
+                                  child: Column(
+                                    children: [
+                                       TextFormField(
+                                         controller: commentController,
+                                        validator: (v){
+                                           if(v!.isEmpty){
+                                             return "Field is required";
+                                           }else{
+                                             return null;
+                                           }
+                                        },
+                                        decoration: const InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          labelText: 'Write a review',
+                                        ),
+                                        maxLines: 3,
+                                      ),
+                                      const SizedBox(height: 50),
+                                      ElevatedButton(
+                                        onPressed: isLoading ? null : () {
+                                          _formKey.currentState!.save();
+                                          if(_formKey.currentState!.validate()){
+                                            saveComment();
+                                          }
+                                        },
+                                        child: isLoading ? ButtonLoading(buttonText: "Submit Review") : const Text('Submit Review'),
+                                      ),
+                                    ],
+                                  ),
+                                ) : Center(
+                              child: Text("Please sign in as a Student to write a comment."),
+                            ),
+
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

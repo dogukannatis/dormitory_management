@@ -125,8 +125,24 @@ class Repository {
     }
     return dorm;
   }
+
   Future<void> deleteCommentByID({required int commentId}) async {
     await _commentApi.deleteCommentByID(commentId: commentId);
+  }
+
+  Future<Booking?> getApprovedBookingByUserId({required int userId}) async {
+    Booking? booking = await _dormitoryOwnerApi.getApprovedBookingByUserId(userId: userId);
+    if(booking!.status != "Approved"){
+      return null;
+    }
+
+    booking.user = await _studentApi.getStudentByID(id: booking.userId!);
+    booking.dormitory = await _dormitoryApi.getDormitoryByID(dormitoryId: booking.dormitoryId!);
+    if(booking.dormitory != null){
+      booking.dormitory?.dormitoryDetails = await _dormitoryDetailsApi.getDormitoryDetailsByDormitoryID(dormitoryId: booking.dormitoryId!);
+    }
+
+    return booking;
   }
 
   Future<void> getDormitoryDetailsByDormitoryID({required int dormitoryId}) async {

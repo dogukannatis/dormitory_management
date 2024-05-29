@@ -68,6 +68,8 @@ class DormitoryDetailsApi extends Api{
 
 
 
+
+
   /// Delete dormitory details with [dormitoryDetailsId]
   /// Works properly
   Future<bool?> deleteDormitoryDetailsByID({required int dormitoryDetailsId}) async {

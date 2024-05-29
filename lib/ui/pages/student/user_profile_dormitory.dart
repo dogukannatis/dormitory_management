@@ -1,21 +1,63 @@
+import 'package:dormitory_management/ui/pages/dormitory_details_page.dart';
+import 'package:dormitory_management/viewmodels/booking_manager.dart';
+import 'package:dormitory_management/viewmodels/dorm_manager.dart';
+import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UserProfileDormitory extends StatelessWidget {
+import '../../../models/booking.dart';
+
+class UserProfileDormitory extends ConsumerStatefulWidget {
   const UserProfileDormitory({Key? key}) : super(key: key);
+
+  @override
+  ConsumerState createState() => _UserProfileDormitoryState();
+}
+
+class _UserProfileDormitoryState extends ConsumerState<UserProfileDormitory> {
+
+  bool isLoading = true;
+
+  Booking? booking;
+
+  Future<void> getBooking() async {
+    final bookingManager = ref.read(bookingManagerProvider.notifier);
+    final user = ref.read(userManagerProvider);
+    booking = await bookingManager.getApprovedBookingByUserId(userId: user!.userId!);
+    setState(() {
+      isLoading = true;
+    });
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    getBooking();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: getCustomAppBar(context),
-      body: Padding(
+      body: isLoading ? const Center(
+        child: CircularProgressIndicator(),
+      ) : Padding(
         padding: const EdgeInsets.all(0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomDrawer(activePage: ActivePages.userProfileDormitory,),
-            SizedBox(width: 16),
+            const SizedBox(
+              width: 250,
+              child: CustomDrawer(),
+            ),
+            const SizedBox(width: 16),
+            booking != null ?
             Expanded(
               child: Card(
                 color: Colors.white,
@@ -31,7 +73,7 @@ class UserProfileDormitory extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Universe Dormitory A Block',
+                        '${booking!.dormitory?.name}',
                         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
@@ -64,7 +106,7 @@ class UserProfileDormitory extends StatelessWidget {
                                   child: Center(
                                     child: Text(
                                       'Approved',
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(fontSize: 16, color: Colors.green),
                                     ),
                                   ),
                                 ),
@@ -97,7 +139,7 @@ class UserProfileDormitory extends StatelessWidget {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      'September 10, 2023',
+                                      '${booking!.updatedAt}',
                                       style: TextStyle(fontSize: 16),
                                     ),
                                   ),
@@ -135,7 +177,7 @@ class UserProfileDormitory extends StatelessWidget {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      'help@universedorm.com',
+                                      '${booking!.dormitory?.dormitoryDetails?.email}',
                                       style: TextStyle(fontSize: 16),
                                     ),
                                   ),
@@ -169,7 +211,7 @@ class UserProfileDormitory extends StatelessWidget {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      '+90 533 333 33 33',
+                                      '${booking!.dormitory?.dormitoryDetails?.contactNo}',
                                       style: TextStyle(fontSize: 16),
                                     ),
                                   ),
@@ -181,7 +223,9 @@ class UserProfileDormitory extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => DormitoryDetailsPage(dormitory: booking!.dormitory!)));
+                        },
                         child: Text('Dormitory Page'),
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
@@ -196,6 +240,8 @@ class UserProfileDormitory extends StatelessWidget {
                   ),
                 ),
               ),
+            ) : const Center(
+              child: Text("There is no registered dormitory."),
             ),
           ],
         ),

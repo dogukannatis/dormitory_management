@@ -12,6 +12,21 @@ import 'package:flutter/material.dart';
 class DormitoryOwnerApi extends Api{
 
 
+  Future<Booking?> getApprovedBookingByUserId({required int userId}) async {
+
+    try{
+      final response = await dio.get("$baseUrl/DormitoryOwner/getApprovedBookingByUserId", queryParameters: {"id" : userId}, options: options);
+      debugPrint("response: $response");
+      Booking booking = Booking.fromJson(response.data);
+      debugPrint("comment: $booking");
+      return booking;
+    } on DioException catch (e, str) {
+      debugPrint("HATA: $e, $str");
+      return null;
+    }
+
+  }
+
   /// Get all dormitory owners from database.
   /// Returns empty list if any error occured.
   /// Works properly
