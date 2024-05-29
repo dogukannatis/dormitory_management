@@ -1,6 +1,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:dormitory_management/locator.dart';
+import 'package:dormitory_management/models/app_notification.dart';
 import 'package:dormitory_management/models/dormitory_details.dart';
 import 'package:dormitory_management/models/rating.dart';
 import 'package:dormitory_management/models/room.dart';
@@ -93,6 +94,14 @@ class DormManager extends StateNotifier<List<Dormitory>> {
     state.removeWhere((dorm) => dorm.dormitoryId == dormitoryId);
     state = state;
     await _repository.deleteDormitoryByID(dormitoryId: dormitoryId);
+  }
+
+  Future<void> sendNotificationToAllDormStudents({required AppNotification appNotification}) async {
+    await _repository.sendNotificationToAllDormStudents(appNotification: appNotification);
+  }
+
+  Future<void> saveRate({required Rating rating}) async {
+    await _repository.saveRate(rating: rating);
   }
 
   Future<List<Room>> getRoomByDormitoryId({required int dormitoryId}) async {

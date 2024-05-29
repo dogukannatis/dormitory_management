@@ -119,6 +119,14 @@ class Repository {
     await _dormitoryApi.deleteDormitoryByID(dormitoryId: dormitoryId);
   }
 
+  Future<void> sendNotificationToAllDormStudents({required AppNotification appNotification}) async {
+    await _notificationApi.sendNotificationToAllDormStudents(appNotification: appNotification);
+  }
+
+  Future<void> saveRate({required Rating rating}) async {
+    await _ratingApi.saveRating(rating: rating);
+  }
+
   Future<List<Room>> getRoomByDormitoryId({required int dormitoryId}) async {
     return await _roomApi.getRoomByDormitoryId(dormitoryId: dormitoryId);
   }

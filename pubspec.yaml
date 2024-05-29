@@ -41,6 +41,7 @@ dependencies:
   timeago: ^3.6.1
   image_picker: ^1.1.1
   image_picker_for_web: ^3.0.4
+  flutter_rating_bar: ^4.0.1
   flutter:
     sdk: flutter
 

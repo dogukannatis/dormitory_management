@@ -12,11 +12,13 @@ import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../../models/comment.dart';
 import '../../models/dormitory.dart';
+import '../../models/rating.dart';
 import '../../models/room.dart';
 import '../../models/users/admin.dart';
 
@@ -107,14 +109,46 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
     super.initState();
   }
 
+  bool canSendRate = true;
+
   final _formKey = GlobalKey<FormState>();
   final commentController = TextEditingController();
+
+  Future<void> sendRate(int rate) async {
+    final dormManager = ref.read(dormManagerProvider.notifier);
+    final user = ref.read(userManagerProvider);
+    Rating rating = Rating(
+        ratingId: null,
+        dormitoryId: widget.dormitory.dormitoryId,
+        userId: user!.userId,
+        ratingNo: rate,
+        review: "",
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now()
+    );
+    await dormManager.saveRate(rating: rating);
+  }
+
 
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(userManagerProvider);
     ref.watch(dormManagerProvider);
 
+    if(user == null){
+      canSendRate = false;
+    }
+
+    double rate = 0.0;
+
+    if (widget.dormitory.ratings != null) {
+      for (Rating rating in widget.dormitory.ratings!) {
+        rate += rating.ratingNo!;
+      }
+      if (rate != 0) {
+        rate /= widget.dormitory.ratings!.length;
+      }
+    }
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
@@ -271,10 +305,40 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
+                                  'Rate Dorm',
+                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 10),
+                                RatingBar.builder(
+                                  initialRating: rate,
+                                  minRating: 1,
+                                  direction: Axis.horizontal,
+                                  allowHalfRating: true,
+                                  ignoreGestures: !canSendRate,
+                                  itemCount: 5,
+                                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                                  itemBuilder: (context, _) => Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
+                                  ),
+                                  onRatingUpdate: (rating) {
+                                    rate += rating;
+                                    if (rate != 0) {
+                                      rate /= widget.dormitory.ratings!.length + 1;
+                                    }
+                                    setState(() {
+                                      canSendRate = false;
+                                    });
+                                    sendRate(rating.toInt());
+                                  },
+                                ),
+
+                              SizedBox(height: 10),
+                                Text(
                                   'Comments',
                                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 50),
+                                SizedBox(height: 30),
                                 widget.dormitory.comments != null && widget.dormitory.comments!.isNotEmpty ?
                                 ListView.builder(
                                   itemCount: widget.dormitory.comments!.length,

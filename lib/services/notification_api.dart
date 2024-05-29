@@ -13,11 +13,11 @@ class NotificationApi extends Api{
   /// PLEASE NOTE THAT: NOTIFICATION ID SHOULD BE NULL.
   /// Works properly
   Future<bool?> saveNotification({required AppNotification notification}) async {
-    
+
 
     var data = jsonEncode(notification.toJson());
     debugPrint("notification: data: $data");
-    
+
     try{
       final response = await dio.post("$baseUrl/Notification/add", data: data, options: options);
       debugPrint("response: $response");
@@ -27,7 +27,19 @@ class NotificationApi extends Api{
        return false;
     }
 
-    
+
+  }
+
+  Future<void> sendNotificationToAllDormStudents({required AppNotification appNotification}) async {
+    var data = jsonEncode(appNotification.toJson());
+    debugPrint("notification: data: $data");
+    try{
+      final response = await dio.post("$baseUrl/Notification/SendNotificationToAllByDormId", data: data, queryParameters: {"dormitoryId" : appNotification.senderId!} , options: options);
+      debugPrint("response: $response");
+    } on DioException catch (e, str) {
+       debugPrint("HATA: $e, $str");
+    }
+
   }
 
 

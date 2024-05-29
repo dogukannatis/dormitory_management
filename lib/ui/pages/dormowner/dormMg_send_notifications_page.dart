@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:dormitory_management/models/app_notification.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
+import 'package:dormitory_management/viewmodels/dorm_manager.dart';
+import 'package:dormitory_management/viewmodels/user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
@@ -61,6 +63,33 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
     // Sunucuya resimleri yükleme burada, boş örnek
     return '';
   }
+
+  Future<void> sendNotification() async {
+    final dormManager = ref.read(dormManagerProvider.notifier);
+    final user = ref.read(userManagerProvider);
+
+    final notification = AppNotification(
+      id: null,
+      title: _titleController.text,
+      description: _descriptionController.text,
+      senderId: user!.userId,
+      receiverId: null,
+      imageUrl: "",
+      seen: false,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
+
+    await dormManager.sendNotificationToAllDormStudents(appNotification: notification);
+
+    const snackBar = SnackBar(
+      content: Text('Notification has been sent!'),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+  }
+
 
   void _togglePreview() {
     setState(() {
@@ -234,7 +263,7 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
                 ElevatedButton(
                   onPressed: () async {
                     await _uploadImages();
-                    // Kaydetme fonksiyonu buraya gelecek, _uploadedImageUrls +
+                    sendNotification();
                   },
                   child: Text('Send Notification'),
                   style: ElevatedButton.styleFrom(
