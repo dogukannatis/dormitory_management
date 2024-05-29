@@ -13,6 +13,8 @@ import 'package:dormitory_management/ui/pages/dormowner/dormMg_manage_room_page.
 import 'package:dormitory_management/ui/pages/dormowner/dormMg_payment_status_page.dart';
 import 'package:dormitory_management/ui/pages/dormowner/dormMg_booking_history_page.dart';
 import 'package:dormitory_management/ui/pages/dormowner/dormMg_reviews_and_ratings_page.dart';
+import 'package:dormitory_management/ui/pages/systemadmin/admin_list_dormitories_page.dart';
+import 'package:dormitory_management/ui/pages/systemadmin/admin_list_users_page.dart';
 import 'package:dormitory_management/ui/pages/systemadmin/admin_send_notifications_page.dart';
 import 'package:dormitory_management/ui/pages/systemadmin/admin_manage_dormitory_page.dart';
 import 'package:dormitory_management/ui/pages/systemadmin/admin_add_dormitory_page.dart';
@@ -150,6 +152,18 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminAddDorm()));
             },
             title: const Text("ADMIN Add Dorm"),
+          ),
+          ListTile(
+            onTap: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminListDorm()));
+            },
+            title: const Text("ADMIN List Dorm"),
+          ),
+          ListTile(
+            onTap: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminListUser()));
+            },
+            title: const Text("ADMIN List User"),
           ),
           ListTile(
             onTap: (){

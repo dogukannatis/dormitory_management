@@ -586,7 +586,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                                   });
                                 },
                                 child: Chip(
-                                  label: Text("Celan Service"),
+                                  label: Text("Clean Service"),
                                   backgroundColor: hasCleanService
                                       ? Colors.green[100]
                                       : Colors.red[100],

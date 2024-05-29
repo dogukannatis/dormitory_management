@@ -98,8 +98,8 @@ class _UserBookingHistoryState extends ConsumerState<UserBookingHistory> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 250, // Custom drawer genişliği
-            child: const CustomDrawer(), // Custom drawer içeriği
+            width: 250,
+            child: const CustomDrawer(),
           ),
           Expanded(
             child: Padding(
