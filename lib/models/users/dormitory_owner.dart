@@ -12,7 +12,7 @@ class DormitoryOwner extends User {
   @override
   int? get userId => super.userId;
   
-  final int? dormitoryId;
+  int? dormitoryId;
 
   DormitoryOwner({
     required int? userId,

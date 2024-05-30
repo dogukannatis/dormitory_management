@@ -105,6 +105,8 @@ class Repository {
     Dormitory? dorm = await _dormitoryApi.saveDormitory(dormitory: dormitory);
     if(dorm != null){
       dormitory.dormitoryDetails!.dormitoryId = dorm.dormitoryId;
+      dormitory.user!.dormitoryId = dorm.dormitoryId;
+      await _dormitoryOwnerApi.saveDormitoryOwner(user: dormitory.user!);
       await _dormitoryDetailsApi.saveDormitoryDetails(dormitoryDetails: dormitory.dormitoryDetails!);
     }
   }

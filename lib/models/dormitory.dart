@@ -1,5 +1,6 @@
 import 'package:dormitory_management/models/rating.dart';
 import 'package:dormitory_management/models/room.dart';
+import 'package:dormitory_management/models/users/dormitory_owner.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'comment.dart';
@@ -23,6 +24,8 @@ class Dormitory {
   List<Comment?>? comments;
   @JsonKey(ignore: true)
   List<Room?>? rooms;
+  @JsonKey(ignore: true)
+  DormitoryOwner? user;
 
   Dormitory({
     required this.dormitoryId,
@@ -30,7 +33,8 @@ class Dormitory {
     required this.name,
     required this.quota,
     this.createdAt,
-    this.updatedAt
+    this.updatedAt,
+    this.user
   });
 
   factory Dormitory.fromJson(Map<String, dynamic> json) => _$DormitoryFromJson(json);

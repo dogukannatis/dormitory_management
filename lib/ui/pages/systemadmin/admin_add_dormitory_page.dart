@@ -1,5 +1,6 @@
 import 'package:dormitory_management/models/dormitory.dart';
 import 'package:dormitory_management/models/dormitory_details.dart';
+import 'package:dormitory_management/models/users/dormitory_owner.dart';
 import 'package:dormitory_management/ui/widgets/button_loading.dart';
 import 'package:dormitory_management/viewmodels/dorm_manager.dart';
 import 'package:flutter/material.dart';
@@ -202,11 +203,29 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
         hasMicrowave: hasMicrowave,
         hasAirConditioning: hasAirConditioning,
         photoUrls: [],
+        price: 0,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now()
     );
 
+    DormitoryOwner user = DormitoryOwner(
+        userId: null,
+      email: _emailController.text.trim(),
+      name: _nameController.text.trim(),
+      surName: "",
+      phoneNo: _phoneController.text.trim(),
+        isEmailVerified: true,
+        dob: DateTime.now(),
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      address: _addressController.text.trim(),
+      userType: "dormitoryOwner",
+        profileUrl: "",
+      password: _passwordController.text.trim()
+    );
+
     dorm.dormitoryDetails = details;
+    dorm.user = user;
 
     setState(() {
       isDormSaving = true;

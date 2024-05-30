@@ -97,7 +97,9 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
             const CustomDrawer(),
             Expanded(
               flex: 2,
-              child: ListView(
+              child: filteredDormitories.isEmpty ? const Center(
+                child: Text("Dormitories not found"),
+              ) : ListView(
                 children: filteredDormitories.map((dormitory) {
                   double rate = 0.0;
 
@@ -130,7 +132,22 @@ class _CompareDormitoriesPageState extends ConsumerState<CompareDormitoriesPage>
                                   topLeft: Radius.circular(15.0),
                                   bottomLeft: Radius.circular(15.0),
                                 ),
-                                child: Image.asset(
+                                child: dormitory.name == "Pop Art" ? Image.asset(
+                                  'assets/images/home_img1.png',
+                                  fit: BoxFit.fill,
+
+                                  width: 350,
+                                ) : dormitory.name == "Alfam Vista" ? Image.asset(
+                                  'assets/images/alfam.jpeg',
+                                  fit: BoxFit.fill,
+
+                                  width: 350,
+                                ) : dormitory.name == "Golden Plus" ? Image.asset(
+                                  'assets/images/goldenplus.jpg',
+                                  fit: BoxFit.fill,
+
+                                  width: 350,
+                                ) : Image.asset(
                                   'assets/images/home_img1.png',
                                   fit: BoxFit.contain,
                                   height: 200,

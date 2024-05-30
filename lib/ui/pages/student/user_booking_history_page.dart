@@ -43,13 +43,13 @@ class _UserBookingHistoryState extends ConsumerState<UserBookingHistory> {
     String label;
 
     switch (status) {
-      case 'Current':
+      case 'Approved':
         color = Colors.green;
-        label = 'Current';
+        label = 'Approved';
         break;
-      case 'In Debt':
+      case 'Pending':
         color = Colors.orange;
-        label = 'In Debt';
+        label = 'Pending';
         break;
       case 'Former':
       default:

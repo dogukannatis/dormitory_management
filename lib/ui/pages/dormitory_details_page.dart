@@ -184,10 +184,27 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                                         topLeft: Radius.circular(15.0),
                                         bottomLeft: Radius.circular(15.0),
                                       ),
-                                      child: Image.asset(
+                                      child: widget.dormitory.name == "Pop Art" ? Image.asset(
                                         'assets/images/home_img1.png',
-                                        fit: BoxFit.cover,
-                                      ),
+                                        fit: BoxFit.fill,
+
+                                        width: 350,
+                                      ) : widget.dormitory.name == "Alfam Vista" ? Image.asset(
+                                        'assets/images/alfam.jpeg',
+                                        fit: BoxFit.fill,
+
+                                        width: 350,
+                                      ) : widget.dormitory.name == "Golden Plus" ? Image.asset(
+                                        'assets/images/goldenplus.jpg',
+                                        fit: BoxFit.fill,
+
+                                        width: 350,
+                                      ) : Image.asset(
+                                        'assets/images/home_img1.png',
+                                        fit: BoxFit.contain,
+                                        height: 200,
+                                        width: 350,
+                                      )
                                     ),
                                   ),
                                 ),
@@ -217,6 +234,20 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                                       const SizedBox(height: 8),
                                       Text(
                                         widget.dormitory.dormitoryDetails!.description!,
+                                        textAlign: TextAlign.justify,
+                                      ),
+                                      const Padding(
+                                        padding: EdgeInsets.symmetric(vertical: 8.0),
+                                        child: Text(
+                                          "Address",
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        widget.dormitory.dormitoryDetails!.address!,
                                         textAlign: TextAlign.justify,
                                       ),
                                       const Padding(
