@@ -11,12 +11,12 @@ class UserProfileChats extends StatefulWidget {
 }
 
 class _UserProfileChatsState extends State<UserProfileChats> {
-  List<String> users = ['User A', 'User B', 'User C'];
+  List<String> users = ['Ahmet', 'Mehmet', 'Selim'];
   String? _selectedUser;
   List<Message> messages = [
-    Message(id: '1', senderID: '1', receiverID: '2', content: 'Hello User A!', createdAt: DateTime.now().subtract(Duration(minutes: 5))),
-    Message(id: '2', senderID: '2', receiverID: '1', content: 'Hi! How are you?', createdAt: DateTime.now().subtract(Duration(minutes: 3))),
-    Message(id: '3', senderID: '1', receiverID: '2', content: 'I\'m good, thanks! How about you?', createdAt: DateTime.now().subtract(Duration(minutes: 1))),
+    Message(id: '1', senderID: '1', receiverID: '2', content: 'Hey!', createdAt: DateTime.now().subtract(Duration(minutes: 5))),
+    Message(id: '2', senderID: '2', receiverID: '1', content: 'Sup, how you doin?', createdAt: DateTime.now().subtract(Duration(minutes: 3))),
+    Message(id: '3', senderID: '1', receiverID: '2', content: 'I\'m doing better.', createdAt: DateTime.now().subtract(Duration(minutes: 1))),
   ];
 
   final TextEditingController _messageController = TextEditingController();
@@ -105,7 +105,7 @@ class _UserProfileChatsState extends State<UserProfileChats> {
 
   void _startNewChat(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('Start New Chat feature is not implemented yet!'),
+      content: Text('You already have open chats with all users, there is no new users to chat.'),
     ));
   }
 

@@ -127,7 +127,7 @@ class _CustomDrawerState extends ConsumerState<CustomDrawer> {
               onTap: (){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const DormMGEditDorm()));
               },
-              leading: Icon(Icons.edit),
+              leading: Icon(Icons.house),
               title: Text("Edit Dorm", style: widget.activePage == ActivePages.dormMGeditDorm ? TextStyle(color: Colors.blue) : null,),
             ),
             ListTile(

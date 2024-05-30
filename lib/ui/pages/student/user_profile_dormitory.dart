@@ -52,10 +52,7 @@ class _UserProfileDormitoryState extends ConsumerState<UserProfileDormitory> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              width: 250,
-              child: CustomDrawer(),
-            ),
+            CustomDrawer(activePage: ActivePages.userProfileDormitory,),
             const SizedBox(width: 16),
             booking != null ?
             Expanded(
