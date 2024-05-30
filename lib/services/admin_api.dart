@@ -39,7 +39,7 @@ class AdminApi extends Api{
 
   /// Save admin to database with given [user] object.
   /// PLEASE NOTE THAT: USER ID SHOULD BE NULL.
-  /// Has error. Backend should be fixed
+  /// Works properly
   Future<bool?> saveAdmin({required Admin user}) async {
     
 
@@ -61,7 +61,7 @@ class AdminApi extends Api{
 
 
   /// Delete admin from database with given [user] object.
-  /// 
+  /// Works properly
   Future<bool?> deleteAdmin({required int id}) async {
 
     
@@ -80,7 +80,7 @@ class AdminApi extends Api{
 
 
   /// Update admin with [user] object.
-  /// 
+  /// Works properly
   Future<bool?> updateAdmin({required Admin user}) async {
   
     try{
