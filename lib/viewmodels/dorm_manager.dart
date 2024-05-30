@@ -2,7 +2,6 @@
 import 'package:dio/dio.dart';
 import 'package:dormitory_management/locator.dart';
 import 'package:dormitory_management/models/app_notification.dart';
-import 'package:dormitory_management/models/dormitory_details.dart';
 import 'package:dormitory_management/models/rating.dart';
 import 'package:dormitory_management/models/room.dart';
 import 'package:dormitory_management/repository/repository.dart';

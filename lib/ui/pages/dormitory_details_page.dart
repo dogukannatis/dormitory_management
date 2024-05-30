@@ -1,5 +1,4 @@
 import 'package:dormitory_management/models/booking.dart';
-import 'package:dormitory_management/models/dormitory_details.dart';
 import 'package:dormitory_management/models/users/dormitory_owner.dart';
 import 'package:dormitory_management/models/users/student.dart';
 import 'package:dormitory_management/ui/widgets/button_loading.dart';
@@ -9,9 +8,7 @@ import 'package:dormitory_management/viewmodels/booking_manager.dart';
 import 'package:dormitory_management/viewmodels/comment_manager.dart';
 import 'package:dormitory_management/viewmodels/dorm_manager.dart';
 import 'package:dormitory_management/viewmodels/user_manager.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -21,6 +18,7 @@ import '../../models/dormitory.dart';
 import '../../models/rating.dart';
 import '../../models/room.dart';
 import '../../models/users/admin.dart';
+import '../widgets/comment_widget.dart';
 
 class DormitoryDetailsPage extends ConsumerStatefulWidget {
   const DormitoryDetailsPage({Key? key, required this.dormitory}) : super(key: key);
@@ -251,7 +249,7 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                                         textAlign: TextAlign.justify,
                                       ),
                                       const Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                        padding: EdgeInsets.symmetric(vertical: 8.0),
                                         child: Text(
                                           'Features',
                                           style: TextStyle(
@@ -283,7 +281,7 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                                       controller: scrollController,
                                       itemCount: rooms.length,
                                       scrollDirection: Axis.horizontal,
-                                      physics: BouncingScrollPhysics(),
+                                      physics: const BouncingScrollPhysics(),
                                       itemBuilder: (context, index){
                                         return SizedBox(
                                           height: 200,
@@ -301,11 +299,11 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                                                 crossAxisAlignment: CrossAxisAlignment.center,
                                                 children: [
                                                   const Text("Room", style: TextStyle(fontSize: 24 ,fontWeight: FontWeight.bold),),
-                                                  SizedBox(height: 10,),
+                                                  const SizedBox(height: 10,),
                                                   Text("Room Type: ${rooms[index].roomType!}"),
-                                                  SizedBox(height: 10,),
+                                                  const SizedBox(height: 10,),
                                                   Text("${rooms[index].price}₺"),
-                                                  SizedBox(height: 10,),
+                                                  const SizedBox(height: 10,),
                                                   ElevatedButton(
                                                     onPressed: !(user != null && user is Student) || isBooked ? null : () => book(roomId: rooms[index].roomId!),
                                                     child: isBooked ? const Text("Booked") : const Text('Book Now'),
@@ -335,11 +333,11 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Rate Dorm',
                                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 10),
+                                const SizedBox(height: 10),
                                 RatingBar.builder(
                                   initialRating: rate,
                                   minRating: 1,
@@ -347,8 +345,8 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                                   allowHalfRating: true,
                                   ignoreGestures: !canSendRate,
                                   itemCount: 5,
-                                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                                  itemBuilder: (context, _) => Icon(
+                                  itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                  itemBuilder: (context, _) => const Icon(
                                     Icons.star,
                                     color: Colors.amber,
                                   ),
@@ -364,12 +362,12 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                                   },
                                 ),
 
-                              SizedBox(height: 10),
-                                Text(
+                                const SizedBox(height: 10),
+                                const Text(
                                   'Comments',
                                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(height: 30),
+                                const SizedBox(height: 30),
                                 widget.dormitory.comments != null && widget.dormitory.comments!.isNotEmpty ?
                                 ListView.builder(
                                   itemCount: widget.dormitory.comments!.length,
@@ -392,11 +390,11 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                                       ),
                                     );
                                   },
-                                ) : Center(
+                                ) : const Center(
                                   child: Text("There is no comment yet."),
                                 ),
-                                SizedBox(height: 50),
-                                user == null ? Center(
+                                const SizedBox(height: 50),
+                                user == null ? const Center(
                                   child: Text("Please sign in to write a comment."),
                                 ) :
                                 user is Student ?
@@ -427,11 +425,11 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
                                                 saveComment();
                                               }
                                             },
-                                            child: isLoading ? ButtonLoading(buttonText: "Submit Review") : const Text('Submit Review'),
+                                            child: isLoading ? const ButtonLoading(buttonText: "Submit Review") : const Text('Submit Review'),
                                           ),
                                         ],
                                       ),
-                                    ) : Center(
+                                    ) : const Center(
                                   child: Text("Please sign in as a Student to write a comment."),
                                 ),
 
@@ -456,35 +454,35 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
       runSpacing: 4,
       children: [
         Chip(
-          label: Text('Clean Service'),
+          label: const Text('Clean Service'),
           backgroundColor: widget.dormitory.dormitoryDetails!.hasCleanService == true ? Colors.green[100] : Colors.red[100],
         ),
         Chip(
-          label: Text('TV'),
+          label: const Text('TV'),
           backgroundColor: widget.dormitory.dormitoryDetails!.hasTV == true ? Colors.green[100] : Colors.red[100],
         ),
         Chip(
-          label: Text('AC'),
+          label: const Text('AC'),
           backgroundColor: widget.dormitory.dormitoryDetails!.hasAirConditioning == true ? Colors.green[100] : Colors.red[100],
         ),
         Chip(
-          label: Text('Shower'),
+          label: const Text('Shower'),
           backgroundColor: widget.dormitory.dormitoryDetails!.hasShowerAndToilet == true ? Colors.green[100] : Colors.red[100],
         ),
         Chip(
-          label: Text('Internet'),
-          backgroundColor: widget.dormitory.dormitoryDetails!.internetSpeed == true ? Colors.green[100] : Colors.red[100],
+          label: const Text('Internet'),
+          backgroundColor: widget.dormitory.dormitoryDetails!.internetSpeed!.isNotEmpty ? Colors.green[100] : Colors.red[100],
         ),
         Chip(
-          label: Text('Kitchen'),
+          label: const Text('Kitchen'),
           backgroundColor: widget.dormitory.dormitoryDetails!.hasKitchen == true ? Colors.green[100] : Colors.red[100],
         ),
         Chip(
-          label: Text('Balcony'),
+          label: const Text('Balcony'),
           backgroundColor: widget.dormitory.dormitoryDetails!.hasBalcony == true ? Colors.green[100] : Colors.red[100],
         ),
         Chip(
-          label: Text('Microwave'),
+          label: const Text('Microwave'),
           backgroundColor: widget.dormitory.dormitoryDetails!.hasMicrowave == true ? Colors.green[100] : Colors.red[100],
         ),
       ],
@@ -492,47 +490,4 @@ class _DormitoryDetailsPageState extends ConsumerState<DormitoryDetailsPage> {
   }
 
 
-}
-
-class CommentWidget extends StatelessWidget {
-  final String username;
-  final String timeAgo;
-  final String comment;
-  final bool canDelete;
-  final Function()? onPressed;
-
-  CommentWidget({
-    required this.username,
-    required this.timeAgo,
-    required this.comment,
-    required this.onPressed,
-    this.canDelete = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CircleAvatar(
-          child: Icon(Icons.person),
-        ),
-        SizedBox(width: 50),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(username, style: TextStyle(fontWeight: FontWeight.bold)),
-              Text(timeAgo, style: TextStyle(color: Colors.grey)),
-              Text(comment),
-            ],
-          ),
-        ),
-        canDelete ?
-        IconButton(
-          onPressed: onPressed,
-          icon: const Icon(Icons.delete, color: Colors.red,),
-        ) : Container()
-      ],
-    );
-  }
 }

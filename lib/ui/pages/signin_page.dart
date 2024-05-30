@@ -1,5 +1,4 @@
 
-
 import 'package:dormitory_management/ui/pages/home_page.dart';
 import 'package:dormitory_management/ui/pages/signup_page.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
@@ -36,7 +35,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = ref.watch(userManagerProvider);
+    ref.watch(userManagerProvider);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
@@ -47,7 +46,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
 
             Container(
               width: MediaQuery.of(context).size.width / 2,
-              color: Color(0xFFF5F5F5),
+              color: const Color(0xFFF5F5F5),
               child: Center(
                 child: Image.asset(
                   'assets/images/login_access.png',
@@ -59,7 +58,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
             Expanded(
               child: Center(
                 child: Container(
-                  padding: EdgeInsets.all(24),
+                  padding: const EdgeInsets.all(24),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -68,14 +67,14 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                         "Welcome back!",
                         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       const Text(
                         "Please enter your details.",
                         style: TextStyle(fontSize: 16, color: Colors.grey),
                       ),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       buildLoginFormContent(),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -110,20 +109,20 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "Don't have an account?",
                             style: TextStyle(fontSize: 14, color: Colors.grey),
                           ),
-                          SizedBox(width: 5),
+                          const SizedBox(width: 5),
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SignupPage()));
                             },
-                            child: Text(
+                            child: const Text(
                               "Sign up for free",
                               style: TextStyle(fontSize: 14, color: Colors.black),
                             ),

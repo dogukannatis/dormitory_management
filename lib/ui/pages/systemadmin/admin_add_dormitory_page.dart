@@ -35,7 +35,6 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
   late TextEditingController _addressController;
   late TextEditingController _capacityController;
   late TextEditingController _phoneController;
-  late TextEditingController _roomIdController;
   late TextEditingController _dormitoryIdController;
 
 
@@ -69,7 +68,6 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
     _addressController = TextEditingController();
     _capacityController = TextEditingController();
     _phoneController = TextEditingController();
-    _roomIdController = TextEditingController();
     _dormitoryIdController = TextEditingController();
 
     getDormitories();
@@ -89,7 +87,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
           children: [
             Expanded(
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'ID',
                   border: OutlineInputBorder(),
                 ),
@@ -98,7 +96,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
             const SizedBox(width: 10),
             Expanded(
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Dormitory ID',
                   border: OutlineInputBorder(),
                 ),
@@ -111,7 +109,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
           children: [
             Expanded(
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Room Type',
                   border: OutlineInputBorder(),
                 ),
@@ -120,7 +118,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
             const SizedBox(width: 10),
             Expanded(
               child: TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Price',
                   border: OutlineInputBorder(),
                 ),
@@ -131,7 +129,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
         const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () {},
-          child: Text('Save'),
+          child: const Text('Save'),
         ),
       ],
     );
@@ -392,7 +390,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 16),
+                              const SizedBox(width: 16),
                               Expanded(
                                 child: TextFormField(
                                   validator: (v){
@@ -420,7 +418,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           Row(
                             children: [
                               Expanded(
@@ -444,7 +442,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 16),
+                              const SizedBox(width: 16),
                               Expanded(
                                 child: TextFormField(
                                   validator: (v){
@@ -468,7 +466,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           TextFormField(
                             validator: (v){
                               if(v!.isEmpty){
@@ -488,7 +486,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           TextFormField(
                             validator: (v){
                               if(v!.isEmpty){
@@ -508,7 +506,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
 
                           Row(
                             children: [
@@ -537,7 +535,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 16),
+                              const SizedBox(width: 16),
                               Expanded(
                                 child: TextFormField(
                                   validator: (v){
@@ -563,7 +561,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 16),
+                              const SizedBox(width: 16),
                               Expanded(
                                 child: TextFormField(
                                   validator: (v){
@@ -589,11 +587,10 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 16),
+                              const SizedBox(width: 16),
 
                             ],
                           ),
-                          SizedBox(height: 16),
                           Wrap(
                             spacing: 8,
                             runSpacing: 4,
@@ -605,7 +602,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                                   });
                                 },
                                 child: Chip(
-                                  label: Text("Clean Service"),
+                                  label: const Text("Clean Service"),
                                   backgroundColor: hasCleanService
                                       ? Colors.green[100]
                                       : Colors.red[100],
@@ -618,7 +615,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                                   });
                                 },
                                 child: Chip(
-                                  label: Text("Microwave"),
+                                  label: const Text("Microwave"),
                                   backgroundColor: hasMicrowave
                                       ? Colors.green[100]
                                       : Colors.red[100],
@@ -631,7 +628,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                                   });
                                 },
                                 child: Chip(
-                                  label: Text("Kitchen"),
+                                  label: const Text("Kitchen"),
                                   backgroundColor: hasKitchen
                                       ? Colors.green[100]
                                       : Colors.red[100],
@@ -644,7 +641,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                                   });
                                 },
                                 child: Chip(
-                                  label: Text("Shower and Toilet"),
+                                  label: const Text("Shower and Toilet"),
                                   backgroundColor: hasShowerAndToilet
                                       ? Colors.green[100]
                                       : Colors.red[100],
@@ -657,7 +654,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                                   });
                                 },
                                 child: Chip(
-                                  label: Text("Balcony"),
+                                  label: const Text("Balcony"),
                                   backgroundColor: hasBalcony
                                       ? Colors.green[100]
                                       : Colors.red[100],
@@ -670,7 +667,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                                   });
                                 },
                                 child: Chip(
-                                  label: Text("TV"),
+                                  label: const Text("TV"),
                                   backgroundColor: hasTV
                                       ? Colors.green[100]
                                       : Colors.red[100],
@@ -683,7 +680,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                                   });
                                 },
                                 child: Chip(
-                                  label: Text("AC"),
+                                  label: const Text("AC"),
                                   backgroundColor: hasAirConditioning
                                       ? Colors.green[100]
                                       : Colors.red[100],
@@ -696,7 +693,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                                   });
                                 },
                                 child: Chip(
-                                  label: Text("Internet"),
+                                  label: const Text("Internet"),
                                   backgroundColor: internetSpeed
                                       ? Colors.green[100]
                                       : Colors.red[100],
@@ -705,7 +702,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
 
                             ],
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           ElevatedButton(
                             onPressed: isDormSaving ? null : () {
                               _dormFormKey.currentState!.save();
@@ -713,7 +710,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                                 saveDormitory();
                               }
                             },
-                            child: isDormSaving ? ButtonLoading(buttonText: "Saving") : Text('Save'),
+                            child: isDormSaving ? const ButtonLoading(buttonText: "Saving") : const Text('Save'),
                           ),
                         ],
                       ),
@@ -749,7 +746,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                                     addRoom = true;
                                   });
                                 },
-                                child: Text("Add Room"),
+                                child: const Text("Add Room"),
                               ),
                             ],
                           )
@@ -776,7 +773,7 @@ class _AdminAddDormState extends ConsumerState<AdminAddDorm> {
                         children: [
                           Text(
                             'Add Room  - $dormName',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),

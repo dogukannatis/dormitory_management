@@ -14,9 +14,9 @@ class _UserProfileChatsState extends State<UserProfileChats> {
   List<String> users = ['Ahmet', 'Mehmet', 'Selim'];
   String? _selectedUser;
   List<Message> messages = [
-    Message(id: '1', senderID: '1', receiverID: '2', content: 'Hello there!', createdAt: DateTime.now().subtract(Duration(minutes: 5))),
-    Message(id: '2', senderID: '2', receiverID: '1', content: 'Hi! Whats up?', createdAt: DateTime.now().subtract(Duration(minutes: 3))),
-    Message(id: '3', senderID: '1', receiverID: '2', content: 'I\'m perfect, thanks! What about you?', createdAt: DateTime.now().subtract(Duration(minutes: 1))),
+    Message(id: '1', senderID: '1', receiverID: '2', content: 'Hello there!', createdAt: DateTime.now().subtract(const Duration(minutes: 5))),
+    Message(id: '2', senderID: '2', receiverID: '1', content: 'Hi! Whats up?', createdAt: DateTime.now().subtract(const Duration(minutes: 3))),
+    Message(id: '3', senderID: '1', receiverID: '2', content: 'I\'m perfect, thanks! What about you?', createdAt: DateTime.now().subtract(const Duration(minutes: 1))),
   ];
 
   final TextEditingController _messageController = TextEditingController();
@@ -44,13 +44,13 @@ class _UserProfileChatsState extends State<UserProfileChats> {
                         onPressed: () {
                           _startNewChat(context);
                         },
-                        child: Text('Start New Chat'),
+                        child: const Text('Start New Chat'),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       Expanded(
                         child: ListView.separated(
                           itemCount: users.length,
-                          separatorBuilder: (context, index) => Divider(),
+                          separatorBuilder: (context, index) => const Divider(),
                           itemBuilder: (context, index) {
                             final user = users[index];
                             return ListTile(
@@ -67,7 +67,7 @@ class _UserProfileChatsState extends State<UserProfileChats> {
                 ),
               ),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -75,7 +75,7 @@ class _UserProfileChatsState extends State<UserProfileChats> {
                   Expanded(
                     child: _selectedUser != null
                         ? ChatScreen(user: _selectedUser!, messages: messages)
-                        : Center(child: Text('Select a user to start chatting')),
+                        : const Center(child: Text('Select a user to start chatting')),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -84,11 +84,11 @@ class _UserProfileChatsState extends State<UserProfileChats> {
                         Expanded(
                           child: TextField(
                             controller: _messageController,
-                            decoration: InputDecoration(hintText: 'Type a message'),
+                            decoration: const InputDecoration(hintText: 'Type a message'),
                           ),
                         ),
                         IconButton(
-                          icon: Icon(Icons.send),
+                          icon: const Icon(Icons.send),
                           onPressed: _sendMessage,
                         ),
                       ],
@@ -104,7 +104,7 @@ class _UserProfileChatsState extends State<UserProfileChats> {
   }
 
   void _startNewChat(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('You already have open chats with all users, there is no new users to chat.'),
     ));
   }
@@ -142,13 +142,13 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       itemCount: messages.length,
-      separatorBuilder: (context, index) => Divider(),
+      separatorBuilder: (context, index) => const Divider(),
       itemBuilder: (context, index) {
         final message = messages[index];
         return ListTile(
           title: Text(
             message.senderID == '1' ? 'You' : 'Other User',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           subtitle: Text(message.content),
           trailing: Text(_formatDateTime(message.createdAt!)),

@@ -20,11 +20,11 @@ class Booking {
   DateTime? inMax;
   DateTime? outMin;
   DateTime? outMax;
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   Dormitory? dormitory;
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   Room? room;
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   User? user;
 
   Booking({

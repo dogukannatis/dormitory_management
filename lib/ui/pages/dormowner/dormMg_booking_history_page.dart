@@ -1,4 +1,3 @@
-import 'package:dormitory_management/models/app_notification.dart';
 import 'package:dormitory_management/models/booking.dart';
 import 'package:dormitory_management/models/users/dormitory_owner.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
@@ -122,7 +121,7 @@ class _DormMGBookingHistoryState extends ConsumerState<DormMGBookingHistory> {
       appBar: getCustomAppBar(context),
       body: Row(
         children: [
-          CustomDrawer(activePage: ActivePages.dormMGbookingHistory,),
+          const CustomDrawer(activePage: ActivePages.dormMGbookingHistory,),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -136,21 +135,21 @@ class _DormMGBookingHistoryState extends ConsumerState<DormMGBookingHistory> {
                   ),
                   child: Container(
                     padding: const EdgeInsets.all(24.0),
-                    constraints: BoxConstraints(maxWidth: 1000),
+                    constraints: const BoxConstraints(maxWidth: 1000),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Booking History',
                           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Expanded(
                           child: ListView(
                             children: [
                               DataTable(
                                 columnSpacing: 12.0,
-                                columns: [
+                                columns: const [
                                   DataColumn(label: Text('User')),
                                   DataColumn(label: Text('Status')),
                                   DataColumn(label: Text('Room')),
@@ -164,7 +163,7 @@ class _DormMGBookingHistoryState extends ConsumerState<DormMGBookingHistory> {
                                     DataCell(Text('${booking.user?.name} ${booking.user?.surName}')),
                                     DataCell(_buildStatusChip(booking.status ?? 'Unknown')),
                                     DataCell(Text('${booking.room?.roomType}')),
-                                    DataCell(Text('23-24 / F-S')),
+                                    const DataCell(Text('23-24 / F-S')),
                                     DataCell(Text("${booking.user?.phoneNo}")),
                                     DataCell(Text('${booking.room?.price}')),
                                     DataCell(_buildActionButton(booking.bookingId!)),

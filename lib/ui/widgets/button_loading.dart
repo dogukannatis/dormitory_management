@@ -14,8 +14,8 @@ class ButtonLoading extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(buttonText),
-        SizedBox(width: 5,),
-        SizedBox(
+        const SizedBox(width: 5,),
+        const SizedBox(
             height: 16,
             width: 16,
             child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white,))

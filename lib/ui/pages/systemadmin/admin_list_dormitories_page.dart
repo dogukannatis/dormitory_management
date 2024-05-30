@@ -16,7 +16,6 @@ class AdminListDorm extends ConsumerStatefulWidget {
 }
 
 class _AdminListDormState extends ConsumerState<AdminListDorm> {
-  TextEditingController _dormitoryIdController = TextEditingController();
   String dormName = "";
   bool addRoom = false;
   bool isLoading = false;
@@ -50,7 +49,7 @@ class _AdminListDormState extends ConsumerState<AdminListDorm> {
       ) : Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomDrawer(activePage: ActivePages.adminListDorm,),
+          const CustomDrawer(activePage: ActivePages.adminListDorm,),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -82,7 +81,7 @@ class _AdminListDormState extends ConsumerState<AdminListDorm> {
                                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminManageDorm(dormitory: dormitories[index],)));
 
                                   },
-                                  child: Text("Edit Dorm"),
+                                  child: const Text("Edit Dorm"),
                                 ),
                               ],
                             ),

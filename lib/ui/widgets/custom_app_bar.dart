@@ -1,5 +1,4 @@
 import 'package:dormitory_management/ui/pages/compare_dormitories_page.dart';
-import 'package:dormitory_management/ui/pages/dormitory_details_page.dart';
 import 'package:dormitory_management/ui/pages/home_page.dart';
 import 'package:dormitory_management/ui/pages/signin_page.dart';
 import 'package:dormitory_management/ui/pages/signup_page.dart';
@@ -18,7 +17,6 @@ class CustomAppBar extends ConsumerStatefulWidget implements PreferredSizeWidget
   ConsumerState createState() => _CustomAppBarState();
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => throw UnimplementedError();
 }
 
@@ -140,7 +138,6 @@ class _CustomAppBarState extends ConsumerState<CustomAppBar> {
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => throw UnimplementedError();
 }
 
@@ -161,7 +158,7 @@ AppBar getCustomAppBar(BuildContext context) {
         ],
       ),
     ),
-    actions: [
+    actions: const [
       AppBarActions(),
     ],
   );

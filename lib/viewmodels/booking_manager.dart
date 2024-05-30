@@ -6,8 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/app_notification.dart';
-import '../models/dormitory.dart';
 
 
 final bookingManagerProvider = StateNotifierProvider<BookingManager, List<Booking>>((ref){

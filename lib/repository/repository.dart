@@ -4,7 +4,6 @@ import 'package:dormitory_management/models/app_notification.dart';
 import 'package:dormitory_management/models/booking.dart';
 import 'package:dormitory_management/models/comment.dart';
 import 'package:dormitory_management/models/dormitory.dart';
-import 'package:dormitory_management/models/dormitory_details.dart';
 import 'package:dormitory_management/models/room.dart';
 import 'package:dormitory_management/models/users/admin.dart';
 import 'package:dormitory_management/models/users/dormitory_owner.dart';

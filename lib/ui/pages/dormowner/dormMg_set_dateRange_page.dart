@@ -12,7 +12,7 @@ class DormMGSetDateRange extends StatelessWidget {
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomDrawer(activePage: ActivePages.dormMGsetDateRange,),
+          const CustomDrawer(activePage: ActivePages.dormMGsetDateRange,),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -26,12 +26,12 @@ class DormMGSetDateRange extends StatelessWidget {
                   ),
                   child: Container(
                     padding: const EdgeInsets.all(32.0),
-                    constraints: BoxConstraints(maxWidth: 600),
+                    constraints: const BoxConstraints(maxWidth: 600),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
+                        const Text(
                           'Set Date Range',
                           style: TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold),
@@ -44,7 +44,7 @@ class DormMGSetDateRange extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Min Check-in Date',
                                     style: TextStyle(color: Colors.grey),
                                   ),
@@ -68,7 +68,7 @@ class DormMGSetDateRange extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Max Check-in Date',
                                     style: TextStyle(color: Colors.grey),
                                   ),
@@ -96,7 +96,7 @@ class DormMGSetDateRange extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Min Check-out Date',
                                     style: TextStyle(color: Colors.grey),
                                   ),
@@ -120,7 +120,7 @@ class DormMGSetDateRange extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Max Check-out Date',
                                     style: TextStyle(color: Colors.grey),
                                   ),
@@ -144,16 +144,16 @@ class DormMGSetDateRange extends StatelessWidget {
                         const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () {},
-                          child: Text('Save'),
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
                             backgroundColor: Colors.blue,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 16, horizontal: 32),
                           ),
+                          child: const Text('Save'),
                         ),
                       ],
                     ),

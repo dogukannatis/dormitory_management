@@ -38,9 +38,9 @@ class StudentApi extends Api{
     try{
       final response = await dio.get("$baseUrl/Student/getStudentById", queryParameters: {"id" : id}, options: options);
       debugPrint("response: $response");
-      Student _student = Student.fromJson(response.data);
-      debugPrint("_student: $_student");
-      return _student;
+      Student student = Student.fromJson(response.data);
+      debugPrint("_student: $student");
+      return student;
     } on DioException catch (e, str) {
        debugPrint("HATA: $e, $str");
        return null;
@@ -56,9 +56,9 @@ class StudentApi extends Api{
     try{
       final response = await dio.get("$baseUrl/Student/getStudentByName", queryParameters: {"name" : name}, options: options);
       debugPrint("response: $response");
-      Student _student = Student.fromJson(response.data);
-      debugPrint("_student: $_student");
-      return _student;
+      Student student = Student.fromJson(response.data);
+      debugPrint("_student: $student");
+      return student;
     } on DioException catch (e, str) {
        debugPrint("HATA: $e, $str");
        return null;
@@ -74,9 +74,9 @@ class StudentApi extends Api{
     try{
       final response = await dio.get("$baseUrl/Student/vievStudentProfileInfo", queryParameters: {"id" : id}, options: options);
       debugPrint("response: $response");
-      Student _student = Student.fromJson(response.data);
-      debugPrint("_student: $_student");
-      return _student;
+      Student student = Student.fromJson(response.data);
+      debugPrint("_student: $student");
+      return student;
     } on DioException catch (e, str) {
        debugPrint("HATA: $e, $str");
        return null;
@@ -93,19 +93,19 @@ class StudentApi extends Api{
     try{
       final response = await dio.get("$baseUrl/Student/GetNotificationByStudentId", queryParameters: {"id" : id}, options: options);
       debugPrint("response: $response");
-      List<AppNotification> _notifications = [];
+      List<AppNotification> notifications = [];
 
-      List? _responseData = response.data;
+      List? responseData = response.data;
 
-      if(_responseData != null && _responseData.isNotEmpty){
-        for(int i = 0; i < _responseData.length; i++){
-          _notifications.add(AppNotification.fromJson(_responseData[i]));
+      if(responseData != null && responseData.isNotEmpty){
+        for(int i = 0; i < responseData.length; i++){
+          notifications.add(AppNotification.fromJson(responseData[i]));
         }
       }
       
       
-      debugPrint("_notifications: $_notifications");
-      return _notifications;
+      debugPrint("notifications: $notifications");
+      return notifications;
     } on DioException catch (e, str) {
        debugPrint("HATA: $e, $str");
        return [];
@@ -138,17 +138,17 @@ class StudentApi extends Api{
     try{
       final response = await dio.get("$baseUrl/Student/getAll", options: options);
       debugPrint("response: $response");
-      List<Student> _students = [];
+      List<Student> students = [];
 
-      List? _responseData = response.data;
+      List? responseData = response.data;
 
-      if(_responseData != null && _responseData.isNotEmpty){
-        for(int i = 0; i < _responseData.length; i++){
-          _students.add(Student.fromJson(_responseData[i]));
+      if(responseData != null && responseData.isNotEmpty){
+        for(int i = 0; i < responseData.length; i++){
+          students.add(Student.fromJson(responseData[i]));
         }
       }
-      debugPrint("_students: $_students");
-      return _students;
+      debugPrint("students: $students");
+      return students;
     } on DioException catch (e, str) {
        debugPrint("HATA: $e, $str");
        return [];

@@ -1,10 +1,8 @@
 
-
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:dormitory_management/models/booking.dart';
-import 'package:dormitory_management/models/users/admin.dart';
 import 'package:dormitory_management/models/users/dormitory_owner.dart';
 import 'package:dormitory_management/services/api.dart';
 import 'package:flutter/material.dart';
@@ -37,11 +35,11 @@ class DormitoryOwnerApi extends Api{
       debugPrint("response: $response");
       List<DormitoryOwner> dormitoryOwners = [];
 
-      List? _responseData = response.data;
+      List? responseData = response.data;
 
-      if(_responseData != null && _responseData.isNotEmpty){
-        for(int i = 0; i < _responseData.length; i++){
-          dormitoryOwners.add(DormitoryOwner.fromJson(_responseData[i]));
+      if(responseData != null && responseData.isNotEmpty){
+        for(int i = 0; i < responseData.length; i++){
+          dormitoryOwners.add(DormitoryOwner.fromJson(responseData[i]));
         }
       }
       debugPrint("dormitoryOwners: $dormitoryOwners");
@@ -159,11 +157,11 @@ class DormitoryOwnerApi extends Api{
       debugPrint("response: $response");
       List<Booking> bookings = [];
 
-      List? _responseData = response.data;
+      List? responseData = response.data;
 
-      if(_responseData != null && _responseData.isNotEmpty){
-        for(int i = 0; i < _responseData.length; i++){
-          bookings.add(Booking.fromJson(_responseData[i]));
+      if(responseData != null && responseData.isNotEmpty){
+        for(int i = 0; i < responseData.length; i++){
+          bookings.add(Booking.fromJson(responseData[i]));
         }
       }
       debugPrint("bookings: $bookings");
@@ -186,11 +184,11 @@ class DormitoryOwnerApi extends Api{
       debugPrint("response: $response");
       List<Booking> bookings = [];
 
-      List? _responseData = response.data;
+      List? responseData = response.data;
 
-      if(_responseData != null && _responseData.isNotEmpty){
-        for(int i = 0; i < _responseData.length; i++){
-          bookings.add(Booking.fromJson(_responseData[i]));
+      if(responseData != null && responseData.isNotEmpty){
+        for(int i = 0; i < responseData.length; i++){
+          bookings.add(Booking.fromJson(responseData[i]));
         }
       }
       debugPrint("bookings: $bookings");

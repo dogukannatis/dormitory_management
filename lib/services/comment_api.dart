@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:dormitory_management/models/booking.dart';
 import 'package:dormitory_management/models/comment.dart';
 import 'package:dormitory_management/services/api.dart';
 import 'package:flutter/material.dart';

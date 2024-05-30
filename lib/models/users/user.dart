@@ -1,7 +1,4 @@
 import 'package:image_picker/image_picker.dart';
-import 'package:json_annotation/json_annotation.dart';
-
-
 
 abstract class User {
   final int? userId;

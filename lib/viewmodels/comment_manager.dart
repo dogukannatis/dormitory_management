@@ -3,10 +3,7 @@ import 'package:dormitory_management/locator.dart';
 import 'package:dormitory_management/models/comment.dart';
 import 'package:dormitory_management/repository/repository.dart';
 import 'package:dormitory_management/viewmodels/dorm_manager.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../models/dormitory.dart';
 
 
 final commentManagerProvider = StateNotifierProvider<CommentManager, List<Comment>>((ref){

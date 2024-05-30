@@ -59,8 +59,8 @@ class _DormMGPaymentStatusState extends ConsumerState<DormMGPaymentStatus> {
 
   Widget _buildActionButton() {
     return PopupMenuButton<int>(
-      onSelected: (item) => print('Selected item: $item'),
-      itemBuilder: (context) => [
+      onSelected: (item) => debugPrint('Selected item: $item'),
+      itemBuilder: (context) => const [
         PopupMenuItem<int>(value: 0, child: Text('Action 1')),
         PopupMenuItem<int>(value: 1, child: Text('Action 2')),
       ],
@@ -73,7 +73,7 @@ class _DormMGPaymentStatusState extends ConsumerState<DormMGPaymentStatus> {
       appBar: getCustomAppBar(context),
       body: Row(
         children: [
-          CustomDrawer(activePage: ActivePages.dormMGpaymentStatus,),
+          const CustomDrawer(activePage: ActivePages.dormMGpaymentStatus,),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -87,11 +87,11 @@ class _DormMGPaymentStatusState extends ConsumerState<DormMGPaymentStatus> {
                   ),
                   child: Container(
                     padding: const EdgeInsets.all(24.0),
-                    constraints: BoxConstraints(maxWidth: 1000),
+                    constraints: const BoxConstraints(maxWidth: 1000),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Payment Status',
                           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                         ),
@@ -101,7 +101,7 @@ class _DormMGPaymentStatusState extends ConsumerState<DormMGPaymentStatus> {
                             children: [
                               DataTable(
                                 columnSpacing: 12.0,
-                                columns: [
+                                columns: const [
                                   DataColumn(label: Text('User')),
                                   DataColumn(label: Text('Status')),
                                   DataColumn(label: Text('Room')),
@@ -115,9 +115,9 @@ class _DormMGPaymentStatusState extends ConsumerState<DormMGPaymentStatus> {
                                     DataCell(Text('Universe ${booking.dormitoryId}')),
                                     DataCell(_buildStatusChip(booking.status ?? 'Unknown')),
                                     DataCell(Text('Room ${booking.roomId}')),
-                                    DataCell(Text('23-24 / F-S')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
-                                    DataCell(Text('+90 555 555 55 55')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
-                                    DataCell(Text('TRY 75000.00')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
+                                    const DataCell(Text('23-24 / F-S')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
+                                    const DataCell(Text('+90 555 555 55 55')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
+                                    const DataCell(Text('TRY 75000.00')), // Bu veri modelde yok, şimdilik manuel ekliyoruz
                                     DataCell(_buildActionButton()),
                                   ]);
                                 }).toList(),

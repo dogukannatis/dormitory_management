@@ -1,5 +1,4 @@
-import 'package:dormitory_management/models/users/admin.dart';
-import 'package:dormitory_management/models/users/student.dart';
+
 import 'package:dormitory_management/ui/pages/systemadmin/admin_edit_user_profile_page.dart';
 import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';

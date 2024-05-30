@@ -51,15 +51,15 @@ class _AdminEditUserProfileState extends ConsumerState<AdminEditUserProfile> {
     });
     if (widget.user is Student) {
       Student? tempUser = Student(
-        userId: widget.user?.userId,
+        userId: widget.user.userId,
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
         name: nameController.text.trim(),
         surName: surnameController.text.trim(),
         phoneNo: phoneController.text.trim(),
-        dob: widget.user?.dob,
-        createdAt: widget.user?.createdAt,
-        updatedAt: widget.user?.updatedAt,
+        dob: widget.user.dob,
+        createdAt: widget.user.createdAt,
+        updatedAt: widget.user.updatedAt,
         department: (widget.user as Student).department,
         gender: (widget.user as Student).gender,
         profileUrl: widget.user.profileUrl,
@@ -163,7 +163,6 @@ class _AdminEditUserProfileState extends ConsumerState<AdminEditUserProfile> {
                       TextButton(
                         onPressed: () {
                         },
-                        child: Text('Upload Profile Photo'),
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.blue,
@@ -171,58 +170,59 @@ class _AdminEditUserProfileState extends ConsumerState<AdminEditUserProfile> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
+                        child: const Text('Upload Profile Photo'),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Divider(color: Colors.grey.shade300),
                       Text("${widget.user.name} ${widget.user.surName}",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 10),
-                      Text(
+                      const SizedBox(height: 10),
+                      const Text(
                         'Turkey',
                         style: TextStyle(fontSize: 16, color: Colors.grey),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.person, size: 16, color: Colors.grey),
-                          SizedBox(width: 5),
-                          widget.user.userType == "admin" ? Text(
+                          const Icon(Icons.person, size: 16, color: Colors.grey),
+                          const SizedBox(width: 5),
+                          widget.user.userType == "admin" ? const Text(
                             'Admin',
                             style: TextStyle(fontSize: 14, color: Colors.grey),
-                          ) : widget.user.userType == "dormitoryOwner" ? Text(
+                          ) : widget.user.userType == "dormitoryOwner" ? const Text(
                             'Dormitory Owner',
                             style: TextStyle(fontSize: 14, color: Colors.grey),
-                          ) : Text(
+                          ) : const Text(
                             'Student',
                             style: TextStyle(fontSize: 14, color: Colors.grey),
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Divider(color: Colors.grey.shade300),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.phone, size: 16, color: Colors.grey),
-                          SizedBox(width: 5),
+                          const Icon(Icons.phone, size: 16, color: Colors.grey),
+                          const SizedBox(width: 5),
                           Text(
                             "${widget.user.phoneNo}",
-                            style: TextStyle(fontSize: 14),
+                            style: const TextStyle(fontSize: 14),
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.email, size: 16, color: Colors.grey),
-                          SizedBox(width: 5),
+                          const Icon(Icons.email, size: 16, color: Colors.grey),
+                          const SizedBox(width: 5),
                           Text(
                             "${widget.user.email}",
-                            style: TextStyle(fontSize: 14),
+                            style: const TextStyle(fontSize: 14),
                           ),
                         ],
                       ),
@@ -248,12 +248,12 @@ class _AdminEditUserProfileState extends ConsumerState<AdminEditUserProfile> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
+                            const Text(
                               'Edit Profile',
                               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.center,
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             Row(
                               children: [
                                 Expanded(
@@ -274,7 +274,7 @@ class _AdminEditUserProfileState extends ConsumerState<AdminEditUserProfile> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(width: 16),
+                                const SizedBox(width: 16),
                                 Expanded(
                                   child: TextFormField(
                                     validator: (v){
@@ -295,7 +295,7 @@ class _AdminEditUserProfileState extends ConsumerState<AdminEditUserProfile> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             TextFormField(
                               validator: (v){
                                 if(v!.isEmpty){
@@ -312,7 +312,7 @@ class _AdminEditUserProfileState extends ConsumerState<AdminEditUserProfile> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             Row(
                               children: [
                                 Expanded(
@@ -336,7 +336,7 @@ class _AdminEditUserProfileState extends ConsumerState<AdminEditUserProfile> {
                                     },
                                   ),
                                 ),
-                                SizedBox(width: 16),
+                                const SizedBox(width: 16),
                                 Expanded(
                                   flex: 3,
                                   child: TextFormField(
@@ -362,7 +362,7 @@ class _AdminEditUserProfileState extends ConsumerState<AdminEditUserProfile> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             TextFormField(
                               validator: (v){
                                 if(v!.isEmpty){
@@ -379,7 +379,7 @@ class _AdminEditUserProfileState extends ConsumerState<AdminEditUserProfile> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
                             DropdownButtonFormField<String>(
                               decoration: InputDecoration(
                                 labelText: 'Nationality',
@@ -398,7 +398,7 @@ class _AdminEditUserProfileState extends ConsumerState<AdminEditUserProfile> {
                               onChanged: (String? newValue) {
                               },
                             ),
-                            SizedBox(height: 30),
+                            const SizedBox(height: 30),
                             ElevatedButton(
                               onPressed: isSaving ? null : () {
                                 _formKey.currentState!.save();
@@ -406,15 +406,15 @@ class _AdminEditUserProfileState extends ConsumerState<AdminEditUserProfile> {
                                   updateUser();
                                 }
                               },
-                              child: isSaving ? ButtonLoading(buttonText: "Saving") : Text('Save'),
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
                                 backgroundColor: Colors.blue,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                padding: EdgeInsets.symmetric(vertical: 16),
+                                padding: const EdgeInsets.symmetric(vertical: 16),
                               ),
+                              child: isSaving ? const ButtonLoading(buttonText: "Saving") : const Text('Save'),
                             ),
                           ],
                         ),

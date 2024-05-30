@@ -18,17 +18,17 @@ class AdminApi extends Api{
     try{
       final response = await dio.get("$baseUrl/Admin/getAll", options: options);
       debugPrint("response: $response");
-      List<Admin> _admins = [];
+      List<Admin> admins = [];
 
-      List? _responseData = response.data;
+      List? responseData = response.data;
 
-      if(_responseData != null && _responseData.isNotEmpty){
-        for(int i = 0; i < _responseData.length; i++){
-          _admins.add(Admin.fromJson(_responseData[i]));
+      if(responseData != null && responseData.isNotEmpty){
+        for(int i = 0; i < responseData.length; i++){
+          admins.add(Admin.fromJson(responseData[i]));
         }
       }
-      debugPrint("_admins: $_admins");
-      return _admins;
+      debugPrint("_admins: $admins");
+      return admins;
     } on DioException catch (e, str) {
        debugPrint("HATA: $e, $str");
        return [];

@@ -18,13 +18,13 @@ class Dormitory {
   DateTime? createdAt;
   DateTime? updatedAt;
   DormitoryDetails? dormitoryDetails;
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   List<Rating>? ratings;
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   List<Comment?>? comments;
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   List<Room?>? rooms;
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   DormitoryOwner? user;
 
   Dormitory({

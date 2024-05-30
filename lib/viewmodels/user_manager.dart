@@ -8,7 +8,6 @@ import 'package:dormitory_management/models/users/user.dart';
 import 'package:dormitory_management/repository/repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 final userManagerProvider = StateNotifierProvider<UserManager, User?>((ref){

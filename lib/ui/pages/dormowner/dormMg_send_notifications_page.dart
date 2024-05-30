@@ -19,7 +19,7 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
   final TextEditingController _groupController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  List<File> _images = [];
+  final List<File> _images = [];
   bool _showPreview = false;
 
   Future<void> _pickImage() async {
@@ -54,13 +54,10 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );
-      // Bildirimi burada gönderebilirim
-      print(notification.toJson());
     }
   }
 
   Future<String> uploadImageToServer(File image) async {
-    // Sunucuya resimleri yükleme burada, boş örnek
     return '';
   }
 
@@ -104,7 +101,7 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomDrawer(activePage: ActivePages.dormMGsendNotifications,),
+          const CustomDrawer(activePage: ActivePages.dormMGsendNotifications,),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -119,7 +116,7 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
                     ),
                     child: Container(
                       padding: const EdgeInsets.all(32.0),
-                      constraints: BoxConstraints(maxWidth: 600),
+                      constraints: const BoxConstraints(maxWidth: 600),
                       child: _showPreview ? _buildPreview() : _buildForm(),
                     ),
                   ),
@@ -137,7 +134,7 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
+        const Text(
           'Send Notifications & Alerts',
           style: TextStyle(
               fontSize: 24, fontWeight: FontWeight.bold),
@@ -147,7 +144,7 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Group',
               style: TextStyle(color: Colors.grey),
             ),
@@ -164,7 +161,7 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
               ),
             ),
             const SizedBox(height: 20),
-            Text(
+            const Text(
               'Notification Title',
               style: TextStyle(color: Colors.grey),
             ),
@@ -181,7 +178,7 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
               ),
             ),
             const SizedBox(height: 20),
-            Text(
+            const Text(
               'Notification Description',
               style: TextStyle(color: Colors.grey),
             ),
@@ -209,7 +206,7 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
                     alignment: Alignment.topRight,
                     children: [
                       Container(
-                        margin: EdgeInsets.symmetric(horizontal: 5),
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
                         width: 100,
                         height: 100,
                         decoration: BoxDecoration(
@@ -221,7 +218,7 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.delete, color: Colors.red),
+                        icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: () => _deleteImage(index),
                       ),
                     ],
@@ -232,16 +229,16 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _pickImage,
-              child: Text('Add Photo'),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.blue,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                     vertical: 16, horizontal: 32),
               ),
+              child: const Text('Add Photo'),
             ),
             const SizedBox(height: 20),
             Row(
@@ -249,32 +246,32 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
               children: [
                 ElevatedButton(
                   onPressed: _togglePreview,
-                  child: Text('Preview'),
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.blue,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                         vertical: 16, horizontal: 32),
                   ),
+                  child: const Text('Preview'),
                 ),
                 ElevatedButton(
                   onPressed: () async {
                     await _uploadImages();
                     sendNotification();
                   },
-                  child: Text('Send Notification'),
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.blue,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                         vertical: 16, horizontal: 32),
                   ),
+                  child: const Text('Send Notification'),
                 ),
               ],
             ),
@@ -289,7 +286,7 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
+        const Text(
           'Preview Notification',
           style: TextStyle(
               fontSize: 24, fontWeight: FontWeight.bold),
@@ -297,24 +294,24 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
         ),
         const SizedBox(height: 20),
         ListTile(
-          leading: Icon(Icons.notifications, color: Colors.blue),
+          leading: const Icon(Icons.notifications, color: Colors.blue),
           title: Text(
             _titleController.text,
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           subtitle: Text(_descriptionController.text),
-          trailing: Text('Just now'),
+          trailing: const Text('Just now'),
         ),
         const SizedBox(height: 20),
         if (_images.isNotEmpty)
-          Container(
+          SizedBox(
             height: 100,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: _images.length,
               itemBuilder: (context, index) {
                 return Container(
-                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
                   width: 100,
                   height: 100,
                   decoration: BoxDecoration(
@@ -331,16 +328,16 @@ class _DormMGSendNotificationsState extends ConsumerState<DormMGSendNotification
         const SizedBox(height: 20),
         ElevatedButton(
           onPressed: _togglePreview,
-          child: Text('Edit'),
           style: ElevatedButton.styleFrom(
             foregroundColor: Colors.white,
             backgroundColor: Colors.blue,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
                 vertical: 16, horizontal: 32),
           ),
+          child: const Text('Edit'),
         ),
       ],
     );

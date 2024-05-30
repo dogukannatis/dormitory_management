@@ -3,13 +3,15 @@ import 'package:dormitory_management/ui/widgets/custom_app_bar.dart';
 import 'package:dormitory_management/ui/widgets/custom_drawer.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: HomePage(),
     );
   }
@@ -26,11 +28,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF5F5F5),
       appBar: getCustomAppBar(context),
       body: Row(
         children: [
-          CustomDrawer(),
+          const CustomDrawer(),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -59,19 +61,19 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: AspectRatio(
               aspectRatio: 16 / 9,
-              child: Container(
+              child: SizedBox(
                 height: imageHeight,
                 child: _buildImageSection(),
               ),
             ),
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(child: _buildHeader()),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Center(child: _buildWelcomeText()),
               ],
             ),
@@ -89,8 +91,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildHeader() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
+    return const Padding(
+      padding: EdgeInsets.all(16.0),
       child: Text(
         "Welcome to\nDormitory Management System",
         style: TextStyle(
@@ -102,8 +104,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildWelcomeText() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
+    return const Padding(
+      padding: EdgeInsets.all(16.0),
       child: Text(
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         style: TextStyle(fontSize: 16),
@@ -115,18 +117,18 @@ class _HomePageState extends State<HomePage> {
   Widget _buildBlockInfo() {
     return Container(
       margin: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color(0xFFFFFFFF),
       ),
       padding: const EdgeInsets.all(16.0),
-      child: Row(
+      child: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 Center(
                   child: Text(
                     "Dormitories",
@@ -146,7 +148,7 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 Center(
                   child: Text(
                     "Users",
@@ -175,13 +177,13 @@ class _HomePageState extends State<HomePage> {
       margin: const EdgeInsets.all(16.0),
       child: Row(
         children: [
-          Expanded(
+          const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: EdgeInsets.all(16.0),
                     child: Text(
                       "Find Your Dormitory",
                       style: TextStyle(fontSize: 24),
@@ -192,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: 16),
                 Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: EdgeInsets.all(16.0),
                     child: Text(
                       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                       style: TextStyle(fontSize: 16),
@@ -203,7 +205,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           Expanded(
             child: AspectRatio(
               aspectRatio: 16 / 9,

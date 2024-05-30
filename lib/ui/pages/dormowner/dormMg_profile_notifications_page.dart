@@ -29,7 +29,7 @@ class _UserProfileNotificationsState extends ConsumerState<UserProfileNotificati
       senderId: 1,
       receiverId: 1,
       seen: false,
-      createdAt: DateTime.now().subtract(Duration(hours: 12)),
+      createdAt: DateTime.now().subtract(const Duration(hours: 12)),
     ),
     AppNotification(
       id: 3,
@@ -38,7 +38,7 @@ class _UserProfileNotificationsState extends ConsumerState<UserProfileNotificati
       senderId: 1,
       receiverId: 1,
       seen: false,
-      createdAt: DateTime.now().subtract(Duration(hours: 10)),
+      createdAt: DateTime.now().subtract(const Duration(hours: 10)),
     ),
   ];
 
@@ -82,31 +82,31 @@ class _UserProfileNotificationsState extends ConsumerState<UserProfileNotificati
             ),
             child: Container(
               padding: const EdgeInsets.all(24.0),
-              constraints: BoxConstraints(maxWidth: 1000),
+              constraints: const BoxConstraints(maxWidth: 1000),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Notifications',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Expanded(
                     child: ListView.builder(
                       itemCount: notifications.length,
                       itemBuilder: (context, index) {
                         final notification = notifications[index];
                         return Card(
-                          margin: EdgeInsets.symmetric(vertical: 8),
+                          margin: const EdgeInsets.symmetric(vertical: 8),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
                           elevation: 2,
                           child: ListTile(
-                            leading: Icon(Icons.notifications, color: Colors.blue),
+                            leading: const Icon(Icons.notifications, color: Colors.blue),
                             title: Text(
                               notification.title!,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             subtitle: Text(notification.description!),
                             trailing: Text(_formatDateTime(notification.createdAt!)),
